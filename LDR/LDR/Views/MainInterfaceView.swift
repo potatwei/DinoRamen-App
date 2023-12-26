@@ -8,11 +8,13 @@
 import SwiftUI
 
 struct MainInterfaceView: View {
-    
-    var interface: MainInterfaceViewModel
+    //var interface: MainInterfaceViewModel
+    @State private var interface = MainInterfaceViewModel()
     
     var body: some View {
-        VStack {
+        if interface.isSignIn, !interface.currentUserId.isEmpty{
+            OthersDisplayView()
+        } else {
             NavigationStack {
                 LoginView()
             }
@@ -21,5 +23,5 @@ struct MainInterfaceView: View {
 }
 
 #Preview {
-    MainInterfaceView(interface: MainInterfaceViewModel())
+    MainInterfaceView()
 }
