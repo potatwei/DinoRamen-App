@@ -50,6 +50,8 @@
 		7F5BD00F2B3B42E600CC02ED /* UserEditViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F5BD00E2B3B42E600CC02ED /* UserEditViewViewModel.swift */; };
 		7F5BD0112B3B42EE00CC02ED /* LoginViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F5BD0102B3B42EE00CC02ED /* LoginViewViewModel.swift */; };
 		7F5BD0132B3B42F800CC02ED /* RegisterViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F5BD0122B3B42F800CC02ED /* RegisterViewViewModel.swift */; };
+		7F5BD0152B3B440300CC02ED /* OthersDisplayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F5BD0142B3B440300CC02ED /* OthersDisplayView.swift */; };
+		7F5BD0172B3B441D00CC02ED /* OthersDisplayViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F5BD0162B3B441D00CC02ED /* OthersDisplayViewViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -70,6 +72,8 @@
 		7F5BD00E2B3B42E600CC02ED /* UserEditViewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserEditViewViewModel.swift; sourceTree = "<group>"; };
 		7F5BD0102B3B42EE00CC02ED /* LoginViewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewViewModel.swift; sourceTree = "<group>"; };
 		7F5BD0122B3B42F800CC02ED /* RegisterViewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewViewModel.swift; sourceTree = "<group>"; };
+		7F5BD0142B3B440300CC02ED /* OthersDisplayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OthersDisplayView.swift; sourceTree = "<group>"; };
+		7F5BD0162B3B441D00CC02ED /* OthersDisplayViewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OthersDisplayViewViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -134,9 +138,9 @@
 				7F5BCFFF2B3B405400CC02ED /* Views */,
 				7F5BCFFE2B3B404A00CC02ED /* Others */,
 				7F5BCFAF2B3A949D00CC02ED /* ApplicationApp.swift */,
+				7F5BCFB32B3A949D00CC02ED /* Item.swift */,
 				7F5BCFC52B3B389400CC02ED /* GoogleService-Info.plist */,
 				7F5BCFB52B3A949E00CC02ED /* Assets.xcassets */,
-				7F5BCFB32B3A949D00CC02ED /* Item.swift */,
 				7F5BCFB72B3A949E00CC02ED /* Preview Content */,
 			);
 			path = Application;
@@ -161,6 +165,7 @@
 			isa = PBXGroup;
 			children = (
 				7F5BCFB12B3A949D00CC02ED /* MainInterfaceView.swift */,
+				7F5BD0142B3B440300CC02ED /* OthersDisplayView.swift */,
 				7F5BD0022B3B40EC00CC02ED /* UserEditView.swift */,
 				7F5BD0042B3B40FB00CC02ED /* LoginView.swift */,
 				7F5BD0062B3B410400CC02ED /* RegisterView.swift */,
@@ -172,6 +177,7 @@
 			isa = PBXGroup;
 			children = (
 				7F5BCFC32B3A98AC00CC02ED /* MainInterfaceViewModel.swift */,
+				7F5BD0162B3B441D00CC02ED /* OthersDisplayViewViewModel.swift */,
 				7F5BD00E2B3B42E600CC02ED /* UserEditViewViewModel.swift */,
 				7F5BD0102B3B42EE00CC02ED /* LoginViewViewModel.swift */,
 				7F5BD0122B3B42F800CC02ED /* RegisterViewViewModel.swift */,
@@ -183,8 +189,8 @@
 			isa = PBXGroup;
 			children = (
 				7F5BCFC12B3A989E00CC02ED /* OthersInterface.swift */,
-				7F5BD0082B3B41CD00CC02ED /* User.swift */,
 				7F5BD00C2B3B428200CC02ED /* OwnsInterface.swift */,
+				7F5BD0082B3B41CD00CC02ED /* User.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -295,6 +301,7 @@
 				7F5BCFC42B3A98AC00CC02ED /* MainInterfaceViewModel.swift in Sources */,
 				7F5BD00F2B3B42E600CC02ED /* UserEditViewViewModel.swift in Sources */,
 				7F5BD0052B3B40FB00CC02ED /* LoginView.swift in Sources */,
+				7F5BD0172B3B441D00CC02ED /* OthersDisplayViewViewModel.swift in Sources */,
 				7F5BCFB22B3A949D00CC02ED /* MainInterfaceView.swift in Sources */,
 				7F5BCFB42B3A949D00CC02ED /* Item.swift in Sources */,
 				7F5BCFC22B3A989E00CC02ED /* OthersInterface.swift in Sources */,
@@ -304,6 +311,7 @@
 				7F5BD0072B3B410400CC02ED /* RegisterView.swift in Sources */,
 				7F5BCFB02B3A949D00CC02ED /* ApplicationApp.swift in Sources */,
 				7F5BD00D2B3B428200CC02ED /* OwnsInterface.swift in Sources */,
+				7F5BD0152B3B440300CC02ED /* OthersDisplayView.swift in Sources */,
 				7F5BD0032B3B40EC00CC02ED /* UserEditView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
