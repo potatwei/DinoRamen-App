@@ -7,12 +7,31 @@
 
 import SwiftUI
 
-struct SwiftUIView: View {
+struct LDRButton: View {
+    let title: String
+    let background: Color
+    let action: () -> Void
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        Button {
+            // Action
+            action()
+        } label: {
+            ZStack {
+                RoundedRectangle(cornerRadius: 10)
+                    .foregroundStyle(background)
+                Text(title)
+                    .foregroundStyle(.white)
+                    .bold()
+            }
+        }
+        .padding()
     }
 }
 
 #Preview {
-    SwiftUIView()
+    LDRButton(title: "Value",
+              background: .accentColor) {
+        // Action
+    }
 }

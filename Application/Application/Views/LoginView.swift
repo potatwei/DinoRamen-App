@@ -9,31 +9,36 @@ import SwiftUI
 
 struct LoginView: View {
     
-    @State var email = ""
-    @State var password = ""
+    @Bindable var login = LoginViewViewModel()
     
     var body: some View {
         VStack {
             // Header
-            HeaderView()
+            HeaderView(title: "LDR App",
+                       subTitle: "Stay Connected",
+                       angle: 15,
+                       background: .mint)
             
             // Login Form
             Form {
-                TextField("Email Address", text: $email)
-                SecureField("Password", text: $password)
+                if !login.errorMessage.isEmpty {
+                    Text(login.errorMessage)
+                        .foregroundStyle(.red)
+                }
                 
-                Button {
-                    // Attempt log in
-                } label: {
-                    ZStack {
-                        RoundedRectangle(cornerRadius: 10)
-                            .foregroundStyle(.tint)
-                        Text("Log In")
-                            .foregroundStyle(.white)
-                            .bold()
-                    }
+                TextField("Email Address", text: $login.email)
+                    .autocorrectionDisabled()
+                SecureField("Password", text: $login.password)
+                    .autocorrectionDisabled()
+                    .autocapitalization(.none)
+                
+                LDRButton(title: "Log In",
+                          background: .accentColor) {
+                    // Attempt to Login
+                    login.login()
                 }
             }
+            .offset(y: -50)
             
             // Create Account
             VStack {
@@ -52,24 +57,4 @@ struct LoginView: View {
     LoginView()
 }
 
-struct HeaderView: View {
-    var body: some View {
-        ZStack {
-            RoundedRectangle(cornerRadius: 0)
-                .foregroundStyle(.mint)
-                .rotationEffect(Angle(degrees: 15))
-            VStack {
-                Text("LDR APP")
-                    .foregroundStyle(.white)
-                    .bold()
-                    .font(.system(size: 50))
-                Text("Stay Connected")
-                    .foregroundStyle(.white)
-                    .font(.system(size: 25))
-            }
-            .padding(.top, 50)
-        }
-        .frame(width: 1000, height: 300)
-        .offset(y: -95)
-    }
-}
+

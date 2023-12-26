@@ -3,17 +3,17 @@
 <plist version="1.0">
 <dict>
 	<key>API_KEY</key>
-	<string>AIzaSyDTh2lIN6xqkyU8U98O2rooVrK3bG8heKA</string>
+	<string>AIzaSyBIt0LXL-I7Kn42z01Ysyls59Y4qe95lII</string>
 	<key>GCM_SENDER_ID</key>
-	<string>643885092964</string>
+	<string>269406250227</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
 	<string>name.shihangwei.ldrc</string>
 	<key>PROJECT_ID</key>
-	<string>long-distance-connection</string>
+	<string>longdistanceconnection-6fddb</string>
 	<key>STORAGE_BUCKET</key>
-	<string>long-distance-connection.appspot.com</string>
+	<string>longdistanceconnection-6fddb.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -25,6 +25,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:643885092964:ios:691bf9a2ece797eea88f71</string>
+	<string>1:269406250227:ios:fd630c4931505c7fe4c386</string>
 </dict>
 </plist>
