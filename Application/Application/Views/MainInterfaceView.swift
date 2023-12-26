@@ -13,7 +13,9 @@ struct MainInterfaceView: View {
     
     var body: some View {
         VStack {
-
+            NavigationStack {
+                LoginView()
+            }
         }
     }
 }
