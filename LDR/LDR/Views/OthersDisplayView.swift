@@ -10,6 +10,12 @@ import SwiftUI
 struct OthersDisplayView: View {
     var display = OthersDisplayViewViewModel()
     
+    private let userId: String
+    
+    init(userId: String) {
+        self.userId = userId
+    }
+    
     var body: some View {
         VStack {
             HStack {
@@ -67,5 +73,5 @@ struct OthersDisplayView: View {
 }
 
 #Preview {
-    OthersDisplayView()
+    OthersDisplayView(userId: "")
 }

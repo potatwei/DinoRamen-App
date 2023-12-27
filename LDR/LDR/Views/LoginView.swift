@@ -28,6 +28,7 @@ struct LoginView: View {
                 
                 TextField("Email Address", text: $login.email)
                     .autocorrectionDisabled()
+                    .autocapitalization(.none)
                 SecureField("Password", text: $login.password)
                     .autocorrectionDisabled()
                     .autocapitalization(.none)
@@ -39,6 +40,7 @@ struct LoginView: View {
                 }
             }
             .offset(y: -50)
+            .ignoresSafeArea(.keyboard, edges: .bottom)
             
             // Create Account
             VStack {
@@ -47,6 +49,7 @@ struct LoginView: View {
                                destination: RegisterView())
             }
             .padding()
+            .ignoresSafeArea(.keyboard, edges: .bottom)
             
             Spacer()
         }

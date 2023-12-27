@@ -9,12 +9,13 @@ import SwiftUI
 
 struct MainInterfaceView: View {
     //var interface: MainInterfaceViewModel
-    @State private var interface = MainInterfaceViewModel()
+    @StateObject var interface = MainInterfaceViewModel()
     
     var body: some View {
-        if interface.isSignIn, !(interface.currentUserId.isEmpty){
+        //Text("\(interface.currentUserId)")
+        if interface.isSignIn && !(interface.currentUserId.isEmpty){
             TabView {
-                OthersDisplayView()
+                OthersDisplayView(userId: interface.currentUserId)
                     .tabItem { Label("Home", systemImage: "house") }
                 
                 ProfileView()

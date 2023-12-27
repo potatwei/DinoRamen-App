@@ -9,7 +9,8 @@ import FirebaseAuth
 import Foundation
 import FirebaseFirestore
 
-@Observable class RegisterViewViewModel {
+@Observable 
+class RegisterViewViewModel {
     
     var name = ""
     var email = ""
