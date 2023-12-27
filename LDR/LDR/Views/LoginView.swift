@@ -9,7 +9,7 @@ import SwiftUI
 
 struct LoginView: View {
     
-    @Bindable var login = LoginViewViewModel()
+    @Bindable private var login = LoginViewViewModel()
     
     var body: some View {
         VStack {

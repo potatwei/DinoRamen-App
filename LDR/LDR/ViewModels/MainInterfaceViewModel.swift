@@ -20,7 +20,7 @@ import SwiftUI
         }
     }
     
-    public var isSignIn: Bool {
+    var isSignIn: Bool {
         return Auth.auth().currentUser != nil
     }
 }

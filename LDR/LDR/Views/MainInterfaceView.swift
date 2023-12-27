@@ -12,8 +12,15 @@ struct MainInterfaceView: View {
     @State private var interface = MainInterfaceViewModel()
     
     var body: some View {
-        if interface.isSignIn, !interface.currentUserId.isEmpty{
-            OthersDisplayView()
+        if interface.isSignIn, !(interface.currentUserId.isEmpty){
+            TabView {
+                OthersDisplayView()
+                    .tabItem { Label("Home", systemImage: "house") }
+                
+                ProfileView()
+                    .tabItem { Label("Profile", systemImage: "person.circle") }
+                    .navigationTitle("Profile")
+            }
         } else {
             NavigationStack {
                 LoginView()

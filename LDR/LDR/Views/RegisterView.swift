@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct RegisterView: View {
-    @Bindable var register = RegisterViewViewModel()
+    @Bindable private var register = RegisterViewViewModel()
     
     var body: some View {
         // Header

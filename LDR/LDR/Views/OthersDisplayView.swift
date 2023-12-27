@@ -8,8 +8,61 @@
 import SwiftUI
 
 struct OthersDisplayView: View {
+    var display = OthersDisplayViewViewModel()
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        VStack {
+            HStack {
+                Circle() // Profile Image
+                    .frame(maxWidth: 80)
+                    .padding(40)
+                
+                Spacer()
+            }
+            
+            // Others Emoji Displayed
+            Circle()
+                .frame(maxWidth: 250)
+            
+            // Reactions and photo display
+            ZStack {
+                RoundedRectangle(cornerRadius: 25.0)
+                    .frame(maxWidth: 250, maxHeight: 200)
+                
+                Group {
+                    RoundedRectangle(cornerRadius: 25)
+                        .frame(maxWidth: 250, maxHeight: 60)
+                        .padding()
+                        .foregroundStyle(.bar)
+                    HStack{
+                        Button("Thumbs Up", systemImage: "hand.thumbsup.fill") {
+                            display.reaction = "hand.thumbsup.circle.fill"
+                        } .padding(2)
+                        
+                        Button("Thumbs Up", systemImage: "hand.thumbsup.fill") {
+                            display.reaction = "hand.thumbsup.circle.fill"
+                        } .padding(2)
+                        
+                        Button("Thumbs Up", systemImage: "hand.thumbsup.fill") {
+                            display.reaction = "hand.thumbsup.circle.fill"
+                        } .padding(2)
+                        
+                        Button("Thumbs Up", systemImage: "hand.thumbsup.fill") {
+                            display.reaction = "hand.thumbsup.circle.fill"
+                        } .padding(2)
+                    }
+                    .labelStyle(.iconOnly)
+                    .font(.largeTitle)
+                }
+                .offset(y: -80)
+            }
+            .padding()
+            
+            RoundedRectangle(cornerRadius: 25.0)
+                .frame(maxWidth: 350, maxHeight: 100)
+            
+            Spacer()
+        }
     }
 }
 

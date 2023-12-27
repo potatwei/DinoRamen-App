@@ -6,3 +6,10 @@
 //
 
 import Foundation
+
+@Observable class OthersDisplayViewViewModel {
+    init() {}
+    
+    var reaction = ""
+    
+}
