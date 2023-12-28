@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct SearchFriendView: View {
-    @State var friendToSearch: String = ""
+    @Bindable var searchFriend = SearchFriendViewViewModel()
     
     var body: some View {
         VStack {
@@ -30,7 +30,7 @@ struct SearchFriendView: View {
                 VStack {
                     // Search Bar
                     HStack {
-                        TextField("Search Friend...", text: $friendToSearch)
+                        TextField("Search Friend...", text: $searchFriend.friendToSearch)
                             .padding()
                             .background(.white)
                             .clipShape(RoundedRectangle(cornerRadius: 25.0))
@@ -38,6 +38,7 @@ struct SearchFriendView: View {
                         
                         Button{
                             // Search in data base and return userId
+                            //searchFriend.search()
                         } label: {
                             Label("Search Button", systemImage: "magnifyingglass.circle")
                                 .labelStyle(.iconOnly)
@@ -47,7 +48,7 @@ struct SearchFriendView: View {
                         .foregroundStyle(.white)
                     }
                         
-                    // display userInfo using returned userId
+                    // display userInfo using returned userId with an add button
                     
                     Spacer()
                 }

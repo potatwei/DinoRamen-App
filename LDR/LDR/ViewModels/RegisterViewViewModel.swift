@@ -41,9 +41,13 @@ class RegisterViewViewModel {
         
         let db = Firestore.firestore()
         
-        db.collection("users")
-            .document(id)
-            .setData(newUser.asDictionary())
+        do {
+            let document = db.collection("users").document(id)
+            try document.setData(from: newUser)
+            document.updateData(["keywordsForLookup": newUser.keywordsForLookup])
+        } catch {
+            print("Error adding \(error)")
+        }
     }
     
     private func validate() -> Bool {

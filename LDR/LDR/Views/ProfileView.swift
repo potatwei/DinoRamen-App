@@ -48,6 +48,9 @@ struct ProfileView: View {
                     .foregroundStyle(.red)
                 } else {
                     Text("Loading Profile")
+                    Button("Log Out") {
+                        profile.logOut()
+                    }
                 }
             }
             .navigationTitle("Profile")
