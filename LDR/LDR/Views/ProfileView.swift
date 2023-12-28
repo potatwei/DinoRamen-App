@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ProfileView: View {
-    var profile = ProfileViewViewModel()
+    @Bindable var profile = ProfileViewViewModel()
     
     var body: some View {
         NavigationStack {
@@ -20,6 +20,15 @@ struct ProfileView: View {
                         .foregroundStyle(.blue)
                         .frame(width: 125, height: 125)
                         .padding(.bottom, 20)
+                    
+                    Button{
+                        profile.showingSearchFriendView = true
+                    } label: {
+                        Label("Add", systemImage: "person.fill.badge.plus")
+                    }
+                    .sheet(isPresented: $profile.showingSearchFriendView) {
+                        SearchFriendView()
+                    }
                     
                     // User Info
                     VStack(alignment: .leading, spacing: 20) {

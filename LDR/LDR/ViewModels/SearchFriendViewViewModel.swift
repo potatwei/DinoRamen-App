@@ -8,10 +8,13 @@
 import Foundation
 import FirebaseAuth
 import FirebaseFirestore
+import SwiftUI
 
 @Observable class SearchFriendViewViewModel{
-    var friendToSearch: String = ""
     var queriedUsers: [User] = []
+    
+    
+    
     
     private let db = Firestore.firestore()
     

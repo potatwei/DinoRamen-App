@@ -8,11 +8,21 @@
 import SwiftUI
 
 struct UserBarView: View {
+    let userToDisplay: User
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        HStack {
+            Text("\(userToDisplay.name)")
+                .padding()
+            Spacer()
+        }
+        .background(.white)
     }
 }
 
 #Preview {
-    UserBarView()
+    UserBarView(userToDisplay: User(id: "123",
+                                    name: "Shihang Wei",
+                                    email: "sw5672@nyu.edu",
+                                    joined: Date().timeIntervalSince1970))
 }

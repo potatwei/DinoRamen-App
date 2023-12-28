@@ -13,6 +13,8 @@
 		7F0776B62B3CF1D3005AEB58 /* EmojiEditSwitch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F0776B52B3CF1D3005AEB58 /* EmojiEditSwitch.swift */; };
 		7F0776B82B3DDC52005AEB58 /* SearchFriendViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F0776B72B3DDC52005AEB58 /* SearchFriendViewViewModel.swift */; };
 		7F0776BA2B3DDC61005AEB58 /* SearchFriendView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F0776B92B3DDC61005AEB58 /* SearchFriendView.swift */; };
+		7F0776BC2B3E2CA4005AEB58 /* UserBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F0776BB2B3E2CA4005AEB58 /* UserBarView.swift */; };
+		7F0776BE2B3E2CB6005AEB58 /* UserBarViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F0776BD2B3E2CB6005AEB58 /* UserBarViewViewModel.swift */; };
 		7FEDF9AA2B3B92A000127A8D /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 7FEDF9A92B3B92A000127A8D /* FirebaseAnalytics */; };
 		7FEDF9AC2B3B92A000127A8D /* FirebaseAnalyticsOnDeviceConversion in Frameworks */ = {isa = PBXBuildFile; productRef = 7FEDF9AB2B3B92A000127A8D /* FirebaseAnalyticsOnDeviceConversion */; };
 		7FEDF9AE2B3B92A000127A8D /* FirebaseAnalyticsSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 7FEDF9AD2B3B92A000127A8D /* FirebaseAnalyticsSwift */; };
@@ -67,6 +69,8 @@
 		7F0776B52B3CF1D3005AEB58 /* EmojiEditSwitch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiEditSwitch.swift; sourceTree = "<group>"; };
 		7F0776B72B3DDC52005AEB58 /* SearchFriendViewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchFriendViewViewModel.swift; sourceTree = "<group>"; };
 		7F0776B92B3DDC61005AEB58 /* SearchFriendView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchFriendView.swift; sourceTree = "<group>"; };
+		7F0776BB2B3E2CA4005AEB58 /* UserBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserBarView.swift; sourceTree = "<group>"; };
+		7F0776BD2B3E2CB6005AEB58 /* UserBarViewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserBarViewViewModel.swift; sourceTree = "<group>"; };
 		7FEDF9972B3B925700127A8D /* LDR.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LDR.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7FEDF9E02B3B92E600127A8D /* MainInterfaceViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainInterfaceViewModel.swift; sourceTree = "<group>"; };
 		7FEDF9E12B3B92E600127A8D /* OthersDisplayViewViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OthersDisplayViewViewModel.swift; sourceTree = "<group>"; };
@@ -166,6 +170,7 @@
 				7FEDF9E42B3B92E600127A8D /* LoginViewViewModel.swift */,
 				7F0776B32B3C861B005AEB58 /* ProfileViewViewModel.swift */,
 				7F0776B72B3DDC52005AEB58 /* SearchFriendViewViewModel.swift */,
+				7F0776BD2B3E2CB6005AEB58 /* UserBarViewViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -181,6 +186,7 @@
 				7FEDF9E62B3B92E600127A8D /* LoginView.swift */,
 				7F0776B12B3C8608005AEB58 /* ProfileView.swift */,
 				7F0776B92B3DDC61005AEB58 /* SearchFriendView.swift */,
+				7F0776BB2B3E2CA4005AEB58 /* UserBarView.swift */,
 				7FEDF9E92B3B92E600127A8D /* HeaderView.swift */,
 				7FEDF9EA2B3B92E600127A8D /* LDRButton.swift */,
 			);
@@ -330,10 +336,12 @@
 				7FEDFA072B3B92E600127A8D /* ApplicationApp.swift in Sources */,
 				7FEDFA022B3B92E600127A8D /* LDRButton.swift in Sources */,
 				7FEDFA092B3B92E600127A8D /* User.swift in Sources */,
+				7F0776BC2B3E2CA4005AEB58 /* UserBarView.swift in Sources */,
 				7FEDF9FB2B3B92E600127A8D /* UserEditViewViewModel.swift in Sources */,
 				7FEDFA062B3B92E600127A8D /* Extensions.swift in Sources */,
 				7FEDF9FA2B3B92E600127A8D /* OthersDisplayViewViewModel.swift in Sources */,
 				7F0776BA2B3DDC61005AEB58 /* SearchFriendView.swift in Sources */,
+				7F0776BE2B3E2CB6005AEB58 /* UserBarViewViewModel.swift in Sources */,
 				7FEDF9FC2B3B92E600127A8D /* RegisterViewViewModel.swift in Sources */,
 				7FEDF9F92B3B92E600127A8D /* MainInterfaceViewModel.swift in Sources */,
 				7F0776B22B3C8608005AEB58 /* ProfileView.swift in Sources */,

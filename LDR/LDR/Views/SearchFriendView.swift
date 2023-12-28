@@ -8,53 +8,60 @@
 import SwiftUI
 
 struct SearchFriendView: View {
-    @Bindable var searchFriend = SearchFriendViewViewModel()
+    var searchFriend = SearchFriendViewViewModel()
+    @State var friendToSearch: String = ""
     
     var body: some View {
+        let friendToSearchBinding = Binding<String> (
+            get: {
+                friendToSearch
+            }, set: {
+                friendToSearch = $0
+                searchFriend.fetchUsers(from: friendToSearch)
+            }
+        )
+        
         VStack {
             // Title
             Text("Connect to a Friend")
                 .font(.largeTitle)
                 .padding()
                 .padding(.top, 30)
-                .offset(y: 50)
             
-            ZStack {
-                // Background
-                RoundedRectangle(cornerRadius: 25.0)
-                    .frame(height: 800)
+            VStack {
+                // Search Bar
+                HStack {
+                    TextField("Search Friend...", text: friendToSearchBinding)
+                        .padding()
+                        .background(.white)
+                        .clipShape(RoundedRectangle(cornerRadius: 25.0))
+                        .padding(.leading)
                     
-                    .foregroundStyle(.orange)
-                
-                
-                VStack {
-                    // Search Bar
-                    HStack {
-                        TextField("Search Friend...", text: $searchFriend.friendToSearch)
-                            .padding()
-                            .background(.white)
-                            .clipShape(RoundedRectangle(cornerRadius: 25.0))
-                            .padding(.leading)
-                        
-                        Button{
-                            // Search in data base and return userId
-                            //searchFriend.search()
-                        } label: {
-                            Label("Search Button", systemImage: "magnifyingglass.circle")
-                                .labelStyle(.iconOnly)
-                        }
-                        .padding(.trailing, 25)
-                        .font(.largeTitle)
-                        .foregroundStyle(.white)
+                    Button{
+                        // Search in data base and return userId
+                        //searchFriend.search()
+                    } label: {
+                        Label("Search Button", systemImage: "magnifyingglass.circle")
+                            .labelStyle(.iconOnly)
                     }
-                        
-                    // display userInfo using returned userId with an add button
-                    
-                    Spacer()
+                    .padding(.trailing, 25)
+                    .font(.largeTitle)
+                    .foregroundStyle(.white)
                 }
-                .offset(y: 30)
+                
+                // Displaying Users
+                ScrollView {
+                    ForEach(searchFriend.queriedUsers, id: \.id) { user in
+                        UserBarView(userToDisplay: user)
+                    }
+                }
+                
+                Spacer()
             }
-            .offset(y: 50)
+            .offset(y: 30)
+            .background(.orange)
+            
+            
         }
     }
 }

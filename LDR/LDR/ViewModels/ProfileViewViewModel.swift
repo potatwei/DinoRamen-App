@@ -12,6 +12,7 @@ import FirebaseAuth
 @Observable class ProfileViewViewModel {
     init() {}
     
+    var showingSearchFriendView = false
     var user: User?
     
     func fetchUser() {
