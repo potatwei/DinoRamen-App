@@ -6,20 +6,23 @@
 //
 
 import SwiftUI
+import FirebaseFirestore
+import FirebaseFirestoreSwift
 
 struct UserEditView: View {
     
-    var userEdit = UserEditViewViewModel()
+    @Bindable var userEdit = UserEditViewViewModel()
     
     var body: some View {
         VStack {
             
             // Emoji displaying with edit switches
             HStack {
+                // Left switch
                 emojiSwitchButton(offset: -1) {
                     userEdit.changeEmoji(by: -1)
                 }
-                
+                // Emoji
                 ZStack{
                     Circle()
                         .frame(maxWidth: 250)
@@ -27,7 +30,7 @@ struct UserEditView: View {
                         .font(.system(size: 180))
                 }
                 .animation(.default, value: userEdit.emojiToDisplay)
-                
+                // Right Switch
                 emojiSwitchButton(offset: 1) {
                     userEdit.changeEmoji(by: 1)
                 }
@@ -41,22 +44,29 @@ struct UserEditView: View {
                 .padding()
             
             // Comment to be displayed
-            ZStack {
-                RoundedRectangle(cornerRadius: 25.0)
-                    .frame(maxWidth: 350, maxHeight: 100)
-                    .padding(.bottom, 10)
-                
+            HStack {
+                Image(systemName: "book.pages.fill")
+                TextField("How do you feel", text: $userEdit.commentEntered)
             }
-            
+            .modifier(customViewModifier(roundedCornes: 10,
+                                         startColor: .orange,
+                                         endColor: .purple,
+                                         textColor: .white))
+            // Upload Button
             uploadButton
             
             Spacer()
+        }
+        .onAppear {
+            // fetch data from database and sync comment
+            userEdit.fetchStatus()
+            userEdit.syncComment()
         }
     }
     
     var uploadButton: some View {
         Button {
-            // Upload photo, reaction and comment
+            userEdit.upload()
         } label: {
             Text("UpLoad")
                 .font(.largeTitle)
@@ -69,7 +79,26 @@ struct UserEditView: View {
     }
 }
 
+struct customViewModifier: ViewModifier {
+    var roundedCornes: CGFloat
+    var startColor: Color
+    var endColor: Color
+    var textColor: Color
 
+    func body(content: Content) -> some View {
+        content
+            .padding()
+            .background(LinearGradient(gradient: Gradient(colors: [startColor, endColor]),
+                                       startPoint: .topLeading,
+                                       endPoint: .bottomTrailing))
+            .cornerRadius(roundedCornes)
+            .padding(.horizontal, 20)
+            .padding()
+            .foregroundColor(textColor)
+            .font(.custom("Open Sans", size: 20))
+            .shadow(radius: 10)
+    }
+}
 
 #Preview {
     UserEditView()

@@ -10,17 +10,24 @@ import SwiftUI
 struct MainInterfaceView: View {
     //var interface: MainInterfaceViewModel
     @StateObject var interface = MainInterfaceViewModel()
+    @State private var selection = 0
     
     var body: some View {
         //Text("\(interface.currentUserId)")
         if interface.isSignIn && !(interface.currentUserId.isEmpty){
-            TabView {
+            TabView(selection: $selection) {
+                UserEditView()
+                    .tabItem { Label("Edit", systemImage: "figure") }
+                    .tag(1)
+                
                 OthersDisplayView(userId: interface.currentUserId)
                     .tabItem { Label("Home", systemImage: "house") }
+                    .tag(0)
                 
                 ProfileView()
                     .tabItem { Label("Profile", systemImage: "person.circle") }
                     .navigationTitle("Profile")
+                    .tag(2)
             }
         } else {
             NavigationStack {
