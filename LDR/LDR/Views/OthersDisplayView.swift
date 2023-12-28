@@ -35,32 +35,7 @@ struct OthersDisplayView: View {
                 RoundedRectangle(cornerRadius: 25.0)
                     .frame(maxWidth: 250, maxHeight: 200)
                 
-                Group {
-                    RoundedRectangle(cornerRadius: 25)
-                        .frame(maxWidth: 250, maxHeight: 60)
-                        .padding()
-                        .foregroundStyle(.bar)
-                    HStack{
-                        Button("Thumbs Up", systemImage: "hand.thumbsup.fill") {
-                            display.reaction = "hand.thumbsup.circle.fill"
-                        } .padding(2)
-                        
-                        Button("Thumbs Up", systemImage: "hand.thumbsup.fill") {
-                            display.reaction = "hand.thumbsup.circle.fill"
-                        } .padding(2)
-                        
-                        Button("Thumbs Up", systemImage: "hand.thumbsup.fill") {
-                            display.reaction = "hand.thumbsup.circle.fill"
-                        } .padding(2)
-                        
-                        Button("Thumbs Up", systemImage: "hand.thumbsup.fill") {
-                            display.reaction = "hand.thumbsup.circle.fill"
-                        } .padding(2)
-                    }
-                    .labelStyle(.iconOnly)
-                    .font(.largeTitle)
-                }
-                .offset(y: -80)
+                reaction
             }
             .padding()
             
@@ -69,6 +44,40 @@ struct OthersDisplayView: View {
             
             Spacer()
         }
+    }
+    
+    var reactionButtons: some View {
+        HStack{
+            Button("Thumbs Up", systemImage: "hand.thumbsup.fill") {
+                display.reaction = "hand.thumbsup.circle.fill"
+            } .padding(2)
+            
+            Button("Thumbs Up", systemImage: "hand.thumbsup.fill") {
+                display.reaction = "hand.thumbsup.circle.fill"
+            } .padding(2)
+            
+            Button("Thumbs Up", systemImage: "hand.thumbsup.fill") {
+                display.reaction = "hand.thumbsup.circle.fill"
+            } .padding(2)
+            
+            Button("Thumbs Up", systemImage: "hand.thumbsup.fill") {
+                display.reaction = "hand.thumbsup.circle.fill"
+            } .padding(2)
+        }
+        .labelStyle(.iconOnly)
+        .font(.largeTitle)
+    }
+    
+    var reaction: some View {
+        Group {
+            RoundedRectangle(cornerRadius: 25)
+                .frame(maxWidth: 250, maxHeight: 60)
+                .padding()
+                .foregroundStyle(.bar)
+            
+            reactionButtons
+        }
+        .offset(y: -80)
     }
 }
 
