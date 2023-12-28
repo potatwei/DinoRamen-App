@@ -12,6 +12,7 @@ import FirebaseFirestoreSwift
 struct UserEditView: View {
     
     @Bindable var userEdit = UserEditViewViewModel()
+    @Binding var tabSelection: Int
     
     var body: some View {
         VStack {
@@ -46,8 +47,11 @@ struct UserEditView: View {
             // Comment to be displayed
             HStack {
                 Image(systemName: "book.pages.fill")
-                TextField("\(userEdit.commentToDisplay == "" ? "How do you feel" : userEdit.commentToDisplay)",
+                TextField("\(userEdit.commentToDisplay == "" ? "Comment..." : userEdit.commentToDisplay)",
                           text: $userEdit.commentEntered)
+                .onTapGesture {
+                    userEdit.commentEntered = userEdit.commentToDisplay
+                }
             }
             .modifier(customViewModifier(roundedCornes: 10,
                                          startColor: .orange,
@@ -67,6 +71,7 @@ struct UserEditView: View {
     var uploadButton: some View {
         Button {
             userEdit.upload()
+            tabSelection = 0
         } label: {
             Text("UpLoad")
                 .font(.largeTitle)
@@ -100,6 +105,7 @@ struct customViewModifier: ViewModifier {
     }
 }
 
-#Preview {
-    UserEditView()
-}
+//#Preview {
+//    @State var selection: Int = 0
+//    UserEditView(tabSelection: $selection)
+//}

@@ -72,5 +72,6 @@ import Foundation
                                                  comment: data["comment"] as? String ?? "")
             }
         }
+        commentEntered = commentToDisplay
     }
 }

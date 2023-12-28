@@ -16,7 +16,7 @@ struct MainInterfaceView: View {
         //Text("\(interface.currentUserId)")
         if interface.isSignIn && !(interface.currentUserId.isEmpty){
             TabView(selection: $selection) {
-                UserEditView()
+                UserEditView(tabSelection: $selection)
                     .tabItem { Label("Edit", systemImage: "figure") }
                     .tag(1)
                 
