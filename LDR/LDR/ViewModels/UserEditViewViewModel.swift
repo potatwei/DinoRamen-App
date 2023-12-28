@@ -73,8 +73,4 @@ import Foundation
             }
         }
     }
-    
-    func syncComment() {
-        commentEntered = commentToDisplay
-    }
 }

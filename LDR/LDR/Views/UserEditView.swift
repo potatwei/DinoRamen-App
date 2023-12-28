@@ -46,7 +46,8 @@ struct UserEditView: View {
             // Comment to be displayed
             HStack {
                 Image(systemName: "book.pages.fill")
-                TextField("How do you feel", text: $userEdit.commentEntered)
+                TextField("\(userEdit.commentToDisplay == "" ? "How do you feel" : userEdit.commentToDisplay)",
+                          text: $userEdit.commentEntered)
             }
             .modifier(customViewModifier(roundedCornes: 10,
                                          startColor: .orange,
@@ -60,7 +61,6 @@ struct UserEditView: View {
         .onAppear {
             // fetch data from database and sync comment
             userEdit.fetchStatus()
-            userEdit.syncComment()
         }
     }
     
