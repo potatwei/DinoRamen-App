@@ -10,7 +10,7 @@ import SwiftUI
 struct MainInterfaceView: View {
     //var interface: MainInterfaceViewModel
     @StateObject var interface = MainInterfaceViewModel()
-    @State private var selection = 0
+    @State var selection = 0
     
     var body: some View {
         //Text("\(interface.currentUserId)")

@@ -20,14 +20,11 @@ struct User: Codable{
 
 extension String {
     func generateStringSequence() -> [String] {
-        print("**************")
         guard self.count > 0 else { return [] }
         var sequences: [String] = []
         for i in 1...self.count {
             sequences.append(String(self.prefix(i)))
         }
-        print("==============")
-        print(sequences)
         return sequences
     }
 }

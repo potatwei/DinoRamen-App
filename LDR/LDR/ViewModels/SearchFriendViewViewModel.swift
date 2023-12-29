@@ -13,9 +13,6 @@ import SwiftUI
 @Observable class SearchFriendViewViewModel{
     var queriedUsers: [User] = []
     
-    
-    
-    
     private let db = Firestore.firestore()
     
     func fetchUsers(from keyword: String) {
