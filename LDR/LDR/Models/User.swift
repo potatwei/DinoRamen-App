@@ -12,6 +12,7 @@ struct User: Codable{
     let name: String
     let email: String
     let joined: TimeInterval
+    var profileImage: String = ""
     var keywordsForLookup: [String] {
         [self.name.generateStringSequence(), self.email.generateStringSequence()].flatMap { $0 }
     }

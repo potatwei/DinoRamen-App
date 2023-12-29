@@ -8,14 +8,23 @@
 import FirebaseAuth
 import Foundation
 import FirebaseFirestore
+import SwiftUI
 
-@Observable 
+
+
+@Observable
 class RegisterViewViewModel {
     
+    // Binding Variables
     var name = ""
     var email = ""
     var password = ""
+    
     var errorMessage = ""
+    
+    // Variables for moving between textfields
+    
+    
     
     init() {}
     
@@ -25,6 +34,13 @@ class RegisterViewViewModel {
         }
         
         Auth.auth().createUser(withEmail: email, password: password) { [weak self] result, error in
+            if let error = error {
+                print("REGISTER ERROR: \(error.localizedDescription)")
+                self?.errorMessage = "\(error.localizedDescription)"
+            } else {
+                print(" Registration Success")
+            }
+            
             guard let userId = result?.user.uid else {
                 return
             }
@@ -54,14 +70,12 @@ class RegisterViewViewModel {
         guard !name.trimmingCharacters(in: .whitespaces).isEmpty,
               !email.trimmingCharacters(in: .whitespaces).isEmpty,
               !password.trimmingCharacters(in: .whitespaces).isEmpty else {
-            return false
-        }
-        
-        guard email.contains("@") && email.contains(".") else {
+            errorMessage = "Please fill in all fields"
             return false
         }
         
         guard password.count >= 6 else {
+            errorMessage = "Passward is too weak"
             return false
         }
         

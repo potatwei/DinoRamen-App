@@ -24,7 +24,14 @@ import FirebaseAuth
         }
         
         // Try login using firebase
-        Auth.auth().signIn(withEmail: email, password: password)
+        Auth.auth().signIn(withEmail: email, password: password) {_,error in 
+            if let error = error {
+                self.errorMessage = "\(error.localizedDescription)"
+                if self.errorMessage == "The supplied auth credential is malformed or has expired." {
+                    self.errorMessage = "Invalid password or email"
+                }
+            }
+        }
     }
     
     private func validate() -> Bool {
