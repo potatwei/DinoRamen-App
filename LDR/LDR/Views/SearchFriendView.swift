@@ -24,7 +24,7 @@ struct SearchFriendView: View {
         
         NavigationStack {
             List(searchFriend.queriedUsers, id: \.self.id) { user in
-                UserBarView(userToDisplay: user)
+                UserBarView(userBar: UserBarViewViewModel(userToDisplay: user))
             }
             .listStyle(.plain)
             .searchable(text: friendToSearchBinding)

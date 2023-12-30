@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct UserBarView: View {
-    let userToDisplay: User
-    var userBar = UserBarViewViewModel()
+    
+    var userBar: UserBarViewViewModel
     
     var body: some View {
         HStack {
@@ -23,7 +23,9 @@ struct UserBarView: View {
             
             // Button to Send friend request
             Button{
-                
+                Task {
+                    await userBar.sendRequest()
+                }
             } label: {
                 Label("Add", systemImage: "plus")
                     .labelStyle(.iconOnly)
@@ -36,7 +38,7 @@ struct UserBarView: View {
     /// - Returns: `AsyncImage` object that download the current user profile image from firebase
     /// the `AsyncImage` has a default lable of "person.circle"
     var profileImage: some View {
-        let imageURL = URL(string: userToDisplay.profileImage)
+        let imageURL = URL(string: userBar.userToDisplay.profileImage)
         return AsyncImage(url: imageURL) { image in
             image
                 .resizable()
@@ -56,12 +58,12 @@ struct UserBarView: View {
     var nameAndTimeJoined: some View {
         VStack(alignment: .leading){
             // Name
-            Text("\(userToDisplay.name)")
+            Text("\(userBar.userToDisplay.name)")
                 .bold()
                 .font(.system(size: 18))
             
             // Time Joined
-            Text("Joined: \(Date(timeIntervalSince1970: userToDisplay.joined).formatted(date: .abbreviated, time: .omitted))")
+            Text("Joined: \(Date(timeIntervalSince1970: userBar.userToDisplay.joined).formatted(date: .abbreviated, time: .omitted))")
                 .font(.system(size: 12))
                 .foregroundStyle(.gray)
         }
@@ -70,10 +72,10 @@ struct UserBarView: View {
 }
 
 #Preview {
-    UserBarView(userToDisplay: User(id: "BgvoT3j8TIftJMA1zmjn3rEQLTA3",
-                                    name: "weishihang",
-                                    email: "asdfgis@g.com",
-                                    joined: 1703912994.081756,
-                                    profileImageId: "ECCCC5CF-C7D1-4DB3-B829-8E1B48E0C32B",
-                                    profileImage: "https://firebasestorage.googleapis.com:443/v0/b/longdistanceconnection-28d62.appspot.com/o/BgvoT3j8TIftJMA1zmjn3rEQLTA3%2FECCCC5CF-C7D1-4DB3-B829-8E1B48E0C32B.jpeg?alt=media&token=d7951b95-d277-42ad-a67f-fa5f958071a2"))
+    UserBarView(userBar: UserBarViewViewModel(userToDisplay: User(id: "BgvoT3j8TIftJMA1zmjn3rEQLTA3",
+                                                                  name: "weishihang",
+                                                                  email: "asdfgis@g.com",
+                                                                  joined: 1703912994.081756,
+                                                                  profileImageId: "ECCCC5CF-C7D1-4DB3-B829-8E1B48E0C32B",
+                                                                  profileImage: "https://firebasestorage.googleapis.com:443/v0/b/longdistanceconnection-28d62.appspot.com/o/BgvoT3j8TIftJMA1zmjn3rEQLTA3%2FECCCC5CF-C7D1-4DB3-B829-8E1B48E0C32B.jpeg?alt=media&token=d7951b95-d277-42ad-a67f-fa5f958071a2")) )
 }
