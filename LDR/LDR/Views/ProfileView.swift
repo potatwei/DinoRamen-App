@@ -14,74 +14,18 @@ struct ProfileView: View {
     var body: some View {
         NavigationStack {
             VStack {
-                if let user = profile.user {
-                    let imageURL = URL(string: user.profileImage)
-                    AsyncImage(url: imageURL) { image in
-                        image
-                            .resizable()
-                            .scaledToFill()
-                            .frame(width: 125, height: 125)
-                            .clipShape(Circle())
-                    } placeholder: {
-                        Image(systemName: "person.circle")
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .foregroundStyle(.blue)
-                            .frame(width: 125, height: 125)
-                    }
-                    .padding(.bottom, 20)
+                if profile.user != nil {
+                    // Showing Profile Image
+                    profileImage
 
                     // Change Profile Image
-                    PhotosPicker(selection: $profile.selectedPhoto, matching: .images, preferredItemEncoding: .automatic) {
-                        Image(systemName: "photo")
-                        Text("Change Profile Image")
-                    }
-                    .onChange(of: profile.selectedPhoto) { oldValue, newValue in
-                        Task {
-                            do {
-                                if let data = try await newValue?.loadTransferable(type: Data.self) {
-                                    if let uiImage = UIImage(data: data) {
-                                        Task {
-                                            await profile.deleteOldImage()
-                                            _ = await profile.saveImage(user: &profile.user!, image: uiImage)
-                                        }
-                                        print("Successfully selected image")
-                                    }
-                                }
-                            } catch {
-                                print("Selecting image failed \(error.localizedDescription)")
-                            }
-                        }
-                    }
+                    photoPickerButton
                     
                     // Add friend button and bring out a sheet
-                    Button{
-                        profile.showingSearchFriendView = true
-                    } label: {
-                        Label("Add Friend", systemImage: "person.fill.badge.plus")
-                    }
-                    .sheet(isPresented: $profile.showingSearchFriendView) {
-                        SearchFriendView()
-                    }
+                    addFriendButton
                     
                     // User Info
-                    VStack(alignment: .leading, spacing: 20) {
-                        HStack {
-                            Text("Name: ")
-                                .bold()
-                            Text(user.name)
-                        }
-                        HStack {
-                            Text("Email: ")
-                                .bold()
-                            Text(user.email)
-                        }
-                        HStack {
-                            Text("Memeber Since: ")
-                                .bold()
-                            Text("\(Date(timeIntervalSince1970: user.joined).formatted(date: .abbreviated, time: .omitted))")
-                        }
-                    }
+                    userInformation
                     
                     // Sign Out
                     Button("Log Out") {
@@ -100,6 +44,84 @@ struct ProfileView: View {
         }
         .onAppear() {
             profile.fetchUser()
+        }
+    }
+    
+    /// - Returns: `AsyncImage` object that download the current user profile image from firebase
+    /// the `AsyncImage` has a default lable of "person.circle"
+    var profileImage: some View {
+        let imageURL = URL(string: profile.user!.profileImage)
+        return AsyncImage(url: imageURL) { image in
+            image
+                .resizable()
+                .scaledToFill()
+        } placeholder: {
+            Image(systemName: "person.circle")
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .foregroundStyle(.blue)
+        }
+        .padding(.bottom, 20)
+        .frame(width: 125, height: 125)
+        .clipShape(Circle())
+    }
+    
+    /// When an image is selected, the current profile image will be deleted from database, then a new image
+    /// will be save in and `profileImageId` and `profileImage` in `profile.user` will be changed accordingly
+    var photoPickerButton: some View {
+        PhotosPicker(selection: $profile.selectedPhoto, matching: .images, preferredItemEncoding: .automatic) {
+            Image(systemName: "photo")
+            Text("Change Profile Image")
+        }
+        .onChange(of: profile.selectedPhoto) { oldValue, newValue in
+            Task {
+                do {
+                    if let data = try await newValue?.loadTransferable(type: Data.self) {
+                        if let uiImage = UIImage(data: data) {
+                            Task {
+                                await profile.deleteOldImage()
+                                _ = await profile.saveImage(user: &profile.user!, image: uiImage)
+                            }
+                            print("Successfully selected image")
+                        }
+                    }
+                } catch {
+                    print("Selecting image failed \(error.localizedDescription)")
+                }
+            }
+        }
+    }
+    
+    /// Bring out a sheet that contains `SearchFriendView()`
+    var addFriendButton: some View {
+        Button{
+            profile.showingSearchFriendView = true
+        } label: {
+            Label("Add Friend", systemImage: "person.fill.badge.plus")
+        }
+        .sheet(isPresented: $profile.showingSearchFriendView) {
+            SearchFriendView()
+        }
+    }
+    
+    /// Display three fields, Name, Email, and Memeber Since
+    var userInformation: some View {
+        VStack(alignment: .leading, spacing: 20) {
+            HStack {
+                Text("Name: ")
+                    .bold()
+                Text(profile.user!.name)
+            }
+            HStack {
+                Text("Email: ")
+                    .bold()
+                Text(profile.user!.email)
+            }
+            HStack {
+                Text("Memeber Since: ")
+                    .bold()
+                Text("\(Date(timeIntervalSince1970: profile.user!.joined).formatted(date: .abbreviated, time: .omitted))")
+            }
         }
     }
 }
