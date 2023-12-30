@@ -15,13 +15,22 @@ struct ProfileView: View {
         NavigationStack {
             VStack {
                 if let user = profile.user {
-                    Image(systemName: "person.circle")
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .foregroundStyle(.blue)
-                        .frame(width: 125, height: 125)
-                        .padding(.bottom, 20)
-                    
+                    let imageURL = URL(string: user.profileImage)
+                    AsyncImage(url: imageURL) { image in
+                        image
+                            .resizable()
+                            .scaledToFill()
+                            .frame(width: 125, height: 125)
+                            .clipShape(Circle())
+                    } placeholder: {
+                        Image(systemName: "person.circle")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .foregroundStyle(.blue)
+                            .frame(width: 125, height: 125)
+                    }
+                    .padding(.bottom, 20)
+
                     // Change Profile Image
                     PhotosPicker(selection: $profile.selectedPhoto, matching: .images, preferredItemEncoding: .automatic) {
                         Image(systemName: "photo")
@@ -33,6 +42,7 @@ struct ProfileView: View {
                                 if let data = try await newValue?.loadTransferable(type: Data.self) {
                                     if let uiImage = UIImage(data: data) {
                                         Task {
+                                            await profile.deleteOldImage()
                                             _ = await profile.saveImage(user: &profile.user!, image: uiImage)
                                         }
                                         print("Successfully selected image")

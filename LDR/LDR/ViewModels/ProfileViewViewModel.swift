@@ -8,7 +8,6 @@
 import Foundation
 import FirebaseFirestore
 import FirebaseAuth
-import UIKit
 import FirebaseStorage
 import _PhotosUI_SwiftUI
 
@@ -33,6 +32,7 @@ import _PhotosUI_SwiftUI
                                   name: data["name"] as? String ?? "",
                                   email: data["email"] as? String ?? "",
                                   joined: data["joined"] as? TimeInterval ?? 0,
+                                  profileImageId: data["profileImageId"] as? String ?? "",
                                   profileImage: data["profileImage"] as? String ?? "")
                 print(self!.user ?? "no user")
             }
@@ -56,7 +56,7 @@ import _PhotosUI_SwiftUI
         let storageRef = storage.reference().child("\(user.id)/\(photoName).jpeg")
         
         // Compress image
-        guard let resizedImage = image.jpegData(compressionQuality: 0.1) else {
+        guard let resizedImage = image.jpegData(compressionQuality: 0.0) else {
             print("Cound not resize image")
             return false
         }
@@ -86,6 +86,7 @@ import _PhotosUI_SwiftUI
         do {
             let document = db.collection("users").document(user.id)
             user.profileImage = imageURLString
+            user.profileImageId = photoName
             try document.setData(from: user)
             try await document.updateData(["keywordsForLookup": user.keywordsForLookup])
             print("Data updated successfully!")
@@ -93,6 +94,19 @@ import _PhotosUI_SwiftUI
         } catch {
             print("Could not updata data in user for userId \(user.id)")
             return false
+        }
+    }
+    
+    func deleteOldImage() async {
+        let userId = user!.id
+        let imageId = user!.profileImageId
+        let storage = Storage.storage() // Create a Firebase Storage instance
+        let storageRef = storage.reference().child("\(userId)/\(imageId).jpeg")
+        do {
+            try await storageRef.delete()
+            print("Successfully deleted Image")
+        } catch {
+            print("Could not delete Image \(error.localizedDescription)")
         }
     }
 }
