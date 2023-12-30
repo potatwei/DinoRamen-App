@@ -9,6 +9,7 @@ import SwiftUI
 
 struct SearchFriendView: View {
     var searchFriend = SearchFriendViewViewModel()
+    @Environment(\.dismiss) private var dismiss
     @State var friendToSearch: String = ""
     
     var body: some View {
@@ -17,51 +18,23 @@ struct SearchFriendView: View {
                 friendToSearch
             }, set: {
                 friendToSearch = $0
-                searchFriend.fetchUsers(from: friendToSearch)
+                searchFriend.fetchUsers(from: friendToSearch.uppercased())
             }
         )
         
-        VStack {
-            // Title
-            Text("Connect to a Friend")
-                .font(.largeTitle)
-                .padding()
-                .padding(.top, 30)
-            
-            VStack {
-                // Search Bar
-                HStack {
-                    TextField("Search Friend...", text: friendToSearchBinding)
-                        .padding()
-                        .background(.white)
-                        .clipShape(RoundedRectangle(cornerRadius: 25.0))
-                        .padding(.leading)
-                    
-                    Button{
-                        // Search in data base and return userId
-                        //searchFriend.search()
-                    } label: {
-                        Label("Search Button", systemImage: "magnifyingglass.circle")
-                            .labelStyle(.iconOnly)
-                    }
-                    .padding(.trailing, 25)
-                    .font(.largeTitle)
-                    .foregroundStyle(.white)
-                }
-                
-                // Displaying Users
-                ScrollView {
-                    ForEach(searchFriend.queriedUsers, id: \.id) { user in
-                        UserBarView(userToDisplay: user)
-                    }
-                }
-                
-                Spacer()
+        NavigationStack {
+            List(searchFriend.queriedUsers, id: \.self.id) { user in
+                UserBarView(userToDisplay: user)
             }
-            .offset(y: 30)
-            .background(.orange)
-            .clipShape(RoundedCornersShape(corners: [.topLeft, .topRight], radius: 30))
-            
+            .listStyle(.plain)
+            .searchable(text: friendToSearchBinding)
+            .toolbar {
+                ToolbarItem(placement: .automatic) {
+                    Button("Dismiss") {
+                        dismiss()
+                    }
+                }
+            }
         }
     }
 }

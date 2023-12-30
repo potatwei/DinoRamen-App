@@ -61,9 +61,9 @@ struct ProfileView: View {
                 .aspectRatio(contentMode: .fit)
                 .foregroundStyle(.blue)
         }
-        .padding(.bottom, 20)
         .frame(width: 125, height: 125)
         .clipShape(Circle())
+        .padding(.bottom, 20)
     }
     
     /// When an image is selected, the current profile image will be deleted from database, then a new image

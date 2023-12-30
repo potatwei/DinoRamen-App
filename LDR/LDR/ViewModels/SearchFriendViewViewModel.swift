@@ -19,7 +19,14 @@ import SwiftUI
         db.collection("users").whereField("keywordsForLookup", arrayContains: keyword).getDocuments { snapshot, error in
             guard let documents = snapshot?.documents, error == nil else { return }
             self.queriedUsers = documents.compactMap({ QueryDocumentSnapshot in
-                try? QueryDocumentSnapshot.data(as: User.self)
+                do {
+                    let userResult = try QueryDocumentSnapshot.data(as: User.self)
+                    print("Successfully converted data to User")
+                    return userResult
+                } catch {
+                    print("Cannot convert data to User")
+                    return nil
+                }
             })
             
         }

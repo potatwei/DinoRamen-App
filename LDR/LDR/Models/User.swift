@@ -24,7 +24,7 @@ extension String {
         guard self.count > 0 else { return [] }
         var sequences: [String] = []
         for i in 1...self.count {
-            sequences.append(String(self.prefix(i)))
+            sequences.append(String(self.prefix(i)).uppercased())
         }
         return sequences
     }
