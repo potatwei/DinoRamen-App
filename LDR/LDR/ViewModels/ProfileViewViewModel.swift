@@ -15,6 +15,7 @@ import _PhotosUI_SwiftUI
 @Observable class ProfileViewViewModel {
     var selectedPhoto: PhotosPickerItem?
     var showingSearchFriendView = false
+    var isSheetPresented = false
     var user: User?
     
     func fetchUser() {

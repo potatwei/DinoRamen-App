@@ -38,8 +38,21 @@ struct ProfileView: View {
                     Button("Log Out") {
                         profile.logOut()
                     }
+                    .foregroundStyle(.red)
                 }
             }
+            .toolbar{
+                ToolbarItem{
+                    Button {
+                        profile.isSheetPresented = true
+                    } label: {
+                        Label("Friend Request", systemImage: "person.crop.circle.fill.badge.plus")
+                    }
+                }
+            }
+            .sheet(isPresented: $profile.isSheetPresented, content: {
+                /*@START_MENU_TOKEN@*//*@PLACEHOLDER=Content@*/Text("Sheet Content")/*@END_MENU_TOKEN@*/
+            })
             .navigationTitle("Profile")
         }
         .onAppear() {

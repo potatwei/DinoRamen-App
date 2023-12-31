@@ -8,8 +8,22 @@
 import SwiftUI
 
 struct FriendsRequestsView: View {
+    var friendsRequests = FriendsRequestsViewViewModel()
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        Text("")
+        List(friendsRequests.queriedUsers, id: \.self.id) { user in
+            HStack {
+                UserBarView(userBar: UserBarViewViewModel(userToDisplay: user))
+                Spacer()
+            }
+        }
+        .onAppear {
+            Task {
+                await friendsRequests.fetchReceivedId()
+                await friendsRequests.fetchUsers()
+            }
+        }
     }
 }
 
