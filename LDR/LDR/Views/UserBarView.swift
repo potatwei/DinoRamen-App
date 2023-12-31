@@ -24,15 +24,24 @@ struct UserBarView: View {
             // Button to Send friend request
             Button{
                 Task {
+                    await userBar.getOldRequestAndReceived()
                     await userBar.sendRequest()
+                    await userBar.updateFriendStatus()
                 }
             } label: {
+                //
                 Label("Add", systemImage: "plus")
                     .labelStyle(.iconOnly)
+                    .foregroundStyle(.tint)
             }
             .padding()
         }
         .background(.white)
+        .onAppear {
+            Task {
+                await userBar.updateFriendStatus()
+            }
+        }
     }
     
     /// - Returns: `AsyncImage` object that download the current user profile image from firebase
