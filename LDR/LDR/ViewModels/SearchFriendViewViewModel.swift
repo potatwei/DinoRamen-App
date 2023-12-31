@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import FirebaseAuth
 import FirebaseFirestore
 import SwiftUI
 
@@ -28,7 +27,6 @@ import SwiftUI
                     return nil
                 }
             })
-            
         }
     }
     

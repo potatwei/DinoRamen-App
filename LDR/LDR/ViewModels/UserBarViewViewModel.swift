@@ -20,6 +20,13 @@ import FirebaseAuth
     
     let userToDisplay: User
     private let db = Firestore.firestore()
+    var currentUserId: String {
+        guard let currentUserId = Auth.auth().currentUser?.uid else {
+            print("Fail to get current user id")
+            return ""
+        }
+        return currentUserId
+    }
     
     init(userToDisplay: User) {
         self.userToDisplay = userToDisplay
@@ -28,11 +35,6 @@ import FirebaseAuth
     ///
     @MainActor
     func getOldRequestAndReceived() async {
-        guard let currentUserId = Auth.auth().currentUser?.uid else {
-            print("Fail to get current user id")
-            return
-        }
-        
         let requestedDocumentPath = "users/\(currentUserId)/friend/requested"
         let receivedDocumentPath = "users/\(userToDisplay.id)/friend/received"
         
@@ -69,12 +71,6 @@ import FirebaseAuth
     ///
     @MainActor
     func sendRequest() async {
-        // Get user id
-        guard let currentUserId = Auth.auth().currentUser?.uid else {
-            print("Fail to get current user id")
-            return
-        }
-        
         print("\(requestedData) is going to be saved in current user")
         print("\(receivedData) is going to be saved in other user")
         let requestedDocumentPath = "users/\(currentUserId)/friend/requested"
@@ -100,12 +96,6 @@ import FirebaseAuth
     ///
     @MainActor
     func updateFriendStatus() async {
-        // Get user id
-        guard let currentUserId = Auth.auth().currentUser?.uid else {
-            print("Fail to get current user id")
-            return
-        }
-        
         // Update sentfriendRequests
         await update(&self.sentfriendRequests, location: "requested", id: currentUserId)
         

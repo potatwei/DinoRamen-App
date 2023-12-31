@@ -22,19 +22,7 @@ struct UserBarView: View {
             Spacer()
             
             // Button to Send friend request
-            Button{
-                Task {
-                    await userBar.getOldRequestAndReceived()
-                    await userBar.sendRequest()
-                    await userBar.updateFriendStatus()
-                }
-            } label: {
-                //
-                Label("Add", systemImage: "plus")
-                    .labelStyle(.iconOnly)
-                    .foregroundStyle(.tint)
-            }
-            .padding()
+            friendRequestButton
         }
         .background(.white)
         .onAppear {
@@ -77,6 +65,39 @@ struct UserBarView: View {
                 .foregroundStyle(.gray)
         }
         .padding(.leading, 7)
+    }
+    
+    ///
+    var friendRequestButton: some View {
+        Button{
+            Task {
+                await userBar.getOldRequestAndReceived()
+                await userBar.sendRequest()
+                await userBar.updateFriendStatus()
+            }
+        } label: {
+            //
+            if userBar.connectedFriends.contains(userBar.userToDisplay.id) {
+                Text("Connected")
+            }
+            else if userBar.sentfriendRequests.contains(userBar.userToDisplay.id) {
+                Text("Sent")
+            }
+            else if userBar.receivedFriendRequests.contains(userBar.userToDisplay.id) {
+                Text("Requesting")
+            }
+            else {
+                Label("Add", systemImage: "plus")
+                    .labelStyle(.iconOnly)
+                    .foregroundStyle(.tint)
+            }
+        }
+        .padding()
+        .disabled(userBar.connectedFriends.contains(userBar.userToDisplay.id) ||
+                  userBar.sentfriendRequests.contains(userBar.userToDisplay.id) ||
+                  userBar.receivedFriendRequests.contains(userBar.userToDisplay.id) ||
+                  userBar.userToDisplay.id == userBar.currentUserId)
+        .opacity(userBar.userToDisplay.id == userBar.currentUserId ? 0 : 1)
     }
 }
 
