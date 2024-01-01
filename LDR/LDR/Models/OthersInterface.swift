@@ -7,6 +7,8 @@
 
 import Foundation
 
-struct OthersInterface {
-
+struct OthersInterface: Codable {
+    var emoji: Int // TODO: change to string after asset setted up
+    var comment: String
+    //let image: String
 }

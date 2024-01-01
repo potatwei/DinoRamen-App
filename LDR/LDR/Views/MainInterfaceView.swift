@@ -20,7 +20,7 @@ struct MainInterfaceView: View {
                     .tabItem { Label("Edit", systemImage: "figure") }
                     .tag(1)
                 
-                OthersDisplayView(userId: interface.currentUserId)
+                OthersDisplayView()
                     .tabItem { Label("Home", systemImage: "house") }
                     .tag(0)
                 

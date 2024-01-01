@@ -10,12 +10,6 @@ import SwiftUI
 struct OthersDisplayView: View {
     var display = OthersDisplayViewViewModel()
     
-    private let userId: String
-    
-    init(userId: String) {
-        self.userId = userId
-    }
-    
     var body: some View {
         VStack {
             HStack {
@@ -27,8 +21,13 @@ struct OthersDisplayView: View {
             }
             
             // Others Emoji Displayed
-            Circle()
-                .frame(maxWidth: 250)
+            ZStack {
+                Circle()
+                    .frame(maxWidth: 250)
+                Text(display.emojis[display.emojiToDisplay])
+                    .font(.system(size: 180))
+            }
+            .padding(1)
             
             // Reactions and photo display
             ZStack {
@@ -39,10 +38,20 @@ struct OthersDisplayView: View {
             }
             .padding()
             
-            RoundedRectangle(cornerRadius: 25.0)
-                .frame(maxWidth: 350, maxHeight: 100)
+            ZStack {
+                RoundedRectangle(cornerRadius: 25.0)
+                Text(display.commentToDisplay)
+                    .foregroundStyle(.white)
+            }
+            .frame(maxWidth: 350, maxHeight: 100)
+                
             
             Spacer()
+        }
+        .onAppear {
+            Task {
+                await display.fetchStatus()
+            }
         }
     }
     
@@ -82,5 +91,5 @@ struct OthersDisplayView: View {
 }
 
 #Preview {
-    OthersDisplayView(userId: "")
+    OthersDisplayView()
 }

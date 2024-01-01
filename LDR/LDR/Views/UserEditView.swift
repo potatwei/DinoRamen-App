@@ -105,7 +105,6 @@ struct customViewModifier: ViewModifier {
     }
 }
 
-//#Preview {
-//    @State var selection: Int = 0
-//    UserEditView(tabSelection: $selection)
-//}
+#Preview {
+    UserEditView(tabSelection: .constant(0))
+}
