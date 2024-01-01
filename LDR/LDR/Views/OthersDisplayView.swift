@@ -51,30 +51,43 @@ struct OthersDisplayView: View {
         .onAppear {
             Task {
                 await display.fetchStatus()
+                await display.getReaction()
             }
         }
     }
     
     var reactionButtons: some View {
         HStack{
-            Button("Thumbs Up", systemImage: "hand.thumbsup.fill") {
-                display.reaction = "hand.thumbsup.circle.fill"
-            } .padding(2)
+            Button {
+                display.selectReaction("hand.thumbsup.fill")
+            } label: {
+                if display.reaction != "hand.thumbsup.fill"{
+                    Label("Thumbs Up", systemImage: "hand.thumbsup.fill")
+                } else {
+                    Label("Selected Thumbs Up", systemImage: "hand.thumbsup.circle")
+                }
+            }
+            .padding(5)
             
-            Button("Thumbs Up", systemImage: "hand.thumbsup.fill") {
-                display.reaction = "hand.thumbsup.circle.fill"
-            } .padding(2)
+            Button("Thumbs Up", systemImage: "exclamationmark.2") {
+                display.reaction = "exclamationmark.2"
+            } .padding(5)
             
-            Button("Thumbs Up", systemImage: "hand.thumbsup.fill") {
-                display.reaction = "hand.thumbsup.circle.fill"
-            } .padding(2)
+            Button("Thumbs Up", systemImage: "heart.fill") {
+                display.reaction = "heart.fill"
+            } .padding(5)
             
-            Button("Thumbs Up", systemImage: "hand.thumbsup.fill") {
-                display.reaction = "hand.thumbsup.circle.fill"
-            } .padding(2)
+            Button("Thumbs Up", systemImage: "hand.thumbsdown.fill") {
+                display.reaction = "hand.thumbsdown.fill"
+            } .padding(5)
         }
         .labelStyle(.iconOnly)
         .font(.largeTitle)
+        .onAppear {
+            Task {
+                await display.getReaction()
+            }
+        }
     }
     
     var reaction: some View {

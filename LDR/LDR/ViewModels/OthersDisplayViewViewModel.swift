@@ -26,6 +26,43 @@ import Foundation
     var reaction = ""
     
     ///
+    func selectReaction(_ reaction: String) {
+        // Update reaction variable
+        self.reaction = reaction
+        
+        // Set user reaction to document users/\(currentUserId)/status/user_reaction
+        Task {
+            do {
+                try await db.document("users/\(currentUserId)/status/user_reaction").setData([currentUserId : reaction])
+                print("Successfully set reaction in database")
+            } catch {
+                print("Error setting reaction document in database: \(error)")
+            }
+        }
+    }
+    
+    ///
+    func getReaction() async {
+        // Get document from users/\(currentUserId)/status/user_reaction and Update reaction variable
+        do {
+            let document = try await db.document("users/\(currentUserId)/status/user_reaction").getDocument()
+            print("Successfully getting reaction document")
+            if document.exists {
+                if let data = document.data() {
+                    reaction = data[self.currentUserId] as? String ?? ""
+                } else {
+                    print("No data in reaction document")
+                }
+            } else {
+                print("Reaction document doesn't exist")
+            }
+        } catch {
+            print("Error getting reaction document: \(error)")
+        }
+    }
+    
+    ///
+    @MainActor
     func fetchStatus() async {
         // Get connected user id
         var connectedId = ""
