@@ -45,6 +45,7 @@ import Foundation
                 self.requestedData[self.userToDisplay.id] = self.userToDisplay.id
                 print("Preparing to Save in current user \(self.requestedData)")
             } else {
+                self.requestedData[self.userToDisplay.id] = self.userToDisplay.id
                 print("Document does not exist")
             }
         } catch {
@@ -59,6 +60,7 @@ import Foundation
                 self.receivedData[currentUserId] = currentUserId
                 print("Preparing to Save in other user \(self.receivedData)")
             } else {
+                self.receivedData[currentUserId] = currentUserId
                 print("Document does not exist")
             }
         } catch {
@@ -92,6 +94,7 @@ import Foundation
         }
     }
     
+    // TODO: Use Task Group
     ///
     @MainActor
     func updateFriendStatus() async {

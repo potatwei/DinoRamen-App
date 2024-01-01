@@ -51,7 +51,7 @@ struct ProfileView: View {
                 }
             }
             .sheet(isPresented: $profile.isSheetPresented, content: {
-                /*@START_MENU_TOKEN@*//*@PLACEHOLDER=Content@*/Text("Sheet Content")/*@END_MENU_TOKEN@*/
+                FriendsRequestsView(isPresenting: $profile.isSheetPresented)
             })
             .navigationTitle("Profile")
         }

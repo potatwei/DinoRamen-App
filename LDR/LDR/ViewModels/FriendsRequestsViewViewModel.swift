@@ -41,6 +41,7 @@ import FirebaseFirestore
         }
     }
     
+    // TODO: Use Task Group
     ///
     @MainActor
     func fetchUsers() async {
