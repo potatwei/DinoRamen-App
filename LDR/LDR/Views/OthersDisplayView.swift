@@ -58,6 +58,8 @@ struct OthersDisplayView: View {
     
     var reactionButtons: some View {
         HStack{
+            // TODO: Better Animation
+            // Thumbs Up
             Button {
                 display.selectReaction("hand.thumbsup.fill")
             } label: {
@@ -69,17 +71,41 @@ struct OthersDisplayView: View {
             }
             .padding(5)
             
-            Button("Thumbs Up", systemImage: "exclamationmark.2") {
-                display.reaction = "exclamationmark.2"
-            } .padding(5)
+            // Exclamationmark
+            Button {
+                display.selectReaction("exclamationmark.2")
+            } label: {
+                if display.reaction != "exclamationmark.2"{
+                    Label("Exclamationmark", systemImage: "exclamationmark.2")
+                } else {
+                    Label("Selected Exclamationmark", systemImage: "exclamationmark")
+                }
+            }
+            .padding(5)
             
-            Button("Thumbs Up", systemImage: "heart.fill") {
-                display.reaction = "heart.fill"
-            } .padding(5)
-            
-            Button("Thumbs Up", systemImage: "hand.thumbsdown.fill") {
-                display.reaction = "hand.thumbsdown.fill"
-            } .padding(5)
+            // Heart
+            Button {
+                display.selectReaction("heart.fill")
+            } label: {
+                if display.reaction != "heart.fill"{
+                    Label("Heart", systemImage: "heart.fill")
+                } else {
+                    Label("Selected Heart", systemImage: "heart.circle")
+                }
+            }
+            .padding(5)
+
+            // Thumbs Down
+            Button {
+                display.selectReaction("hand.thumbsdown.fill")
+            } label: {
+                if display.reaction != "hand.thumbsdown.fill"{
+                    Label("Thumbsdown", systemImage: "hand.thumbsdown.fill")
+                } else {
+                    Label("Selected Thumbsdown", systemImage: "hand.thumbsdown.circle")
+                }
+            }
+            .padding(5)
         }
         .labelStyle(.iconOnly)
         .font(.largeTitle)
