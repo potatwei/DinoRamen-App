@@ -17,6 +17,15 @@ struct OthersDisplayView: View {
                     .frame(maxWidth: 80)
                     .padding(40)
                 
+                if display.othersReaction != "" {
+                    Image(systemName: display.othersReaction)
+                        .font(.system(size: 20))
+                        .padding(8)
+                        .background(.bar)
+                        .foregroundStyle(.tint)
+                        .clipShape(Circle())
+                        .offset(x: -70, y: 30)
+                }
                 Spacer()
             }
             
@@ -51,7 +60,6 @@ struct OthersDisplayView: View {
         .onAppear {
             Task {
                 await display.fetchStatus()
-                await display.getReaction()
             }
         }
     }
@@ -61,9 +69,11 @@ struct OthersDisplayView: View {
             // TODO: Better Animation
             // Thumbs Up
             Button {
-                display.selectReaction("hand.thumbsup.fill")
+
+                    display.selectReaction("hand.thumbsup.fill")
+                
             } label: {
-                if display.reaction != "hand.thumbsup.fill"{
+                if display.ownsReaction != "hand.thumbsup.fill"{
                     Label("Thumbs Up", systemImage: "hand.thumbsup.fill")
                 } else {
                     Label("Selected Thumbs Up", systemImage: "hand.thumbsup.circle")
@@ -73,9 +83,11 @@ struct OthersDisplayView: View {
             
             // Exclamationmark
             Button {
-                display.selectReaction("exclamationmark.2")
+
+                    display.selectReaction("exclamationmark.2")
+                
             } label: {
-                if display.reaction != "exclamationmark.2"{
+                if display.ownsReaction != "exclamationmark.2"{
                     Label("Exclamationmark", systemImage: "exclamationmark.2")
                 } else {
                     Label("Selected Exclamationmark", systemImage: "exclamationmark")
@@ -85,9 +97,11 @@ struct OthersDisplayView: View {
             
             // Heart
             Button {
-                display.selectReaction("heart.fill")
+                
+                    display.selectReaction("heart.fill")
+                
             } label: {
-                if display.reaction != "heart.fill"{
+                if display.ownsReaction != "heart.fill"{
                     Label("Heart", systemImage: "heart.fill")
                 } else {
                     Label("Selected Heart", systemImage: "heart.circle")
@@ -97,9 +111,11 @@ struct OthersDisplayView: View {
 
             // Thumbs Down
             Button {
-                display.selectReaction("hand.thumbsdown.fill")
+           
+                    display.selectReaction("hand.thumbsdown.fill")
+      
             } label: {
-                if display.reaction != "hand.thumbsdown.fill"{
+                if display.ownsReaction != "hand.thumbsdown.fill"{
                     Label("Thumbsdown", systemImage: "hand.thumbsdown.fill")
                 } else {
                     Label("Selected Thumbsdown", systemImage: "hand.thumbsdown.circle")
@@ -111,7 +127,7 @@ struct OthersDisplayView: View {
         .font(.largeTitle)
         .onAppear {
             Task {
-                await display.getReaction()
+                await display.fetchStatus()
             }
         }
     }

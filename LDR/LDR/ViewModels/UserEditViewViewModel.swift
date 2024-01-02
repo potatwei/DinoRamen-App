@@ -10,12 +10,8 @@ import FirebaseAuth
 import Foundation
 
 @Observable class UserEditViewViewModel {
-    
-    init(emoji: Int = 0, comment: String = "") {
-        userStatus = OwnsInterface(emoji: emoji, comment: comment)
-    }
-    
-    var userStatus: OwnsInterface
+
+    var userStatus = Status(id: "", emoji: 0, comment: "")
     var emojis = ["😁","😅","🥰","😣","😭","😋","🙃","🤪","😪","😵‍💫","🤢","🤒"]
     
     var emojiToDisplay: Int { return userStatus.emoji } // TODO: Change to String after assets setted up and delete the emojis array
@@ -40,15 +36,20 @@ import Foundation
         }
         
         // Updata Model
+        userStatus.changeId(uId)
         userStatus.changeComment(commentEntered)
         
         // Save Model
         let db = Firestore.firestore()
-        db.collection("users")
-            .document(uId)
-            .collection("status")
-            .document("user_status")
-            .setData(userStatus.asDictionary())
+        do {
+            try db.collection("users")
+                .document(uId)
+                .collection("status")
+                .document("user_status")
+                .setData(from: userStatus)
+        } catch {
+            
+        }
     }
     
     func fetchStatus() {
@@ -68,7 +69,8 @@ import Foundation
             }
             
             DispatchQueue.main.async {
-                self?.userStatus = OwnsInterface(emoji: data["emoji"] as? Int ?? 0,
+                self?.userStatus = Status(id:  data["id"] as? String ?? "",
+                                                 emoji: data["emoji"] as? Int ?? 0,
                                                  comment: data["comment"] as? String ?? "")
             }
         }
