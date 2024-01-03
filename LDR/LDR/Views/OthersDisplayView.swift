@@ -9,6 +9,7 @@ import SwiftUI
 
 struct OthersDisplayView: View {
     var display = OthersDisplayViewViewModel()
+
     
     var body: some View {
         VStack {
@@ -26,6 +27,7 @@ struct OthersDisplayView: View {
                         .clipShape(Circle())
                         .offset(x: -70, y: 30)
                 }
+                
                 Spacer()
             }
             
@@ -35,6 +37,13 @@ struct OthersDisplayView: View {
                     .frame(maxWidth: 250)
                 Text(display.emojis[display.emojiToDisplay])
                     .font(.system(size: 180))
+                Button {
+                    display.showReactions.toggle()
+                } label: {
+                    Circle()
+                        .frame(maxWidth: 180)
+                        .opacity(0)
+                }
             }
             .padding(1)
             
@@ -42,8 +51,9 @@ struct OthersDisplayView: View {
             ZStack {
                 RoundedRectangle(cornerRadius: 25.0)
                     .frame(maxWidth: 250, maxHeight: 200)
-                
-                reaction
+                if display.showReactions {
+                    reaction
+                }
             }
             .padding()
             

@@ -25,6 +25,7 @@ import Foundation
         }
     }
     
+    var showReactions = false
     var ownStatus = Status(id: "", emoji: 0, comment: "")
     var othersStatus = Status(id: "", emoji: 0, comment: "")
     var emojis = ["😁","😅","🥰","😣","😭","😋","🙃","🤪","😪","😵‍💫","🤢","🤒"]
@@ -32,15 +33,6 @@ import Foundation
     var commentToDisplay: String { return othersStatus.comment }
     var ownsReaction: String { return ownStatus.reaction }
     var othersReaction: String { return othersStatus.reaction}
-    
-    ///
-//    func fetchOthersReaction() async {
-//        do {
-//            try await db.document("users/\(")
-//        } catch {
-//            
-//        }
-//    }
     
     ///
     func selectReaction(_ reaction: String) {
