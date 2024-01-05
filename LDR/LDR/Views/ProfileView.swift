@@ -15,39 +15,83 @@ struct ProfileView: View {
         NavigationStack {
             VStack {
                 if profile.user != nil {
-                    // Showing Profile Image
-                    profileImage
-
-                    // Change Profile Image
-                    photoPickerButton
-                    
-                    // Add friend button and bring out a sheet
-                    addFriendButton
-                    
-                    // User Info
-                    userInformation
-                    
-                    // Sign Out
-                    Button("Log Out") {
-                        profile.logOut()
+                    HStack {
+                        // Showing Profile Image
+                        profileImage
+                        
+                        // Showing Name and Email and Member Since
+                        VStack(alignment:.leading){
+                            Text(profile.user!.name)
+                                .font(.system(size: 35))
+                                .bold()
+                                .minimumScaleFactor(0.1)
+                            
+                            Spacer()
+                            
+                            Group {
+                                Text(profile.user!.email)
+                                
+                                HStack {
+                                    Text("Since")
+                                    Text("\(Date(timeIntervalSince1970: profile.user!.joined).formatted(date: .abbreviated, time: .omitted))")
+                                }
+                            }
+                            .foregroundStyle(.gray)
+                            .font(.system(size: 17))
+                            .minimumScaleFactor(0.1)
+                        }
+                        .frame(maxHeight: 85)
+                        
+                        Spacer()
                     }
-                    .padding(.top, 20)
-                    .foregroundStyle(.red)
+                    
+                    VStack(alignment: .leading) {
+                        // Change Profile Image
+                        photoPickerButton
+                        
+                        // Add friend button and bring out a sheet
+                        addFriendButton
+                        
+                        // Show Friend Request
+                        Button {
+                            profile.isSheetPresented = true
+                        } label: {
+                            HStack {
+                                Image(systemName: "person.fill.badge.plus")
+                                    .foregroundStyle(.sugerLightMint)
+                                    .padding(.leading, 15)
+                                    .padding(.trailing, 5)
+                                    
+                                Group { Text("Add Friend") }
+                                    .foregroundStyle(.foreground)
+                                
+                                Spacer()
+                                
+                                Image(systemName: "chevron.forward")
+                                    .foregroundStyle(.foreground)
+                                    .padding(.trailing, 15)
+                            }
+                            .padding(.bottom, 18)
+                            .border(.blue)
+                        }
+                        
+                        // Sign Out
+                        Button("Log Out") {
+                            profile.logOut()
+                        }
+                        .padding(.top, 20)
+                        .foregroundStyle(.red)
+                    }
+                    .border(.blue)
+                    
+                    Spacer()
+                    
                 } else {
                     Text("Loading Profile...")
                     Button("Log Out") {
                         profile.logOut()
                     }
                     .foregroundStyle(.red)
-                }
-            }
-            .toolbar{
-                ToolbarItem{
-                    Button {
-                        profile.isSheetPresented = true
-                    } label: {
-                        Label("Friend Request", systemImage: "person.crop.circle.fill.badge.plus")
-                    }
                 }
             }
             .sheet(isPresented: $profile.isSheetPresented, content: {
@@ -74,17 +118,32 @@ struct ProfileView: View {
                 .aspectRatio(contentMode: .fit)
                 .foregroundStyle(.blue)
         }
-        .frame(width: 125, height: 125)
+        .frame(width: 100, height: 100)
         .clipShape(Circle())
-        .padding(.bottom, 20)
+        .padding(.vertical, 40)
+        .padding(15)
+        .padding(.leading, 15)
     }
     
     /// When an image is selected, the current profile image will be deleted from database, then a new image
     /// will be save in and `profileImageId` and `profileImage` in `profile.user` will be changed accordingly
     var photoPickerButton: some View {
         PhotosPicker(selection: $profile.selectedPhoto, matching: .images, preferredItemEncoding: .automatic) {
-            Image(systemName: "photo")
-            Text("Change Profile Image")
+            HStack {
+                Image(systemName: "photo")
+                    .foregroundStyle(.sugerLightMint)
+                    .padding(.leading, 15)
+                    .padding(.trailing, 5)
+                Group { Text("Change Profile Image")}
+                    .foregroundStyle(.foreground)
+                
+                Spacer()
+                
+                Image(systemName: "chevron.forward")
+                    .foregroundStyle(.foreground)
+                    .padding(.trailing, 15)
+            }
+            .padding(.bottom, 18)
         }
         .onChange(of: profile.selectedPhoto) { oldValue, newValue in
             Task {
@@ -110,7 +169,23 @@ struct ProfileView: View {
         Button{
             profile.showingSearchFriendView = true
         } label: {
-            Label("Add Friend", systemImage: "person.fill.badge.plus")
+            HStack {
+                Image(systemName: "person.fill.badge.plus")
+                    .foregroundStyle(.sugerLightMint)
+                    .frame(width: 20, height: 20)
+                    .padding(.leading, 15)
+                    .padding(.trailing, 5)
+                    .padding(.vertical, 18)
+                    
+                Group { Text("Add Friend") }
+                    .foregroundStyle(.foreground)
+                
+                Spacer()
+                
+                Image(systemName: "chevron.forward")
+                    .foregroundStyle(.foreground)
+                    .padding(.trailing, 15)
+            }
         }
         .sheet(isPresented: $profile.showingSearchFriendView) {
             SearchFriendView()
@@ -121,8 +196,6 @@ struct ProfileView: View {
     var userInformation: some View {
         VStack(alignment: .leading, spacing: 20) {
             HStack {
-                Text("Name: ")
-                    .bold()
                 Text(profile.user!.name)
             }
             HStack {

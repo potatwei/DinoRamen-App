@@ -25,6 +25,8 @@ import Foundation
         }
     }
     
+    var takenImage = UIImage()
+    
     var showReactions = false
     var ownStatus = Status(id: "", emoji: 0, comment: "")
     var othersStatus = Status(id: "", emoji: 0, comment: "")
@@ -33,6 +35,9 @@ import Foundation
     var commentToDisplay: String { return othersStatus.comment }
     var ownsReaction: String { return ownStatus.reaction }
     var othersReaction: String { return othersStatus.reaction}
+    
+    ///
+    
     
     ///
     func selectReaction(_ reaction: String) {
@@ -49,6 +54,8 @@ import Foundation
         }
         
     }
+    
+    
     
     ///
     @MainActor
