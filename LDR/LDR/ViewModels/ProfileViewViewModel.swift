@@ -18,27 +18,27 @@ import _PhotosUI_SwiftUI
     var isSheetPresented = false
     var user: User?
     
-    func fetchUser() {
+    init() {
+        Task {
+            await fetchUser()
+        }
+    }
+    
+    func fetchUser() async {
         guard let userId = Auth.auth().currentUser?.uid else {
             return
         }
         let db = Firestore.firestore()
-        db.collection("users").document(userId).getDocument { [weak self] snapshot, error in
-            guard let data = snapshot?.data(), error == nil else {
-                return
+        do {
+            let document = try await db.collection("users").document(userId).getDocument()
+            if document.exists {
+                user = try document.data(as: User.self)
+                print("Updated User Successfully")
+            } else {
+                print("Error: User document do not exist")
             }
-            
-            DispatchQueue.main.async {
-                self?.user = User(id: data["id"] as? String ?? "",
-                                  name: data["name"] as? String ?? "",
-                                  email: data["email"] as? String ?? "",
-                                  joined: data["joined"] as? TimeInterval ?? 0,
-                                  profileImageId: data["profileImageId"] as? String ?? "",
-                                  profileImage: data["profileImage"] as? String ?? "")
-                print(self!.user ?? "no user")
-            }
-            
-            
+        } catch {
+            print("Unable to update User or fail to get document \(error)")
         }
     }
     

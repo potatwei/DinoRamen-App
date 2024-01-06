@@ -112,7 +112,9 @@ struct UserEditView: View {
     
     var uploadButton: some View {
         Button {
-            userEdit.upload()
+            Task {
+                await userEdit.upload()
+            }
             tabSelection = 0
         } label: {
             Text("UpLoad")

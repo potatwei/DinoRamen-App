@@ -16,8 +16,6 @@ class MainInterfaceViewModel: ObservableObject {
         self.handler = Auth.auth().addStateDidChangeListener { [weak self] _, user in
             DispatchQueue.main.async{
                 self?.currentUserId = user?.uid ?? ""
-                print(self?.currentUserId ?? "p")
-                print(self!.isSignIn)
             }
         }
     }

@@ -12,7 +12,8 @@ struct Status: Codable {
     var id: String
     var emoji: Int // TODO: change to string after asset setted up
     var comment: String
-    //let image: String
+    var image: String?
+    var imageId: String?
     var reaction: String = ""
     
     mutating func add(_ number: Int) {

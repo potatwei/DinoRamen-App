@@ -100,7 +100,9 @@ struct ProfileView: View {
             .navigationTitle("Profile")
         }
         .onAppear() {
-            profile.fetchUser()
+            Task {
+                await profile.fetchUser()
+            }
         }
     }
     
