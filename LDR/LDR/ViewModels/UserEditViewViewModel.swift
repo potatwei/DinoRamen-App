@@ -11,6 +11,12 @@ import Foundation
 
 @Observable class UserEditViewViewModel {
 
+    init() {
+        Task {
+            await fetchStatus()
+        }
+    }
+    
     var userStatus = Status(id: "", emoji: 0, comment: "")
     var emojis = ["😁","😅","🥰","😣","😭","😋","🙃","🤪","😪","😵‍💫","🤢","🤒"]
     
@@ -18,6 +24,7 @@ import Foundation
     //var photoToDisplay = ""
     var commentToDisplay: String { return userStatus.comment }
     var commentEntered: String = ""
+    var takenImage: UIImage?
     
     func changeEmoji(by value: Int) {
         userStatus.add(value)
@@ -52,27 +59,19 @@ import Foundation
         }
     }
     
-    func fetchStatus() {
+    func fetchStatus() async {
         // Get User Id
         guard let uId = Auth.auth().currentUser?.uid else {
             return
         }
         let db = Firestore.firestore()
-        db.collection("users")
-            .document(uId)
-            .collection("status")
-            .document("user_status")
-            .getDocument { [weak self] snapshot, error in
-            // Check if get data and no error
-            guard let data = snapshot?.data(), error == nil else {
-                return
+        do {
+            let document = try await db.collection("users").document(uId).collection("status").document("user_status").getDocument()
+            if document.exists {
+                userStatus = try document.data(as: Status.self)
             }
-            
-            DispatchQueue.main.async {
-                self?.userStatus = Status(id:  data["id"] as? String ?? "",
-                                                 emoji: data["emoji"] as? Int ?? 0,
-                                                 comment: data["comment"] as? String ?? "")
-            }
+        } catch {
+            print("Unable to update Status or fail to get document \(error)")
         }
         commentEntered = commentToDisplay
     }

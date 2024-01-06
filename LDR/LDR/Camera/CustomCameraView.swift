@@ -29,6 +29,9 @@ struct CustomCameraView: View {
                     print(error.localizedDescription)
                 }
             }
+            .clipShape(RoundedRectangle(cornerRadius: 8))
+            .ignoresSafeArea()
+            
             
             VStack {
                 Spacer()

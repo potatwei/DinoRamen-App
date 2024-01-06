@@ -13,6 +13,7 @@ struct UserEditView: View {
     
     @Bindable var userEdit = UserEditViewViewModel()
     @Binding var tabSelection: Int
+    @State var showCamera = false
     
     var body: some View {
         VStack {
@@ -38,20 +39,47 @@ struct UserEditView: View {
             }
             .padding()
             .padding(.top, 80)
+            .minimumScaleFactor(0.5)
             
             // Picuture to be displayed
-            RoundedRectangle(cornerRadius: 25.0)
-                .frame(maxWidth: 250, maxHeight: 200)
-                .padding()
-            
+            ZStack {
+                if userEdit.takenImage != nil {
+                    Image(uiImage: userEdit.takenImage!)
+                        .resizable()
+                        .scaledToFill()
+                        .frame(maxWidth: 250, maxHeight: 200)
+                        .clipShape(RoundedRectangle(cornerRadius: 25.0))
+                    Button {
+                        // turn on camera
+                        showCamera = true
+                    } label: {
+                        RoundedRectangle(cornerRadius: 25.0)
+                            .frame(maxWidth: 250, maxHeight: 200)
+                    }
+                    .foregroundStyle(.clear)
+                } else {
+                    // Photo to display
+                    RoundedRectangle(cornerRadius: 25.0)
+                        .frame(maxWidth: 250, maxHeight: 200)
+                    
+                    Button {
+                        // turn on camera
+                        showCamera = true
+                    } label: {
+                        Label("Add Image", systemImage: "plus")
+                            .labelStyle(.iconOnly)
+                    }
+                    .foregroundStyle(.white)
+                    .fontWeight(.bold)
+                    .font(.system(size: 80))
+                }
+            }
+
             // Comment to be displayed
             HStack {
                 Image(systemName: "book.pages.fill")
                 TextField("\(userEdit.commentToDisplay == "" ? "Comment..." : userEdit.commentToDisplay)",
                           text: $userEdit.commentEntered)
-                .onTapGesture {
-                    userEdit.commentEntered = userEdit.commentToDisplay
-                }
             }
             .modifier(customViewModifier(roundedCornes: 10,
                                          startColor: .orange,
@@ -64,8 +92,22 @@ struct UserEditView: View {
         }
         .onAppear {
             // fetch data from database and sync comment
-            userEdit.fetchStatus()
+            Task {
+                await userEdit.fetchStatus()
+            }
         }
+        .fullScreenCover(isPresented: $showCamera, content: {
+            // Show Camera View
+            CustomCameraView(capturedImage: $userEdit.takenImage)
+                .gesture(
+                    DragGesture(minimumDistance: 50, coordinateSpace: .local)
+                        .onEnded {value in
+                            if value.translation.height > 50 {
+                                showCamera = false
+                            }
+                        }
+                )
+        })
     }
     
     var uploadButton: some View {

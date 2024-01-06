@@ -9,7 +9,6 @@ import SwiftUI
 
 struct OthersDisplayView: View {
     @Bindable var display = OthersDisplayViewViewModel()
-    @State var showCamera = false
     
     var body: some View {
         VStack {
@@ -53,16 +52,6 @@ struct OthersDisplayView: View {
                 RoundedRectangle(cornerRadius: 25.0)
                     .frame(maxWidth: 250, maxHeight: 200)
                 
-                Button {
-                    // turn on camera
-                    showCamera = true
-                } label: {
-                    Label("Add Image", systemImage: "plus")
-                        .labelStyle(.iconOnly)
-                }
-                .foregroundStyle(.white)
-                .fontWeight(.bold)
-                .font(.system(size: 80))
                 
                 // Reactions
                 if display.showReactions {
@@ -86,9 +75,7 @@ struct OthersDisplayView: View {
                 await display.fetchStatus()
             }
         }
-        .fullScreenCover(isPresented: $showCamera, content: {
-            // Show Camera View
-        })
+        
     }
     
     var reactionButtons: some View {
