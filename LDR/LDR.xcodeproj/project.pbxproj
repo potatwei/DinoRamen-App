@@ -15,6 +15,10 @@
 		7F0776BA2B3DDC61005AEB58 /* SearchFriendView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F0776B92B3DDC61005AEB58 /* SearchFriendView.swift */; };
 		7F0776BC2B3E2CA4005AEB58 /* UserBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F0776BB2B3E2CA4005AEB58 /* UserBarView.swift */; };
 		7F0776BE2B3E2CB6005AEB58 /* UserBarViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F0776BD2B3E2CB6005AEB58 /* UserBarViewViewModel.swift */; };
+		7F0B6A142B49DFD3003325C5 /* CameraService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F0B6A132B49DFD3003325C5 /* CameraService.swift */; };
+		7F0B6A162B49E7E6003325C5 /* CameraView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F0B6A152B49E7E6003325C5 /* CameraView.swift */; };
+		7F0B6A182B49EB4C003325C5 /* CustomCameraView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F0B6A172B49EB4C003325C5 /* CustomCameraView.swift */; };
+		7F0B6A1A2B49EDCF003325C5 /* Camera.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F0B6A192B49EDCF003325C5 /* Camera.swift */; };
 		7F73EBDB2B42170B009202CC /* FriendsRequestsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F73EBDA2B42170B009202CC /* FriendsRequestsView.swift */; };
 		7F73EBDD2B42171E009202CC /* FriendsRequestsViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F73EBDC2B42171E009202CC /* FriendsRequestsViewViewModel.swift */; };
 		7F73EBE12B421934009202CC /* FriendRequestButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F73EBE02B421934009202CC /* FriendRequestButtonView.swift */; };
@@ -76,6 +80,10 @@
 		7F0776B92B3DDC61005AEB58 /* SearchFriendView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchFriendView.swift; sourceTree = "<group>"; };
 		7F0776BB2B3E2CA4005AEB58 /* UserBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserBarView.swift; sourceTree = "<group>"; };
 		7F0776BD2B3E2CB6005AEB58 /* UserBarViewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserBarViewViewModel.swift; sourceTree = "<group>"; };
+		7F0B6A132B49DFD3003325C5 /* CameraService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraService.swift; sourceTree = "<group>"; };
+		7F0B6A152B49E7E6003325C5 /* CameraView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraView.swift; sourceTree = "<group>"; };
+		7F0B6A172B49EB4C003325C5 /* CustomCameraView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCameraView.swift; sourceTree = "<group>"; };
+		7F0B6A192B49EDCF003325C5 /* Camera.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Camera.swift; sourceTree = "<group>"; };
 		7F73EBDA2B42170B009202CC /* FriendsRequestsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsRequestsView.swift; sourceTree = "<group>"; };
 		7F73EBDC2B42171E009202CC /* FriendsRequestsViewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsRequestsViewViewModel.swift; sourceTree = "<group>"; };
 		7F73EBE02B421934009202CC /* FriendRequestButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendRequestButtonView.swift; sourceTree = "<group>"; };
@@ -142,6 +150,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		7F0B6A122B49DFAF003325C5 /* Camera */ = {
+			isa = PBXGroup;
+			children = (
+				7F0B6A132B49DFD3003325C5 /* CameraService.swift */,
+				7F0B6A152B49E7E6003325C5 /* CameraView.swift */,
+				7F0B6A172B49EB4C003325C5 /* CustomCameraView.swift */,
+				7F0B6A192B49EDCF003325C5 /* Camera.swift */,
+			);
+			path = Camera;
+			sourceTree = "<group>";
+		};
 		7FEDF98E2B3B925700127A8D = {
 			isa = PBXGroup;
 			children = (
@@ -161,6 +180,7 @@
 		7FEDF9992B3B925700127A8D /* LDR */ = {
 			isa = PBXGroup;
 			children = (
+				7F0B6A122B49DFAF003325C5 /* Camera */,
 				7FEDF9F22B3B92E600127A8D /* Models */,
 				7FEDF9DF2B3B92E600127A8D /* ViewModels */,
 				7FEDF9E52B3B92E600127A8D /* Views */,
@@ -347,19 +367,23 @@
 				7F73EBE52B423557009202CC /* AddFriendButtonView.swift in Sources */,
 				7F73EBDD2B42171E009202CC /* FriendsRequestsViewViewModel.swift in Sources */,
 				7F0776B82B3DDC52005AEB58 /* SearchFriendViewViewModel.swift in Sources */,
+				7F0B6A162B49E7E6003325C5 /* CameraView.swift in Sources */,
 				7FEDF9FE2B3B92E600127A8D /* LoginView.swift in Sources */,
 				7FEDF9FD2B3B92E600127A8D /* LoginViewViewModel.swift in Sources */,
 				7FEDFA042B3B92E600127A8D /* UserEditView.swift in Sources */,
+				7F0B6A1A2B49EDCF003325C5 /* Camera.swift in Sources */,
 				7FEDFA0A2B3B92E600127A8D /* Status.swift in Sources */,
 				7FEDFA072B3B92E600127A8D /* ApplicationApp.swift in Sources */,
 				7FEDFA022B3B92E600127A8D /* LDRButton.swift in Sources */,
 				7F73EBDB2B42170B009202CC /* FriendsRequestsView.swift in Sources */,
 				7FEDFA092B3B92E600127A8D /* User.swift in Sources */,
+				7F0B6A182B49EB4C003325C5 /* CustomCameraView.swift in Sources */,
 				7F0776BC2B3E2CA4005AEB58 /* UserBarView.swift in Sources */,
 				7FEDF9FB2B3B92E600127A8D /* UserEditViewViewModel.swift in Sources */,
 				7FEDFA062B3B92E600127A8D /* Extensions.swift in Sources */,
 				7FEDF9FA2B3B92E600127A8D /* OthersDisplayViewViewModel.swift in Sources */,
 				7F73EBE72B423570009202CC /* AddFriendButtonViewViewModel.swift in Sources */,
+				7F0B6A142B49DFD3003325C5 /* CameraService.swift in Sources */,
 				7F0776BA2B3DDC61005AEB58 /* SearchFriendView.swift in Sources */,
 				7F0776BE2B3E2CB6005AEB58 /* UserBarViewViewModel.swift in Sources */,
 				7FEDF9FC2B3B92E600127A8D /* RegisterViewViewModel.swift in Sources */,
@@ -502,12 +526,15 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"LDR/Preview Content\"";
+				DEVELOPMENT_TEAM = 2TK48Y293M;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSCameraUsageDescription = "Camera is used to capture photos";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UIRequiresFullScreen = YES;
+				INFOPLIST_KEY_UIStatusBarStyle = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
@@ -532,12 +559,15 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"LDR/Preview Content\"";
+				DEVELOPMENT_TEAM = 2TK48Y293M;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSCameraUsageDescription = "Camera is used to capture photos";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UIRequiresFullScreen = YES;
+				INFOPLIST_KEY_UIStatusBarStyle = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;

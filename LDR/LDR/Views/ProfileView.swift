@@ -62,7 +62,7 @@ struct ProfileView: View {
                                     .padding(.leading, 15)
                                     .padding(.trailing, 5)
                                     
-                                Group { Text("Add Friend") }
+                                Group { Text("Friend Request") }
                                     .foregroundStyle(.foreground)
                                 
                                 Spacer()
