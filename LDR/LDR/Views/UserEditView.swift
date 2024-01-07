@@ -43,12 +43,25 @@ struct UserEditView: View {
             
             // Picuture to be displayed
             ZStack {
-                if userEdit.takenImage != nil {
-                    Image(uiImage: userEdit.takenImage!)
-                        .resizable()
+                if userEdit.takenImage != nil || userEdit.photoToDisplay != nil {
+                    if userEdit.takenImage != nil {
+                        Image(uiImage: userEdit.takenImage!)
+                            .resizable()
+                            .scaledToFill()
+                            .frame(maxWidth: 250, maxHeight: 200)
+                            .clipShape(RoundedRectangle(cornerRadius: 25.0))
+                    } else if userEdit.photoToDisplay != nil {
+                        let imageURL = URL(string: userEdit.photoToDisplay ?? "")
+                        AsyncImage(url: imageURL) { Image in
+                            Image
+                                .resizable()
+                        } placeholder: {
+                            RoundedRectangle(cornerRadius: 25.0)
+                        }
                         .scaledToFill()
                         .frame(maxWidth: 250, maxHeight: 200)
                         .clipShape(RoundedRectangle(cornerRadius: 25.0))
+                    }
                     Button {
                         // turn on camera
                         showCamera = true

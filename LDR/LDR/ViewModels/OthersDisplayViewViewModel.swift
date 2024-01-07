@@ -14,7 +14,7 @@ import Foundation
     var currentUserId: String {
         guard let currentUserId = Auth.auth().currentUser?.uid else {
             print("Fail to get current user id")
-            return ""
+            return "0"
         }
         return currentUserId
     }
@@ -33,6 +33,7 @@ import Foundation
     var commentToDisplay: String { return othersStatus.comment }
     var ownsReaction: String { return ownStatus.reaction }
     var othersReaction: String { return othersStatus.reaction}
+    var photoToDisplay: String? { return othersStatus.image}
     
     ///
     func selectReaction(_ reaction: String) {
@@ -68,7 +69,7 @@ import Foundation
         }
         
         // Get connected user id
-        var connectedId = ""
+        var connectedId = "a"
         do {
             let document = try await db.document("users/\(currentUserId)/friend/connected").getDocument()
             if document.exists {

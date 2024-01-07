@@ -22,14 +22,14 @@ import FirebaseStorage
     var emojis = ["😁","😅","🥰","😣","😭","😋","🙃","🤪","😪","😵‍💫","🤢","🤒"]
     
     var emojiToDisplay: Int { return userStatus.emoji } // TODO: Change to String after assets setted up and delete the emojis array
-    //var photoToDisplay = ""
+    var photoToDisplay: String? { return userStatus.image }
     var commentToDisplay: String { return userStatus.comment }
     var commentEntered: String = ""
     var takenImage: UIImage?
     var currentUserId: String {
         guard let currentUserId = Auth.auth().currentUser?.uid else {
             print("Fail to get current user id")
-            return ""
+            return "b"
         }
         return currentUserId
     }

@@ -14,7 +14,7 @@ struct OthersDisplayView: View {
         VStack {
             HStack {
                 Circle() // Profile Image
-                    .frame(maxWidth: 80)
+                    .frame(width: 80)
                     .padding(40)
                 
                 if display.othersReaction != "" {
@@ -49,8 +49,21 @@ struct OthersDisplayView: View {
             // Reactions and photo display
             ZStack {
                 // Photo to display
-                RoundedRectangle(cornerRadius: 25.0)
+                if display.photoToDisplay != nil {
+                    let imageURL = URL(string: display.photoToDisplay!)
+                    AsyncImage(url: imageURL) { Image in
+                        Image
+                            .resizable()
+                    } placeholder: {
+                        RoundedRectangle(cornerRadius: 25.0)
+                    }
+                    .scaledToFill()
                     .frame(maxWidth: 250, maxHeight: 200)
+                    .clipShape(RoundedRectangle(cornerRadius: 25.0))
+                } else {
+                    RoundedRectangle(cornerRadius: 25.0)
+                        .frame(maxWidth: 250, maxHeight: 200)
+                }
                 
                 
                 // Reactions
@@ -66,7 +79,6 @@ struct OthersDisplayView: View {
                     .foregroundStyle(.white)
             }
             .frame(maxWidth: 350, maxHeight: 100)
-                
             
             Spacer()
         }
