@@ -118,12 +118,12 @@ import FirebaseStorage
     func deleteOldImage() async {
         let imageId = userStatus.imageId
         let storage = Storage.storage()
-        let storageRef = storage.reference().child("\(currentUserId)/status/user_status/\(imageId ?? "").jpeg")
+        let storageRef = storage.reference().child("\(currentUserId)/\(imageId ?? "").jpg")
         do {
             try await storageRef.delete()
-            print("Successfully deleted Image")
+            print("😆Successfully deleted Image")
         } catch {
-            print("Could not delete Image \(error.localizedDescription)")
+            print("😡Could not delete Image \(error.localizedDescription)")
         }
     }
 }

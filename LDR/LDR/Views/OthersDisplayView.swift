@@ -41,7 +41,7 @@ struct OthersDisplayView: View {
                 } label: {
                     Circle()
                         .frame(maxWidth: 180)
-                        .opacity(0)
+                        .opacity(0.3)
                 }
             }
             .padding(1)
@@ -61,11 +61,7 @@ struct OthersDisplayView: View {
                     .scaledToFill()
                     .frame(maxWidth: 250, maxHeight: 200)
                     .clipShape(RoundedRectangle(cornerRadius: 25.0))
-                } else {
-                    RoundedRectangle(cornerRadius: 25.0)
-                        .frame(maxWidth: 250, maxHeight: 200)
                 }
-                
                 
                 // Reactions
                 if display.showReactions {
@@ -74,12 +70,14 @@ struct OthersDisplayView: View {
             }
             .padding()
             
-            ZStack {
-                RoundedRectangle(cornerRadius: 25.0)
-                Text(display.commentToDisplay)
-                    .foregroundStyle(.white)
-            }
-            .frame(maxWidth: 350, maxHeight: 100)
+            Text(display.commentToDisplay)
+                .padding(10)
+                .padding(.horizontal, 15)
+                .background(.regularMaterial)
+                .clipShape(.capsule)
+                .font(.system(size: 20))
+                .fontWeight(.medium)
+                .frame(maxWidth: 350, maxHeight: 100)
             
             Spacer()
         }
