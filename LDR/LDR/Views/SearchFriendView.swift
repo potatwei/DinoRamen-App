@@ -10,6 +10,7 @@ import SwiftUI
 struct SearchFriendView: View {
     var searchFriend = SearchFriendViewViewModel()
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.colorScheme) var colorScheme
     @State var friendToSearch: String = ""
     
     var body: some View {
@@ -38,6 +39,25 @@ struct SearchFriendView: View {
                         dismiss()
                     }
                 }
+            }
+            if friendToSearch == "" {
+                VStack {
+                    Image(systemName: colorScheme == .light ? "person.crop.circle.fill.badge.plus" : "person.crop.circle.badge.plus")
+                        .foregroundStyle(Color.sugarOrange)
+                        .font(.system(size: 100))
+                        .fontWeight(.ultraLight)
+                        .offset(y: 20)
+                    Text("Search Friends")
+                        .padding(13)
+                        .fontWeight(.semibold)
+                        .font(.system(size: 30))
+                    Text("Looking for connections by entering friend's user name or email")
+                        .multilineTextAlignment(.center)
+                        .frame(maxWidth: 310)
+                        .foregroundStyle(.gray)
+                        .font(.system(size: 17))
+                }
+                .offset(y:-360)
             }
         }
     }

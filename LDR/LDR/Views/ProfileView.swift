@@ -90,7 +90,7 @@ struct ProfileView: View {
         PhotosPicker(selection: $profile.selectedPhoto, matching: .images, preferredItemEncoding: .automatic) {
             HStack {
                 Image(systemName: "photo")
-                    .foregroundStyle(.sugerLightMint)
+                    .foregroundStyle(.sugarMint)
                     .frame(width: 30, height: 30)
                     .padding(.leading, 10)
                     .padding(.trailing, 3)
@@ -131,13 +131,13 @@ struct ProfileView: View {
         } label: {
             HStack {
                 Image(systemName: "person.fill.badge.plus")
-                    .foregroundStyle(.sugerLightMint)
+                    .foregroundStyle(.sugarOrange)
                     .frame(width: 30, height: 30)
                     .padding(.leading, 10)
                     .padding(.trailing, 3)
                     .offset(y: 1)
                     
-                Group { Text("Search friend") }
+                Group { Text("Search friends") }
                     .foregroundStyle(.foreground)
                 
                 Spacer()
@@ -185,7 +185,7 @@ struct ProfileView: View {
         } label: {
             HStack {
                 Image(systemName: "list.dash")
-                    .foregroundStyle(.sugerLightMint)
+                    .foregroundStyle(.sugarBlue)
                     .frame(width: 30, height: 30)
                     .padding(.leading, 10)
                     .padding(.trailing, 3)

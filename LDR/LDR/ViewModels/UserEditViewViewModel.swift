@@ -50,6 +50,7 @@ import FirebaseStorage
         userStatus.changeId(currentUserId)
         userStatus.changeComment(commentEntered)
         if takenImage != nil {
+            await deleteOldImage()
             await saveImage(image: takenImage!) // Upload the photo and the model
         }
     }

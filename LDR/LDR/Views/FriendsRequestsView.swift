@@ -24,7 +24,22 @@ struct FriendsRequestsView: View {
                         }
                     }
                 } else {
-                    Text("No Friend Requesting")
+                    VStack {
+                        Image(systemName: "list.bullet.circle")
+                            .foregroundStyle(Color.sugarBlue)
+                            .font(.system(size: 100))
+                            .fontWeight(.ultraLight)
+                        Text("Connect Requests")
+                            .padding(13)
+                            .fontWeight(.semibold)
+                            .font(.system(size: 30))
+                        Text("When people ask to connect with you, you'll see their requests here.")
+                            .multilineTextAlignment(.center)
+                            .frame(maxWidth: 310)
+                            .foregroundStyle(.gray)
+                            .font(.system(size: 17))
+                    }
+                    .offset(y:-120)
                 }
             }
             .toolbar {
