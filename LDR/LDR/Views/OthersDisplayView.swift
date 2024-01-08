@@ -14,8 +14,9 @@ struct OthersDisplayView: View {
         VStack {
             HStack {
                 Circle() // Profile Image
-                    .frame(width: 80)
-                    .padding(40)
+                    .frame(height: 80)
+                    .padding(10)
+                    .padding(.leading, 20)
                 
                 if display.othersReaction != "" {
                     Image(systemName: display.othersReaction)
@@ -24,11 +25,13 @@ struct OthersDisplayView: View {
                         .background(.bar)
                         .foregroundStyle(.tint)
                         .clipShape(Circle())
-                        .offset(x: -70, y: 30)
+                        .offset(x: -39, y: 30)
                 }
                 
                 Spacer()
             }
+            
+            Divider().padding().frame(maxWidth: 300)
             
             // Others Emoji Displayed
             ZStack {
@@ -36,50 +39,37 @@ struct OthersDisplayView: View {
                     .frame(maxWidth: 250)
                 Text(display.emojis[display.emojiToDisplay])
                     .font(.system(size: 180))
-                Button {
-                    display.showReactions.toggle()
-                } label: {
-                    Circle()
-                        .frame(maxWidth: 180)
-                        .opacity(0.3)
-                }
             }
             .padding(1)
-            .minimumScaleFactor(0.8)
+            .minimumScaleFactor(0.1)
             
-            // Reactions and photo display
-            ZStack {
-                // Photo to display
-                if display.photoToDisplay != nil {
-                    let imageURL = URL(string: display.photoToDisplay!)
-                    AsyncImage(url: imageURL) { Image in
-                        Image
-                            .resizable()
-                    } placeholder: {
-                        RoundedRectangle(cornerRadius: 25.0)
-                    }
-                    .scaledToFill()
-                    .frame(maxWidth: 250, maxHeight: 200)
-                    .clipShape(RoundedRectangle(cornerRadius: 25.0))
+            // Photo to display
+            if display.photoToDisplay != nil {
+                let imageURL = URL(string: display.photoToDisplay!)
+                AsyncImage(url: imageURL) { Image in
+                    Image
+                        .resizable()
+                } placeholder: {
+                    RoundedRectangle(cornerRadius: 25.0)
                 }
-                
-                // Reactions
-                if display.showReactions {
-                    reaction
-                }
+                .scaledToFill()
+                .frame(maxWidth: 210, maxHeight: 160)
+                .clipShape(RoundedRectangle(cornerRadius: 25.0))
             }
-            .padding()
             
             Text(display.commentToDisplay)
                 .padding(10)
                 .padding(.horizontal, 15)
                 .background(.regularMaterial)
-                .clipShape(.capsule)
+                .clipShape(RoundedRectangle(cornerRadius: 15))
                 .font(.system(size: 20))
                 .fontWeight(.medium)
                 .frame(maxWidth: 350, maxHeight: 100)
             
-            Spacer()
+            Divider().frame(maxWidth: 300)
+            
+            reaction
+
         }
         .onAppear {
             Task {
@@ -158,15 +148,16 @@ struct OthersDisplayView: View {
     }
     
     var reaction: some View {
-        Group {
+        ZStack {
             RoundedRectangle(cornerRadius: 25)
-                .frame(maxWidth: 250, maxHeight: 60)
+                .frame(width: 250, height: 60)
                 .padding()
                 .foregroundStyle(.bar)
             
             reactionButtons
         }
-        .offset(y: -80)
+        .minimumScaleFactor(0.8)
+        
     }
 }
 

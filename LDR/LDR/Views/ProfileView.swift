@@ -10,11 +10,21 @@ import _PhotosUI_SwiftUI
 
 struct ProfileView: View {
     @Bindable var profile = ProfileViewViewModel()
+    @Binding var tabSelection: Int
     
     var body: some View {
         NavigationStack {
             VStack {
-                if profile.user != nil {
+                HStack {
+                    // Go back to main page
+                    backButton
+                    
+                    // Display the word " Profile"
+                    pageTitle
+                    
+                    Spacer()
+                }
+                
                     HStack {
                         // Showing Profile Image
                         profileImage
@@ -24,7 +34,7 @@ struct ProfileView: View {
                         
                         Spacer()
                     }
-                    .padding(.vertical, 35)
+                    .padding(.bottom, 35)
                     
                     // Change Profile Image
                     VStack(alignment: .leading) { photoPickerButton }
@@ -46,15 +56,11 @@ struct ProfileView: View {
                     
                     Spacer()
                     
-                } else {
-                    Text("Loading Profile...")
-                    signoutButton
-                }
+                
             }
             .sheet(isPresented: $profile.isSheetPresented, content: {
                 FriendsRequestsView(isPresenting: $profile.isSheetPresented)
             })
-            .navigationTitle("Profile")
         }
         .onAppear() {
             Task {
@@ -66,7 +72,7 @@ struct ProfileView: View {
     /// - Returns: `AsyncImage` object that download the current user profile image from firebase
     /// the `AsyncImage` has a default lable of "person.circle"
     var profileImage: some View {
-        let imageURL = URL(string: profile.user!.profileImage)
+        let imageURL = URL(string: profile.user?.profileImage ?? "a")
         return AsyncImage(url: imageURL) { image in
             image
                 .resizable()
@@ -156,7 +162,7 @@ struct ProfileView: View {
     /// Display three fields, Name, Email, and Memeber Since
     var userInformation: some View {
         VStack(alignment:.leading){
-            Text(profile.user!.name)
+            Text(profile.user?.name ?? "")
                 .font(.system(size: 35))
                 .bold()
                 .minimumScaleFactor(0.9)
@@ -164,11 +170,11 @@ struct ProfileView: View {
             Spacer()
             
             Group {
-                Text(profile.user!.email)
+                Text(profile.user?.email ?? "")
                 
                 HStack {
                     Text("Since")
-                    Text("\(Date(timeIntervalSince1970: profile.user!.joined).formatted(date: .abbreviated, time: .omitted))")
+                    Text("\(Date(timeIntervalSince1970: profile.user?.joined ?? 0.0).formatted(date: .abbreviated, time: .omitted))")
                 }
             }
             .foregroundStyle(.gray)
@@ -217,10 +223,33 @@ struct ProfileView: View {
                 .clipShape(Capsule())
                 .padding(.top, 20)
         }
-        
+    }
+    
+    ///
+    var backButton: some View {
+        Button {
+            tabSelection = 0
+        } label: {
+            Image(systemName: "chevron.left")
+                .foregroundStyle(.foreground)
+                .font(.system(size: 30))
+                .fontWeight(.bold)
+                .offset(y: 4)
+                .padding(.leading, 10)
+        }
+    }
+    
+    ///
+    var pageTitle: some View {
+        Text("Profile")
+            .font(.system(size: 42))
+            .fontWeight(.bold)
+            .padding(.horizontal, 3)
+            .padding(.top, 35)
+            .padding(.bottom, 28)
     }
 }
 
 #Preview {
-    ProfileView()
+    ProfileView(tabSelection: .constant(0))
 }

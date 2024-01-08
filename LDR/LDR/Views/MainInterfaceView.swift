@@ -24,11 +24,13 @@ struct MainInterfaceView: View {
                     .tabItem { Label("Home", systemImage: "house") }
                     .tag(0)
                 
-                ProfileView()
+                ProfileView(tabSelection: $selection)
                     .tabItem { Label("Profile", systemImage: "person.circle") }
-                    .navigationTitle("Profile")
                     .tag(2)
             }
+            .tabViewStyle(.page(indexDisplayMode: .never))
+            .animation(.easeInOut(duration: 0.1), value: selection)
+            .transition(.slide)
         } else {
             NavigationStack {
                 LoginView()

@@ -13,6 +13,7 @@ import FirebaseStorage
 @Observable class UserEditViewViewModel {
 
     init() {
+        print("😁😁😁😁😁😁")
         Task {
             await fetchStatus()
         }

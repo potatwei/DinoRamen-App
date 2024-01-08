@@ -17,6 +17,26 @@ struct UserEditView: View {
     
     var body: some View {
         VStack {
+            HStack {
+                Text("Edit Yours")
+                    .font(.system(size: 42))
+                    .fontWeight(.bold)
+                    .padding(.horizontal, 20)
+                    .padding(.top, 35)
+                
+                Spacer()
+                
+                Button {
+                    tabSelection = 0
+                } label: {
+                    Image(systemName: "chevron.right")
+                        .foregroundStyle(.foreground)
+                        .font(.system(size: 30))
+                        .fontWeight(.bold)
+                        .offset(y: 18)
+                        .padding(.trailing, 10)
+                }
+            }
             
             // Emoji displaying with edit switches
             HStack {
@@ -38,7 +58,6 @@ struct UserEditView: View {
                 }
             }
             .padding()
-            .padding(.top, 80)
             .minimumScaleFactor(0.5)
             
             // Picuture to be displayed
