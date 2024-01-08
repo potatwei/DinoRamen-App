@@ -45,6 +45,7 @@ struct OthersDisplayView: View {
                 }
             }
             .padding(1)
+            .minimumScaleFactor(0.8)
             
             // Reactions and photo display
             ZStack {

@@ -20,78 +20,35 @@ struct ProfileView: View {
                         profileImage
                         
                         // Showing Name and Email and Member Since
-                        VStack(alignment:.leading){
-                            Text(profile.user!.name)
-                                .font(.system(size: 35))
-                                .bold()
-                                .minimumScaleFactor(0.1)
-                            
-                            Spacer()
-                            
-                            Group {
-                                Text(profile.user!.email)
-                                
-                                HStack {
-                                    Text("Since")
-                                    Text("\(Date(timeIntervalSince1970: profile.user!.joined).formatted(date: .abbreviated, time: .omitted))")
-                                }
-                            }
-                            .foregroundStyle(.gray)
-                            .font(.system(size: 17))
-                            .minimumScaleFactor(0.1)
-                        }
-                        .frame(maxHeight: 85)
+                        userInformation
                         
                         Spacer()
                     }
+                    .padding(.vertical, 35)
+                    
+                    // Change Profile Image
+                    VStack(alignment: .leading) { photoPickerButton }
+                    
+                    Divider().frame(maxWidth: 200)
                     
                     VStack(alignment: .leading) {
-                        // Change Profile Image
-                        photoPickerButton
-                        
                         // Add friend button and bring out a sheet
                         addFriendButton
                         
                         // Show Friend Request
-                        Button {
-                            profile.isSheetPresented = true
-                        } label: {
-                            HStack {
-                                Image(systemName: "person.fill.badge.plus")
-                                    .foregroundStyle(.sugerLightMint)
-                                    .padding(.leading, 15)
-                                    .padding(.trailing, 5)
-                                    
-                                Group { Text("Friend Request") }
-                                    .foregroundStyle(.foreground)
-                                
-                                Spacer()
-                                
-                                Image(systemName: "chevron.forward")
-                                    .foregroundStyle(.foreground)
-                                    .padding(.trailing, 15)
-                            }
-                            .padding(.bottom, 18)
-                            .border(.blue)
-                        }
-                        
-                        // Sign Out
-                        Button("Log Out") {
-                            profile.logOut()
-                        }
-                        .padding(.top, 20)
-                        .foregroundStyle(.red)
+                        connectRequestsButton
                     }
-                    .border(.blue)
+                    
+                    Divider().frame(maxWidth: 200)
+                    
+                    // Sign Out
+                    signoutButton
                     
                     Spacer()
                     
                 } else {
                     Text("Loading Profile...")
-                    Button("Log Out") {
-                        profile.logOut()
-                    }
-                    .foregroundStyle(.red)
+                    signoutButton
                 }
             }
             .sheet(isPresented: $profile.isSheetPresented, content: {
@@ -122,9 +79,9 @@ struct ProfileView: View {
         }
         .frame(width: 100, height: 100)
         .clipShape(Circle())
-        .padding(.vertical, 40)
         .padding(15)
         .padding(.leading, 15)
+
     }
     
     /// When an image is selected, the current profile image will be deleted from database, then a new image
@@ -134,9 +91,10 @@ struct ProfileView: View {
             HStack {
                 Image(systemName: "photo")
                     .foregroundStyle(.sugerLightMint)
-                    .padding(.leading, 15)
-                    .padding(.trailing, 5)
-                Group { Text("Change Profile Image")}
+                    .frame(width: 30, height: 30)
+                    .padding(.leading, 10)
+                    .padding(.trailing, 3)
+                Group { Text("Change profile image")}
                     .foregroundStyle(.foreground)
                 
                 Spacer()
@@ -145,7 +103,7 @@ struct ProfileView: View {
                     .foregroundStyle(.foreground)
                     .padding(.trailing, 15)
             }
-            .padding(.bottom, 18)
+            .padding(.bottom, 15)
         }
         .onChange(of: profile.selectedPhoto) { oldValue, newValue in
             Task {
@@ -174,12 +132,12 @@ struct ProfileView: View {
             HStack {
                 Image(systemName: "person.fill.badge.plus")
                     .foregroundStyle(.sugerLightMint)
-                    .frame(width: 20, height: 20)
-                    .padding(.leading, 15)
-                    .padding(.trailing, 5)
-                    .padding(.vertical, 18)
+                    .frame(width: 30, height: 30)
+                    .padding(.leading, 10)
+                    .padding(.trailing, 3)
+                    .offset(y: 1)
                     
-                Group { Text("Add Friend") }
+                Group { Text("Search friend") }
                     .foregroundStyle(.foreground)
                 
                 Spacer()
@@ -188,6 +146,7 @@ struct ProfileView: View {
                     .foregroundStyle(.foreground)
                     .padding(.trailing, 15)
             }
+            .padding(.top, 15)
         }
         .sheet(isPresented: $profile.showingSearchFriendView) {
             SearchFriendView()
@@ -196,21 +155,69 @@ struct ProfileView: View {
     
     /// Display three fields, Name, Email, and Memeber Since
     var userInformation: some View {
-        VStack(alignment: .leading, spacing: 20) {
-            HStack {
-                Text(profile.user!.name)
-            }
-            HStack {
-                Text("Email: ")
-                    .bold()
+        VStack(alignment:.leading){
+            Text(profile.user!.name)
+                .font(.system(size: 35))
+                .bold()
+                .minimumScaleFactor(0.9)
+            
+            Spacer()
+            
+            Group {
                 Text(profile.user!.email)
+                
+                HStack {
+                    Text("Since")
+                    Text("\(Date(timeIntervalSince1970: profile.user!.joined).formatted(date: .abbreviated, time: .omitted))")
+                }
             }
-            HStack {
-                Text("Memeber Since: ")
-                    .bold()
-                Text("\(Date(timeIntervalSince1970: profile.user!.joined).formatted(date: .abbreviated, time: .omitted))")
-            }
+            .foregroundStyle(.gray)
+            .font(.system(size: 17))
+            .minimumScaleFactor(0.9)
         }
+        .frame(maxHeight: 85)
+    }
+    
+    ///
+    var connectRequestsButton: some View {
+        Button {
+            profile.isSheetPresented = true
+        } label: {
+            HStack {
+                Image(systemName: "list.dash")
+                    .foregroundStyle(.sugerLightMint)
+                    .frame(width: 30, height: 30)
+                    .padding(.leading, 10)
+                    .padding(.trailing, 3)
+                    .offset(y: 0.5)
+                    
+                Group { Text("Connect requests") }
+                    .foregroundStyle(.foreground)
+                
+                Spacer()
+                
+                Image(systemName: "chevron.forward")
+                    .foregroundStyle(.foreground)
+                    .padding(.trailing, 15)
+            }
+            .padding(.bottom, 18)
+        }
+    }
+    
+    ///
+    var signoutButton: some View {
+        Button {
+            profile.logOut()
+        } label: {
+            Text("Log out")
+                .padding(12)
+                .padding(.horizontal, 50)
+                .foregroundStyle(.white)
+                .background(.red)
+                .clipShape(Capsule())
+                .padding(.top, 20)
+        }
+        
     }
 }
 

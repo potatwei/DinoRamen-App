@@ -19,8 +19,7 @@ struct UserBarView: View {
             // Name and Time Joined
             nameAndTimeJoined
         }
-        .background(.white)
-    }
+            }
     
     /// - Returns: `AsyncImage` object that download the current user profile image from firebase
     /// the `AsyncImage` has a default lable of "person.circle"

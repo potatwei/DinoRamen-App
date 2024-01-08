@@ -15,12 +15,16 @@ struct FriendsRequestsView: View {
     var body: some View {
         NavigationStack {
             Group {
-                List(friendsRequests.queriedUsers, id: \.self.id) { user in
-                    HStack {
-                        UserBarView(userBar: UserBarViewViewModel(userToDisplay: user))
-                        Spacer()
-                        AddFriendButtonView(addFriendButton: AddFriendButtonViewViewModel(user), isPresenting: $isPresenting)
+                if friendsRequests.queriedUsers.count != 0 {
+                    List(friendsRequests.queriedUsers, id: \.self.id) { user in
+                        HStack {
+                            UserBarView(userBar: UserBarViewViewModel(userToDisplay: user))
+                            Spacer()
+                            AddFriendButtonView(addFriendButton: AddFriendButtonViewViewModel(user), isPresenting: $isPresenting)
+                        }
                     }
+                } else {
+                    Text("No Friend Requesting")
                 }
             }
             .toolbar {
