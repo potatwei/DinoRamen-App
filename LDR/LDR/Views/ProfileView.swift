@@ -11,6 +11,7 @@ import _PhotosUI_SwiftUI
 struct ProfileView: View {
     @Bindable var profile = ProfileViewViewModel()
     @Binding var tabSelection: Int
+    @EnvironmentObject var currentUserInfo: UserEnvironment
     
     var body: some View {
         NavigationStack {
@@ -24,39 +25,36 @@ struct ProfileView: View {
                     
                     Spacer()
                 }
-                
-                    HStack {
-                        // Showing Profile Image
-                        profileImage
-                        
-                        // Showing Name and Email and Member Since
-                        userInformation
-                        
-                        Spacer()
-                    }
-                    .padding(.bottom, 35)
+                HStack {
+                    // Showing Profile Image
+                    profileImage
                     
-                    // Change Profile Image
-                    VStack(alignment: .leading) { photoPickerButton }
-                    
-                    Divider().frame(maxWidth: 200)
-                    
-                    VStack(alignment: .leading) {
-                        // Add friend button and bring out a sheet
-                        addFriendButton
-                        
-                        // Show Friend Request
-                        connectRequestsButton
-                    }
-                    
-                    Divider().frame(maxWidth: 200)
-                    
-                    // Sign Out
-                    signoutButton
+                    // Showing Name and Email and Member Since
+                    userInformation
                     
                     Spacer()
-                    
+                }
+                .padding(.bottom, 35)
                 
+                // Change Profile Image
+                VStack(alignment: .leading) { photoPickerButton }
+                
+                Divider().frame(maxWidth: 200)
+                
+                VStack(alignment: .leading) {
+                    // Add friend button and bring out a sheet
+                    addFriendButton
+                    
+                    // Show Friend Request
+                    connectRequestsButton
+                }
+                
+                Divider().frame(maxWidth: 200)
+                
+                // Sign Out
+                signoutButton
+                
+                Spacer()
             }
             .sheet(isPresented: $profile.isSheetPresented, content: {
                 FriendsRequestsView(isPresenting: $profile.isSheetPresented)
@@ -64,7 +62,7 @@ struct ProfileView: View {
         }
         .onAppear() {
             Task {
-                await profile.fetchUser()
+                await currentUserInfo.fetchCurrentUser()
             }
         }
     }
@@ -72,7 +70,7 @@ struct ProfileView: View {
     /// - Returns: `AsyncImage` object that download the current user profile image from firebase
     /// the `AsyncImage` has a default lable of "person.circle"
     var profileImage: some View {
-        let imageURL = URL(string: profile.user?.profileImage ?? "a")
+        let imageURL = URL(string: currentUserInfo.currentUser.profileImage)
         return AsyncImage(url: imageURL) { image in
             image
                 .resizable()
@@ -117,8 +115,9 @@ struct ProfileView: View {
                     if let data = try await newValue?.loadTransferable(type: Data.self) {
                         if let uiImage = UIImage(data: data) {
                             Task {
-                                await profile.deleteOldImage()
-                                _ = await profile.saveImage(user: &profile.user!, image: uiImage)
+                                await profile.deleteOldImage(userId: currentUserInfo.currentUser
+                                    .id, imageId: currentUserInfo.currentUser.profileImageId)
+                                currentUserInfo.currentUser = await profile.saveImage(user: currentUserInfo.currentUser, image: uiImage)
                             }
                             print("Successfully selected image")
                         }
@@ -162,7 +161,7 @@ struct ProfileView: View {
     /// Display three fields, Name, Email, and Memeber Since
     var userInformation: some View {
         VStack(alignment:.leading){
-            Text(profile.user?.name ?? "")
+            Text(currentUserInfo.currentUser.name)
                 .font(.system(size: 35))
                 .bold()
                 .minimumScaleFactor(0.9)
@@ -170,11 +169,11 @@ struct ProfileView: View {
             Spacer()
             
             Group {
-                Text(profile.user?.email ?? "")
+                Text(currentUserInfo.currentUser.email)
                 
                 HStack {
                     Text("Since")
-                    Text("\(Date(timeIntervalSince1970: profile.user?.joined ?? 0.0).formatted(date: .abbreviated, time: .omitted))")
+                    Text("\(Date(timeIntervalSince1970: currentUserInfo.currentUser.joined).formatted(date: .abbreviated, time: .omitted))")
                 }
             }
             .foregroundStyle(.gray)
@@ -252,4 +251,5 @@ struct ProfileView: View {
 
 #Preview {
     ProfileView(tabSelection: .constant(0))
+        .environmentObject(UserEnvironment())
 }

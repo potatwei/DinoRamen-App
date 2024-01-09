@@ -11,21 +11,9 @@ import Foundation
 import FirebaseStorage
 
 @Observable class UserEditViewViewModel {
-
-    init() {
-        print("😁😁😁😁😁😁")
-        Task {
-            await fetchStatus()
-        }
-    }
-    
-    var userStatus = Status(id: "", emoji: 0, comment: "")
     var emojis = ["😁","😅","🥰","😣","😭","😋","🙃","🤪","😪","😵‍💫","🤢","🤒"]
     
-    var emojiToDisplay: Int { return userStatus.emoji } // TODO: Change to String after assets setted up and delete the emojis array
-    var photoToDisplay: String? { return userStatus.image }
-    var commentToDisplay: String { return userStatus.comment }
-    var commentEntered: String = ""
+    //var emojiToDisplay: Int { return userStatus.emoji } // TODO: Change to String after assets setted up and delete the emojis array
     var takenImage: UIImage?
     var currentUserId: String {
         guard let currentUserId = Auth.auth().currentUser?.uid else {
@@ -35,42 +23,36 @@ import FirebaseStorage
         return currentUserId
     }
     
-    func changeEmoji(by value: Int) {
-        userStatus.add(value)
-        if emojiToDisplay < 0 {
-            userStatus.add(emojis.count)
-        }
-        if emojiToDisplay > emojis.count - 1 {
-            userStatus.add(-emojis.count)
-        }
-    }
-    
     @MainActor
-    func upload() async {
+    func upload(_ status: Status, comment: String) async -> Status {
+        var status = status
         // Updata Model
-        userStatus.changeId(currentUserId)
-        userStatus.changeComment(commentEntered)
+        status.id = currentUserId
+        status.comment = comment
         if takenImage != nil {
-            await deleteOldImage()
-            await saveImage(image: takenImage!) // Upload the photo and the model
+            await deleteOldImage(status.imageId ?? "a")
+            let imageInfo = await saveImage(image: takenImage!, status: status) // Upload the photo
+            if let imageInfo = imageInfo {
+                status.image = imageInfo.0
+                status.imageId = imageInfo.1
+            }
         }
-    }
-    
-    func fetchStatus() async {
+        
+        // upload status
         let db = Firestore.firestore()
         do {
-            let document = try await db.collection("users").document(currentUserId).collection("status").document("user_status").getDocument()
-            if document.exists {
-                userStatus = try document.data(as: Status.self)
-            }
+            let document = db.document("users/\(currentUserId)/status/user_status")
+            try document.setData(from: status)
+            print("Data updated successfully!")
+            return status
         } catch {
-            print("Unable to update Status or fail to get document \(error)")
+            print("Could not update image in user_status for userId \(currentUserId)")
+            return status
         }
-        commentEntered = commentToDisplay
     }
     
     @MainActor
-    func saveImage(image: UIImage) async {
+    func saveImage(image: UIImage, status: Status) async -> (String, String)? {
         let photoName = UUID().uuidString // This will be the name of the image file
         let storage = Storage.storage() // Create a Firebase Storage instance
         let storageRef = storage.reference().child("\(currentUserId)/\(photoName).jpg")
@@ -78,7 +60,7 @@ import FirebaseStorage
         // Compress image
         guard let resizedImage = image.jpegData(compressionQuality: 0.5) else {
             print("Cound not resize image")
-            return
+            return nil
         }
         
         // Setting metadata allows to see image in the web browser
@@ -92,34 +74,20 @@ import FirebaseStorage
             do {
                 let imageURL = try await storageRef.downloadURL()
                 imageURLString = "\(imageURL)" // Will save to user -> profileImage
+                return (imageURLString, photoName)
             } catch {
                 print("Could not get imageURL \(error.localizedDescription)")
-                return
+                return nil
             }
         } catch {
             print("Cound not upload image to FirebaseStorage")
-            return
-        }
-        
-        // Save imageURLString to user -> profileImage
-        let db = Firestore.firestore()
-        do {
-            let document = db.document("users/\(currentUserId)/status/user_status")
-            userStatus.image = imageURLString
-            userStatus.imageId = photoName
-            try document.setData(from: userStatus)
-            print("Data updated successfully!")
-            return
-        } catch {
-            print("Could not updata image in user_status for userId \(currentUserId)")
-            return
+            return nil
         }
     }
     
-    func deleteOldImage() async {
-        let imageId = userStatus.imageId
+    func deleteOldImage(_ imageId: String) async {
         let storage = Storage.storage()
-        let storageRef = storage.reference().child("\(currentUserId)/\(imageId ?? "").jpg")
+        let storageRef = storage.reference().child("\(currentUserId)/\(imageId).jpg")
         do {
             try await storageRef.delete()
             print("😆Successfully deleted Image")

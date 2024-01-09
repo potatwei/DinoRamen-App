@@ -38,7 +38,7 @@ import Foundation
     ///
     func selectReaction(_ reaction: String) {
         // Set user reaction to document users/\(currentUserId)/status/user_reaction
-        ownStatus.changeReaction(reaction)
+        ownStatus.reaction = reaction
         Task {
             do {
                 // Update local reaction variable

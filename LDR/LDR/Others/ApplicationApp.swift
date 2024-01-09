@@ -20,7 +20,6 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 @main
 struct ApplicationApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
-    //@State private var interface = MainInterfaceViewModel() // interface instance
     
     var body: some Scene {
         WindowGroup {

@@ -24,6 +24,8 @@
 		7F73EBE32B42194A009202CC /* FriendRequestViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F73EBE22B42194A009202CC /* FriendRequestViewViewModel.swift */; };
 		7F73EBE52B423557009202CC /* AddFriendButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F73EBE42B423557009202CC /* AddFriendButtonView.swift */; };
 		7F73EBE72B423570009202CC /* AddFriendButtonViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F73EBE62B423570009202CC /* AddFriendButtonViewViewModel.swift */; };
+		7FD361552B4CC01000923139 /* UserEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FD361542B4CC01000923139 /* UserEnvironment.swift */; };
+		7FD361572B4CEBBD00923139 /* UserStatusEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FD361562B4CEBBD00923139 /* UserStatusEnvironment.swift */; };
 		7FEDF9AA2B3B92A000127A8D /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 7FEDF9A92B3B92A000127A8D /* FirebaseAnalytics */; };
 		7FEDF9AC2B3B92A000127A8D /* FirebaseAnalyticsOnDeviceConversion in Frameworks */ = {isa = PBXBuildFile; productRef = 7FEDF9AB2B3B92A000127A8D /* FirebaseAnalyticsOnDeviceConversion */; };
 		7FEDF9AE2B3B92A000127A8D /* FirebaseAnalyticsSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 7FEDF9AD2B3B92A000127A8D /* FirebaseAnalyticsSwift */; };
@@ -88,6 +90,8 @@
 		7F73EBE22B42194A009202CC /* FriendRequestViewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendRequestViewViewModel.swift; sourceTree = "<group>"; };
 		7F73EBE42B423557009202CC /* AddFriendButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFriendButtonView.swift; sourceTree = "<group>"; };
 		7F73EBE62B423570009202CC /* AddFriendButtonViewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFriendButtonViewViewModel.swift; sourceTree = "<group>"; };
+		7FD361542B4CC01000923139 /* UserEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserEnvironment.swift; sourceTree = "<group>"; };
+		7FD361562B4CEBBD00923139 /* UserStatusEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserStatusEnvironment.swift; sourceTree = "<group>"; };
 		7FEDF9972B3B925700127A8D /* LDR.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LDR.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7FEDF9E02B3B92E600127A8D /* MainInterfaceViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainInterfaceViewModel.swift; sourceTree = "<group>"; };
 		7FEDF9E12B3B92E600127A8D /* OthersDisplayViewViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OthersDisplayViewViewModel.swift; sourceTree = "<group>"; };
@@ -158,6 +162,15 @@
 			path = Camera;
 			sourceTree = "<group>";
 		};
+		7FD361532B4CBFF900923139 /* Environments */ = {
+			isa = PBXGroup;
+			children = (
+				7FD361542B4CC01000923139 /* UserEnvironment.swift */,
+				7FD361562B4CEBBD00923139 /* UserStatusEnvironment.swift */,
+			);
+			path = Environments;
+			sourceTree = "<group>";
+		};
 		7FEDF98E2B3B925700127A8D = {
 			isa = PBXGroup;
 			children = (
@@ -177,6 +190,7 @@
 		7FEDF9992B3B925700127A8D /* LDR */ = {
 			isa = PBXGroup;
 			children = (
+				7FD361532B4CBFF900923139 /* Environments */,
 				7F0B6A122B49DFAF003325C5 /* Camera */,
 				7FEDF9F22B3B92E600127A8D /* Models */,
 				7FEDF9DF2B3B92E600127A8D /* ViewModels */,
@@ -369,6 +383,7 @@
 				7FEDF9FD2B3B92E600127A8D /* LoginViewViewModel.swift in Sources */,
 				7FEDFA042B3B92E600127A8D /* UserEditView.swift in Sources */,
 				7FEDFA0A2B3B92E600127A8D /* Status.swift in Sources */,
+				7FD361552B4CC01000923139 /* UserEnvironment.swift in Sources */,
 				7FEDFA072B3B92E600127A8D /* ApplicationApp.swift in Sources */,
 				7FEDFA022B3B92E600127A8D /* LDRButton.swift in Sources */,
 				7F73EBDB2B42170B009202CC /* FriendsRequestsView.swift in Sources */,
@@ -388,6 +403,7 @@
 				7F0776B62B3CF1D3005AEB58 /* EmojiEditSwitch.swift in Sources */,
 				7F0776B42B3C861B005AEB58 /* ProfileViewViewModel.swift in Sources */,
 				7F73EBE12B421934009202CC /* FriendRequestButtonView.swift in Sources */,
+				7FD361572B4CEBBD00923139 /* UserStatusEnvironment.swift in Sources */,
 				7FEDF9FF2B3B92E600127A8D /* MainInterfaceView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

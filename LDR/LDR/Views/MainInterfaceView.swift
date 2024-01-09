@@ -12,6 +12,9 @@ struct MainInterfaceView: View {
     @StateObject var interface = MainInterfaceViewModel()
     @State var selection = 0
     
+    @StateObject var currentUserInfo = UserEnvironment()
+    @StateObject var status = UserStatusEnvironment()
+    
     var body: some View {
         //Text("\(interface.currentUserId)")
         if interface.isSignIn {
@@ -19,10 +22,12 @@ struct MainInterfaceView: View {
                 UserEditView(tabSelection: $selection)
                     .tabItem { Label("Edit", systemImage: "figure") }
                     .tag(1)
+                    .environmentObject(status)
                 
                 OthersDisplayView()
                     .tabItem { Label("Home", systemImage: "house") }
                     .tag(0)
+                    .environmentObject(status)
                 
                 ProfileView(tabSelection: $selection)
                     .tabItem { Label("Profile", systemImage: "person.circle") }
@@ -31,6 +36,7 @@ struct MainInterfaceView: View {
             .tabViewStyle(.page(indexDisplayMode: .never))
             .animation(.easeInOut(duration: 0.1), value: selection)
             .transition(.slide)
+            .environmentObject(currentUserInfo)
         } else {
             NavigationStack {
                 LoginView()

@@ -12,35 +12,12 @@ import FirebaseStorage
 import _PhotosUI_SwiftUI
 
 
-@Observable class ProfileViewViewModel {
+@Observable 
+class ProfileViewViewModel {
     var selectedPhoto: PhotosPickerItem?
     var showingSearchFriendView = false
     var isSheetPresented = false
     var user: User?
-    
-    init() {
-        Task {
-            await fetchUser()
-        }
-    }
-    
-    func fetchUser() async {
-        guard let userId = Auth.auth().currentUser?.uid else {
-            return
-        }
-        let db = Firestore.firestore()
-        do {
-            let document = try await db.collection("users").document(userId).getDocument()
-            if document.exists {
-                user = try document.data(as: User.self)
-                print("Updated User Successfully")
-            } else {
-                print("Error: User document do not exist")
-            }
-        } catch {
-            print("Unable to update User or fail to get document \(error)")
-        }
-    }
     
     func logOut() {
         do {
@@ -51,15 +28,16 @@ import _PhotosUI_SwiftUI
     }
     
     @MainActor
-    func saveImage(user: inout User, image: UIImage) async -> Bool {
+    func saveImage(user: User, image: UIImage) async -> User {
         let photoName = UUID().uuidString // This will be the name o the image file
         let storage = Storage.storage() // Create a Firebase Storage instance
         let storageRef = storage.reference().child("\(user.id)/\(photoName).jpeg")
+        var user = user
         
         // Compress image
         guard let resizedImage = image.jpegData(compressionQuality: 0.0) else {
             print("Cound not resize image")
-            return false
+            return user
         }
         
         // Setting metadata allows to see image in the web browser
@@ -75,11 +53,11 @@ import _PhotosUI_SwiftUI
                 imageURLString = "\(imageURL)" // Will save to user -> profileImage
             } catch {
                 print("Could not get imageURL \(error.localizedDescription)")
-                return false
+                return user
             }
         } catch {
             print("Cound not upload image to FirebaseStorage")
-            return false
+            return user
         }
         
         // Save imageURLString to user -> profileImage
@@ -91,16 +69,14 @@ import _PhotosUI_SwiftUI
             try document.setData(from: user)
             try await document.updateData(["keywordsForLookup": user.keywordsForLookup])
             print("Data updated successfully!")
-            return true
+            return user
         } catch {
             print("Could not updata data in user for userId \(user.id)")
-            return false
+            return user
         }
     }
     
-    func deleteOldImage() async {
-        let userId = user!.id
-        let imageId = user!.profileImageId
+    func deleteOldImage(userId: String, imageId: String) async {
         let storage = Storage.storage() // Create a Firebase Storage instance
         let storageRef = storage.reference().child("\(userId)/\(imageId).jpeg")
         do {

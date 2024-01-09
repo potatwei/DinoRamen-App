@@ -13,12 +13,15 @@ struct UserEditView: View {
     
     @Bindable var userEdit = UserEditViewViewModel()
     @Binding var tabSelection: Int
+    @State var enteredText = ""
     @State var showCamera = false
+    
+    @EnvironmentObject var userStatus: UserStatusEnvironment
     
     var body: some View {
         VStack {
             HStack {
-                Text("Edit Yours")
+                Text("Edit")
                     .font(.system(size: 42))
                     .fontWeight(.bold)
                     .padding(.horizontal, 20)
@@ -41,36 +44,31 @@ struct UserEditView: View {
             // Emoji displaying with edit switches
             HStack {
                 // Left switch
-                emojiSwitchButton(offset: -1) {
-                    userEdit.changeEmoji(by: -1)
-                }
+                emojiSwitchButton(offset: -1) { userStatus.changeEmoji(by: -1) }
                 // Emoji
                 ZStack{
                     Circle()
                         .frame(maxWidth: 250)
-                    Text(userEdit.emojis[userEdit.emojiToDisplay])
+                    Text(userEdit.emojis[userStatus.currUserStatus.emoji])
                         .font(.system(size: 180))
                 }
-                .animation(.default, value: userEdit.emojiToDisplay)
                 // Right Switch
-                emojiSwitchButton(offset: 1) {
-                    userEdit.changeEmoji(by: 1)
-                }
+                emojiSwitchButton(offset: 1) { userStatus.changeEmoji(by: 1) }
             }
             .padding()
             .minimumScaleFactor(0.5)
             
             // Picuture to be displayed
             ZStack {
-                if userEdit.takenImage != nil || userEdit.photoToDisplay != nil {
+                if userEdit.takenImage != nil || userStatus.currUserStatus.image != nil {
                     if userEdit.takenImage != nil {
                         Image(uiImage: userEdit.takenImage!)
                             .resizable()
                             .scaledToFill()
                             .frame(maxWidth: 250, maxHeight: 200)
                             .clipShape(RoundedRectangle(cornerRadius: 25.0))
-                    } else if userEdit.photoToDisplay != nil {
-                        let imageURL = URL(string: userEdit.photoToDisplay ?? "")
+                    } else if let imageURL = userStatus.currUserStatus.image{
+                        let imageURL = URL(string: imageURL)
                         AsyncImage(url: imageURL) { Image in
                             Image
                                 .resizable()
@@ -106,12 +104,12 @@ struct UserEditView: View {
                     .font(.system(size: 80))
                 }
             }
-
+            
             // Comment to be displayed
             HStack {
                 Image(systemName: "book.pages.fill")
-                TextField("\(userEdit.commentToDisplay == "" ? "Comment..." : userEdit.commentToDisplay)",
-                          text: $userEdit.commentEntered)
+                TextField("\(userStatus.currUserStatus.comment == "" ? "Comment..." : userStatus.currUserStatus.comment)",
+                          text: $enteredText)
             }
             .modifier(customViewModifier(roundedCornes: 10,
                                          startColor: .orange,
@@ -125,7 +123,7 @@ struct UserEditView: View {
         .onAppear {
             // fetch data from database and sync comment
             Task {
-                await userEdit.fetchStatus()
+                await userStatus.fetchCurrentUserStatus()
             }
         }
         .fullScreenCover(isPresented: $showCamera, content: {
@@ -145,7 +143,7 @@ struct UserEditView: View {
     var uploadButton: some View {
         Button {
             Task {
-                await userEdit.upload()
+                userStatus.currUserStatus = await userEdit.upload(userStatus.currUserStatus, comment: enteredText)
             }
             tabSelection = 0
         } label: {
@@ -183,4 +181,6 @@ struct customViewModifier: ViewModifier {
 
 #Preview {
     UserEditView(tabSelection: .constant(0))
+        .environmentObject(UserEnvironment())
+        .environmentObject(UserStatusEnvironment())
 }
