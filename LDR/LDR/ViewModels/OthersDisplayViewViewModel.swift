@@ -19,83 +19,23 @@ import Foundation
         return currentUserId
     }
     
-    init() {
-        Task {
-            await fetchStatus()
-        }
-    }
-    
     var showReactions = false
-    var ownStatus = Status(id: "", emoji: 0, comment: "")
-    var othersStatus = Status(id: "", emoji: 0, comment: "")
     var emojis = ["😁","😅","🥰","😣","😭","😋","🙃","🤪","😪","😵‍💫","🤢","🤒"]
-    var emojiToDisplay: Int { return othersStatus.emoji }
-    var commentToDisplay: String { return othersStatus.comment }
-    var ownsReaction: String { return ownStatus.reaction }
-    var othersReaction: String { return othersStatus.reaction}
-    var photoToDisplay: String? { return othersStatus.image}
     
     ///
-    func selectReaction(_ reaction: String) {
+    func selectReaction(_ reaction: String, status: Status) async -> Status {
+        var newStatus = status
         // Set user reaction to document users/\(currentUserId)/status/user_reaction
-        ownStatus.reaction = reaction
-        Task {
-            do {
-                // Update local reaction variable
-                try await db.document("users/\(currentUserId)/status/user_status").setData(ownStatus.asDictionary())
-                print("Successfully set reaction in database")
-            } catch {
-                print("Error setting reaction document in database: \(error)")
-            }
-        }
-        
-    }
-    
-    
-    
-    ///
-    @MainActor
-    func fetchStatus() async {
-        do {
-            let document = try await db.document("users/\(currentUserId)/status/user_status").getDocument()
-            if document.exists {
-                ownStatus = try document.data(as: Status.self)
-                print("Updated userStatus Successfully")
-            } else {
-                print("user_status document doesn't exist")
-            }
-        } catch {
-            print("Unable to update userStatus or fail to get document \(error)")
-        }
-        
-        // Get connected user id
-        var connectedId = "a"
-        do {
-            let document = try await db.document("users/\(currentUserId)/friend/connected").getDocument()
-            if document.exists {
-                if let data = document.data() {
-                    for (id, _) in data {
-                        connectedId = id
-                    }
-                    print("get connected user id Successfully")
-                }
-            } else {
-                print("Connected document doesn't exist")
-            }
-        } catch {
-            print("Unable to update user id or fail to get document \(error)")
-        }
+        newStatus.reaction = reaction
         
         do {
-            let document = try await db.document("users/\(connectedId)/status/user_status").getDocument()
-            if document.exists {
-                othersStatus = try document.data(as: Status.self)
-                print("Updated userStatus Successfully")
-            } else {
-                print("user_status document doesn't exist")
-            }
+            // Update local reaction variable
+            try await db.document("users/\(currentUserId)/status/user_status").setData(newStatus.asDictionary())
+            print("Successfully set reaction in database")
+            return newStatus
         } catch {
-            print("Unable to update userStatus or fail to get document \(error)")
+            print("Error setting reaction document in database: \(error)")
+            return status
         }
     }
 }

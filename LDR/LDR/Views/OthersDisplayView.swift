@@ -10,6 +10,8 @@ import SwiftUI
 struct OthersDisplayView: View {
     @Bindable var display = OthersDisplayViewViewModel()
     
+    @EnvironmentObject var userStatus: UserStatusEnvironment
+    
     var body: some View {
         VStack {
             HStack {
@@ -18,8 +20,8 @@ struct OthersDisplayView: View {
                     .padding(10)
                     .padding(.leading, 20)
                 
-                if display.othersReaction != "" {
-                    Image(systemName: display.othersReaction)
+                if userStatus.connUserStatus.reaction != "" {
+                    Image(systemName: userStatus.connUserStatus.reaction)
                         .font(.system(size: 20))
                         .padding(8)
                         .background(.bar)
@@ -37,15 +39,15 @@ struct OthersDisplayView: View {
             ZStack {
                 Circle()
                     .frame(maxWidth: 250)
-                Text(display.emojis[display.emojiToDisplay])
+                Text(display.emojis[userStatus.connUserStatus.emoji])
                     .font(.system(size: 180))
             }
             .padding(1)
             .minimumScaleFactor(0.1)
             
             // Photo to display
-            if display.photoToDisplay != nil {
-                let imageURL = URL(string: display.photoToDisplay!)
+            if userStatus.connUserStatus.image != nil {
+                let imageURL = URL(string: userStatus.connUserStatus.image!)
                 AsyncImage(url: imageURL) { Image in
                     Image
                         .resizable()
@@ -57,7 +59,7 @@ struct OthersDisplayView: View {
                 .clipShape(RoundedRectangle(cornerRadius: 25.0))
             }
             
-            Text(display.commentToDisplay)
+            Text(userStatus.connUserStatus.comment)
                 .padding(10)
                 .padding(.horizontal, 15)
                 .background(.regularMaterial)
@@ -73,7 +75,8 @@ struct OthersDisplayView: View {
         }
         .onAppear {
             Task {
-                await display.fetchStatus()
+                await userStatus.fetchCurrentUserStatus()
+                await userStatus.fetchOtherUserStatus()
             }
         }
         
@@ -83,68 +86,20 @@ struct OthersDisplayView: View {
         HStack{
             // TODO: Better Animation
             // Thumbs Up
-            Button {
-
-                    display.selectReaction("hand.thumbsup.fill")
-                
-            } label: {
-                if display.ownsReaction != "hand.thumbsup.fill"{
-                    Label("Thumbs Up", systemImage: "hand.thumbsup.fill")
-                } else {
-                    Label("Selected Thumbs Up", systemImage: "hand.thumbsup.circle")
-                }
-            }
-            .padding(5)
+            reactionButton(defau: "hand.thumbsup.fill", selected: "hand.thumbsup.circle")
             
             // Exclamationmark
-            Button {
-
-                    display.selectReaction("exclamationmark.2")
-                
-            } label: {
-                if display.ownsReaction != "exclamationmark.2"{
-                    Label("Exclamationmark", systemImage: "exclamationmark.2")
-                } else {
-                    Label("Selected Exclamationmark", systemImage: "exclamationmark")
-                }
-            }
-            .padding(5)
+            reactionButton(defau: "exclamationmark.2", selected: "exclamationmark")
             
             // Heart
-            Button {
-                
-                    display.selectReaction("heart.fill")
-                
-            } label: {
-                if display.ownsReaction != "heart.fill"{
-                    Label("Heart", systemImage: "heart.fill")
-                } else {
-                    Label("Selected Heart", systemImage: "heart.circle")
-                }
-            }
-            .padding(5)
-
+            reactionButton(defau: "heart.fill", selected: "heart.circle")
+    
             // Thumbs Down
-            Button {
-           
-                    display.selectReaction("hand.thumbsdown.fill")
-      
-            } label: {
-                if display.ownsReaction != "hand.thumbsdown.fill"{
-                    Label("Thumbsdown", systemImage: "hand.thumbsdown.fill")
-                } else {
-                    Label("Selected Thumbsdown", systemImage: "hand.thumbsdown.circle")
-                }
-            }
-            .padding(5)
+            reactionButton(defau: "hand.thumbsdown.fill", selected: "hand.thumbsdown.circle")
+            
         }
         .labelStyle(.iconOnly)
         .font(.largeTitle)
-        .onAppear {
-            Task {
-                await display.fetchStatus()
-            }
-        }
     }
     
     var reaction: some View {
@@ -157,10 +112,28 @@ struct OthersDisplayView: View {
             reactionButtons
         }
         .minimumScaleFactor(0.8)
-        
+    }
+    
+    func reactionButton(defau: String, selected: String) -> some View {
+        Button {
+            userStatus.currUserStatus.reaction = defau
+            Task {
+                userStatus.currUserStatus = await display.selectReaction(defau, status: userStatus.currUserStatus)
+            }
+        } label: {
+            if userStatus.currUserStatus.reaction != defau{
+                Label(defau, systemImage: defau)
+            } else {
+                Label(selected, systemImage: selected)
+            }
+        }
+        .padding(5)
     }
 }
 
+
+
 #Preview {
     OthersDisplayView()
+        .environmentObject(UserStatusEnvironment())
 }
