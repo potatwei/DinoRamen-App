@@ -9,6 +9,7 @@ import SwiftUI
 
 struct OthersDisplayView: View {
     @Bindable var display = OthersDisplayViewViewModel()
+    @Binding var tabSelection: Int
     
     @EnvironmentObject var userStatus: UserStatusEnvironment
     
@@ -31,6 +32,17 @@ struct OthersDisplayView: View {
                 }
                 
                 Spacer()
+                
+                Button {
+                    tabSelection = 2
+                } label: {
+                    Label("profile", systemImage: "person.circle")
+                        .labelStyle(.iconOnly)
+                        .foregroundStyle(.sugarYellow)
+                }
+                .padding(.trailing, 25)
+                .font(.system(size: 37))
+                .offset(y: -22)
             }
             
             Divider().padding().frame(maxWidth: 300)
@@ -67,6 +79,8 @@ struct OthersDisplayView: View {
                 .font(.system(size: 20))
                 .fontWeight(.medium)
                 .frame(maxWidth: 350, maxHeight: 100)
+            
+            Spacer()
             
             Divider().frame(maxWidth: 300)
             
@@ -134,6 +148,6 @@ struct OthersDisplayView: View {
 
 
 #Preview {
-    OthersDisplayView()
+    OthersDisplayView(tabSelection: .constant(0))
         .environmentObject(UserStatusEnvironment())
 }

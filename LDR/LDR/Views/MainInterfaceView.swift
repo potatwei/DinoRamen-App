@@ -24,7 +24,7 @@ struct MainInterfaceView: View {
                     .tag(1)
                     .environmentObject(status)
                 
-                OthersDisplayView()
+                OthersDisplayView(tabSelection: $selection)
                     .tabItem { Label("Home", systemImage: "house") }
                     .tag(0)
                     .environmentObject(status)
