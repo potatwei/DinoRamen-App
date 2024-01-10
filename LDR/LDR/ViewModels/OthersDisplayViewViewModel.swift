@@ -19,6 +19,7 @@ import Foundation
         return currentUserId
     }
     
+    var showCommentEnter = false
     var showReactions = false
     var emojis = ["😁","😅","🥰","😣","😭","😋","🙃","🤪","😪","😵‍💫","🤢","🤒"]
     

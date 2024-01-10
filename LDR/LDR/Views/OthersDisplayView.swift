@@ -61,13 +61,17 @@ struct OthersDisplayView: View {
             HStack {
                 reaction // Display four reaction buttons
                 
+                Spacer()
+                
                 ZStack {
                     Circle()
                         .frame(width: 60)
                         .foregroundStyle(.regularMaterial)
                     
                     Button {
-                        
+                        withAnimation {
+                            display.showCommentEnter.toggle()
+                        }
                     } label: {
                         Label("Text Comment", systemImage: "text.bubble")
                             .labelStyle(.iconOnly)
@@ -77,6 +81,7 @@ struct OthersDisplayView: View {
                     //.sensoryFeedback(.impact(weight: .light, intensity: 0.7), trigger: )
                 }
             }
+            .frame(width: 322)
         }
         .onAppear {
             Task {
@@ -90,20 +95,32 @@ struct OthersDisplayView: View {
     ///
     @ViewBuilder
     var reactionButtons: some View {
-        HStack{
-            // TODO: Better Animation
-            // Thumbs Up
-            reactionButton(defau: "hand.thumbsup.fill")
-            
-            // Exclamationmark
-            reactionButton(defau: "exclamationmark.2")
-            
-            // Heart
-            reactionButton(defau: "heart.fill")
-    
-            // Thumbs Down
-            reactionButton(defau: "hand.thumbsdown.fill")
-            
+        ZStack{
+            HStack{
+                // Thumbs Up
+                reactionButton(defau: "hand.thumbsup.fill")
+                
+                // Exclamationmark
+                reactionButton(defau: "exclamationmark.2")
+                    .offset(x: display.showCommentEnter ? -55 : 0)
+                
+                // Heart
+                reactionButton(defau: "heart.fill")
+                    .offset(x: display.showCommentEnter ? -115 : 0)
+        
+                // Thumbs Down
+                reactionButton(defau: "hand.thumbsdown.fill")
+                    .offset(x: display.showCommentEnter ? -175 : 0)
+            }
+            .opacity(display.showCommentEnter ? 0 : 1)
+            // Show Reaction Button
+            Button {
+                
+            } label: {
+                Label("Show Reaction", systemImage: "suit.heart")
+                    .foregroundStyle(.black)
+            }
+            .offset(x: display.showCommentEnter ? 0 : -200 , y: 1)
         }
         .labelStyle(.iconOnly)
         .font(.system(size: 28))
@@ -118,12 +135,14 @@ struct OthersDisplayView: View {
         ZStack {
             RoundedRectangle(cornerRadius: 70)
                 .frame(width: 255, height: 60)
-                .padding(.vertical)
                 .foregroundStyle(.regularMaterial)
             
             reactionButtons
         }
-        .minimumScaleFactor(0.8)
+        .frame(width: display.showCommentEnter ? 60 : 255)
+        .clipped()
+        .clipShape(RoundedRectangle(cornerRadius: 70))
+        .padding(.vertical)
     }
     
     ///
