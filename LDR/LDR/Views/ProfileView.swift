@@ -12,7 +12,6 @@ struct ProfileView: View {
     @Bindable var profile = ProfileViewViewModel()
     @Binding var tabSelection: Int
     @EnvironmentObject var currentUserInfo: UserEnvironment
-    @State var selectPhotoPicker = false
     @State var selectLogout = false
     
     var body: some View {
@@ -61,6 +60,7 @@ struct ProfileView: View {
             .sheet(isPresented: $profile.isSheetPresented, content: {
                 FriendsRequestsView(isPresenting: $profile.isSheetPresented)
             })
+            .photosPicker(isPresented: $profile.showPhotoPicker, selection: $profile.selectedPhoto, matching: .images, preferredItemEncoding: .automatic)
         }
         .onAppear() {
             Task {
@@ -93,7 +93,9 @@ struct ProfileView: View {
     /// When an image is selected, the current profile image will be deleted from database, then a new image
     /// will be save in and `profileImageId` and `profileImage` in `profile.user` will be changed accordingly
     var photoPickerButton: some View {
-        PhotosPicker(selection: $profile.selectedPhoto, matching: .images, preferredItemEncoding: .automatic) {
+        Button {
+            profile.showPhotoPicker = true
+        } label: {
             HStack {
                 Image(systemName: "photo")
                     .foregroundStyle(.sugarMint)
@@ -111,7 +113,7 @@ struct ProfileView: View {
             }
             .padding(.bottom, 15)
         }
-        .sensoryFeedback(.impact(weight: .light, intensity: 0.8), trigger: profile.selectedPhoto)
+        .sensoryFeedback(.impact(weight: .light, intensity: 0.7), trigger: profile.showPhotoPicker)
         .onChange(of: profile.selectedPhoto) { oldValue, newValue in
             Task {
                 do {
@@ -158,7 +160,7 @@ struct ProfileView: View {
         .sheet(isPresented: $profile.showingSearchFriendView) {
             SearchFriendView()
         }
-        .sensoryFeedback(.impact(weight: .light, intensity: 0.8), trigger: profile.showingSearchFriendView)
+        .sensoryFeedback(.impact(weight: .light, intensity: 0.7), trigger: profile.showingSearchFriendView)
     }
     
     /// Display three fields, Name, Email, and Memeber Since
@@ -210,7 +212,7 @@ struct ProfileView: View {
             }
             .padding(.bottom, 18)
         }
-        .sensoryFeedback(.impact(weight: .light, intensity: 0.8), trigger: profile.isSheetPresented)
+        .sensoryFeedback(.impact(weight: .light, intensity: 0.7), trigger: profile.isSheetPresented)
     }
     
     ///
@@ -227,7 +229,7 @@ struct ProfileView: View {
                 .clipShape(Capsule())
                 .padding(.top, 20)
         }
-        .sensoryFeedback(.impact(weight: .light, intensity: 0.8), trigger: selectLogout)
+        .sensoryFeedback(.impact(weight: .light, intensity: 0.7), trigger: selectLogout)
     }
     
     ///

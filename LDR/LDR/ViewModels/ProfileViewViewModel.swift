@@ -16,6 +16,7 @@ import _PhotosUI_SwiftUI
 class ProfileViewViewModel {
     var selectedPhoto: PhotosPickerItem?
     var showingSearchFriendView = false
+    var showPhotoPicker = false
     var isSheetPresented = false
     var user: User?
     

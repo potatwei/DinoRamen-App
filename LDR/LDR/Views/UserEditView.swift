@@ -57,6 +57,8 @@ struct UserEditView: View {
             }
             .padding()
             .minimumScaleFactor(0.5)
+            .sensoryFeedback(.impact(weight: .light, intensity: 0.7), trigger: userStatus.currUserStatus.emoji)
+
             
             // Picuture to be displayed
             ZStack {
@@ -121,6 +123,7 @@ struct UserEditView: View {
                     .font(.system(size: 90))
                 }
             }
+            .sensoryFeedback(.impact(weight: .light, intensity: 0.7), trigger: showCamera)
             
             // Comment to be displayed
             HStack {
