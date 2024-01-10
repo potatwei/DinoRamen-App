@@ -74,6 +74,7 @@ struct OthersDisplayView: View {
                             .font(.system(size: 25))
                             .foregroundStyle(.foreground)
                     }
+                    //.sensoryFeedback(.impact(weight: .light, intensity: 0.5), trigger: )
                 }
             }
         }
@@ -148,6 +149,7 @@ struct OthersDisplayView: View {
                     .animation(nil, value: userStatus.currUserStatus.reaction)
             }
         }
+        .sensoryFeedback(.impact(weight: .light, intensity: 0.5), trigger: userStatus.currUserStatus.reaction)
     }
     
     ///
@@ -163,6 +165,7 @@ struct OthersDisplayView: View {
         .padding(.trailing, 25)
         .font(.system(size: 37))
         .offset(y: -22)
+        .sensoryFeedback(.impact(weight: .heavy, intensity: 0.8), trigger: tabSelection) // Provide feedback when change tab
     }
     
     ///

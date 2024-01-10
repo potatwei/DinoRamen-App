@@ -12,6 +12,8 @@ struct ProfileView: View {
     @Bindable var profile = ProfileViewViewModel()
     @Binding var tabSelection: Int
     @EnvironmentObject var currentUserInfo: UserEnvironment
+    @State var selectPhotoPicker = false
+    @State var selectLogout = false
     
     var body: some View {
         NavigationStack {
@@ -85,7 +87,7 @@ struct ProfileView: View {
         .clipShape(Circle())
         .padding(15)
         .padding(.leading, 15)
-
+        
     }
     
     /// When an image is selected, the current profile image will be deleted from database, then a new image
@@ -109,14 +111,14 @@ struct ProfileView: View {
             }
             .padding(.bottom, 15)
         }
+        .sensoryFeedback(.impact(weight: .light, intensity: 0.8), trigger: profile.selectedPhoto)
         .onChange(of: profile.selectedPhoto) { oldValue, newValue in
             Task {
                 do {
                     if let data = try await newValue?.loadTransferable(type: Data.self) {
                         if let uiImage = UIImage(data: data) {
                             Task {
-                                await profile.deleteOldImage(userId: currentUserInfo.currentUser
-                                    .id, imageId: currentUserInfo.currentUser.profileImageId)
+                                await profile.deleteOldImage(userId: currentUserInfo.currentUser.id, imageId: currentUserInfo.currentUser.profileImageId)
                                 currentUserInfo.currentUser = await profile.saveImage(user: currentUserInfo.currentUser, image: uiImage)
                             }
                             print("Successfully selected image")
@@ -156,6 +158,7 @@ struct ProfileView: View {
         .sheet(isPresented: $profile.showingSearchFriendView) {
             SearchFriendView()
         }
+        .sensoryFeedback(.impact(weight: .light, intensity: 0.8), trigger: profile.showingSearchFriendView)
     }
     
     /// Display three fields, Name, Email, and Memeber Since
@@ -207,11 +210,13 @@ struct ProfileView: View {
             }
             .padding(.bottom, 18)
         }
+        .sensoryFeedback(.impact(weight: .light, intensity: 0.8), trigger: profile.isSheetPresented)
     }
     
     ///
     var signoutButton: some View {
         Button {
+            selectLogout.toggle()
             profile.logOut()
         } label: {
             Text("Log out")
@@ -222,6 +227,7 @@ struct ProfileView: View {
                 .clipShape(Capsule())
                 .padding(.top, 20)
         }
+        .sensoryFeedback(.impact(weight: .light, intensity: 0.8), trigger: selectLogout)
     }
     
     ///
