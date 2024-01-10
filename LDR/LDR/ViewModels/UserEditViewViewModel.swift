@@ -36,6 +36,10 @@ import FirebaseStorage
                 status.image = imageInfo.0
                 status.imageId = imageInfo.1
             }
+        } else { // when no photo is taken update environment's image as nil
+            await deleteOldImage(status.imageId ?? "a")
+            status.image = nil
+            status.imageId = nil
         }
         
         // upload status

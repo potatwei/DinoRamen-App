@@ -60,14 +60,22 @@ struct UserEditView: View {
             
             // Picuture to be displayed
             ZStack {
-                if userEdit.takenImage != nil || userStatus.currUserStatus.image != nil {
-                    if userEdit.takenImage != nil {
-                        Image(uiImage: userEdit.takenImage!)
-                            .resizable()
-                            .scaledToFill()
-                            .frame(maxWidth: 250, maxHeight: 200)
-                            .clipShape(RoundedRectangle(cornerRadius: 25.0))
-                    } else if let imageURL = userStatus.currUserStatus.image{
+                if userEdit.takenImage != nil {
+                    Image(uiImage: userEdit.takenImage!)
+                        .resizable()
+                        .scaledToFill()
+                        .frame(maxWidth: 250, maxHeight: 200)
+                        .clipShape(RoundedRectangle(cornerRadius: 25.0))
+                    
+                    Button {
+                        // turn on camera
+                        showCamera = true
+                    } label: {
+                        RoundedRectangle(cornerRadius: 25)
+                            .foregroundStyle(.clear)
+                    }
+                } else if userStatus.currUserStatus.image != nil {
+                    if let imageURL = userStatus.currUserStatus.image{
                         let imageURL = URL(string: imageURL)
                         AsyncImage(url: imageURL) { Image in
                             Image
@@ -79,18 +87,10 @@ struct UserEditView: View {
                         .frame(maxWidth: 250, maxHeight: 200)
                         .clipShape(RoundedRectangle(cornerRadius: 25.0))
                     }
-                    Button {
-                        // turn on camera
-                        showCamera = true
-                    } label: {
-                        RoundedRectangle(cornerRadius: 25.0)
-                            .frame(maxWidth: 250, maxHeight: 200)
-                    }
-                    .foregroundStyle(.clear)
-                } else {
-                    // Photo to display
+                    
                     RoundedRectangle(cornerRadius: 25.0)
                         .frame(maxWidth: 250, maxHeight: 200)
+                        .foregroundStyle(.ultraThinMaterial)
                     
                     Button {
                         // turn on camera
@@ -98,10 +98,27 @@ struct UserEditView: View {
                     } label: {
                         Label("Add Image", systemImage: "plus")
                             .labelStyle(.iconOnly)
+                            .foregroundStyle(Gradient(colors: [.sugarOrange, .sugarYellow]))
+                            .fontWeight(.bold)
+                            .font(.system(size: 90))
+                    }
+                } else {
+                    // Photo to display
+                    RoundedRectangle(cornerRadius: 25.0)
+                        .frame(maxWidth: 250, maxHeight: 200)
+                        .foregroundStyle(Gradient(colors: [.sugarMint,.sugarBlue]))
+                    
+                    Button {
+                        // turn on camera
+                        showCamera = true
+                    } label: {
+                        Label("Add Image", systemImage: "plus")
+                            .foregroundStyle(Gradient(colors: [.sugarOrange, .sugarYellow]))
+                            .labelStyle(.iconOnly)
                     }
                     .foregroundStyle(.white)
                     .fontWeight(.bold)
-                    .font(.system(size: 80))
+                    .font(.system(size: 90))
                 }
             }
             
@@ -121,6 +138,7 @@ struct UserEditView: View {
             Spacer()
         }
         .onAppear {
+            userEdit.takenImage = nil
             // fetch data from database and sync comment
             Task {
                 await userStatus.fetchCurrentUserStatus()

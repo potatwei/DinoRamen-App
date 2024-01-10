@@ -34,7 +34,7 @@ struct MainInterfaceView: View {
                     .tag(2)
             }
             .tabViewStyle(.page(indexDisplayMode: .never))
-            .animation(.easeInOut(duration: 0.1), value: selection)
+            .animation(.easeOut(duration: 0.1), value: selection)
             .transition(.slide)
             .environmentObject(currentUserInfo)
         } else {

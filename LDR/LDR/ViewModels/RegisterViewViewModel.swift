@@ -21,13 +21,7 @@ class RegisterViewViewModel {
     var password = ""
     
     var errorMessage = ""
-    
-    // Variables for moving between textfields
-    
-    
-    
-    init() {}
-    
+
     func register() {
         guard validate() else {
             return

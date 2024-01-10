@@ -15,9 +15,6 @@ import FirebaseAuth
     var password = ""
     var errorMessage = ""
     
-    init() {
-    }
-    
     func login() {
         guard validate() else {
             return
