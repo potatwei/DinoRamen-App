@@ -58,7 +58,24 @@ struct OthersDisplayView: View {
             
             Divider().frame(maxWidth: 320)
             
-            reaction // Display four reaction buttons
+            HStack {
+                reaction // Display four reaction buttons
+                
+                ZStack {
+                    Circle()
+                        .frame(width: 60)
+                        .foregroundStyle(.regularMaterial)
+                    
+                    Button {
+                        
+                    } label: {
+                        Label("Text Comment", systemImage: "text.bubble")
+                            .labelStyle(.iconOnly)
+                            .font(.system(size: 25))
+                            .foregroundStyle(.foreground)
+                    }
+                }
+            }
         }
         .onAppear {
             Task {
@@ -75,30 +92,33 @@ struct OthersDisplayView: View {
         HStack{
             // TODO: Better Animation
             // Thumbs Up
-            reactionButton(defau: "hand.thumbsup.fill", selected: "hand.thumbsup.circle")
+            reactionButton(defau: "hand.thumbsup.fill")
             
             // Exclamationmark
-            reactionButton(defau: "exclamationmark.2", selected: "exclamationmark")
+            reactionButton(defau: "exclamationmark.2")
             
             // Heart
-            reactionButton(defau: "heart.fill", selected: "heart.circle")
+            reactionButton(defau: "heart.fill")
     
             // Thumbs Down
-            reactionButton(defau: "hand.thumbsdown.fill", selected: "hand.thumbsdown.circle")
+            reactionButton(defau: "hand.thumbsdown.fill")
             
         }
         .labelStyle(.iconOnly)
-        .font(.largeTitle)
+        .font(.system(size: 28))
     }
+    
+    ///
+    //@ViewBuilder
     
     ///
     @ViewBuilder
     var reaction: some View {
         ZStack {
-            RoundedRectangle(cornerRadius: 25)
-                .frame(width: 250, height: 60)
-                .padding()
-                .foregroundStyle(.bar)
+            RoundedRectangle(cornerRadius: 70)
+                .frame(width: 255, height: 60)
+                .padding(.vertical)
+                .foregroundStyle(.regularMaterial)
             
             reactionButtons
         }
@@ -107,20 +127,27 @@ struct OthersDisplayView: View {
     
     ///
     @ViewBuilder
-    func reactionButton(defau: String, selected: String) -> some View {
+    func reactionButton(defau: String) -> some View {
         Button {
-            userStatus.currUserStatus.reaction = defau
+            withAnimation(.spring(response: 0.2, dampingFraction: 0.5)) {
+                userStatus.currUserStatus.reaction = defau
+            }
             Task {
                 userStatus.currUserStatus = await display.selectReaction(defau, status: userStatus.currUserStatus)
             }
         } label: {
-            if userStatus.currUserStatus.reaction != defau{
+            ZStack {
+                Circle()
+                    .frame(width: 50)
+                    .scaleEffect(userStatus.currUserStatus.reaction == defau ? 1 : 0)
+                    .foregroundStyle(.sugarPink)
+                    .opacity(userStatus.currUserStatus.reaction == defau ? 1 : 0)
                 Label(defau, systemImage: defau)
-            } else {
-                Label(selected, systemImage: selected)
+                    .foregroundStyle(userStatus.currUserStatus.reaction == defau ? .white : .sugarGreen)
+                    .offset(y: 0.5)
+                    .animation(nil, value: userStatus.currUserStatus.reaction)
             }
         }
-        .padding(5)
     }
     
     ///

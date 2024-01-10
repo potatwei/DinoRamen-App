@@ -105,7 +105,7 @@ struct UserEditView: View {
                 } else {
                     // Photo to display
                     RoundedRectangle(cornerRadius: 25.0)
-                        .frame(maxWidth: 250, maxHeight: 200)
+                        .frame(width: 250, height: 200)
                         .foregroundStyle(Gradient(colors: [.sugarMint,.sugarBlue]))
                     
                     Button {
@@ -139,6 +139,7 @@ struct UserEditView: View {
         }
         .onAppear {
             userEdit.takenImage = nil
+            enteredText = ""
             // fetch data from database and sync comment
             Task {
                 await userStatus.fetchCurrentUserStatus()
