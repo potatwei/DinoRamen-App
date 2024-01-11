@@ -30,16 +30,25 @@ struct OthersDisplayView: View {
                                 Circle()
                                     .foregroundStyle(.gray)
                             }
-                            .frame(width: 80, height: 80)
+                            .frame(width: 90, height: 90)
                             .clipShape(Circle())
-                            .padding(10)
+                            .opacity(0.7)
                             
                             // Show own emoji
                             Text(display.emojis[userStatus.currUserStatus.emoji])
                                 .font(.title)
-                                .offset(x: -25, y: -25)
+                                .offset(x: -30, y: -30)
+                                .opacity(0.7)
                         } else {
                             // Only show own emoji
+                            ZStack {
+                                Circle().foregroundStyle(.regularMaterial)
+                                
+                                Text(display.emojis[userStatus.currUserStatus.emoji])
+                                    .font(.system(size: 80))
+                                    .opacity(0.7)
+                            }
+                            .frame(width: 90, height: 90)
                         }
                         // Show own comment
                         if userStatus.currUserStatus.comment != "" {
@@ -50,37 +59,35 @@ struct OthersDisplayView: View {
                                 .padding(.vertical, 5)
                                 .background(.thickMaterial)
                                 .clipShape(.capsule)
-                                .offset(y: 22)
+                                .offset(y: 24)
                         }
+                        
+                        // Go to UserEditView
+                        Button {
+                            tabSelection = 1
+                        } label: {
+                            Circle().foregroundStyle(.clear)
+                        }
+                        .frame(width: 90, height: 90)
                     }
-                    // Display other's reaction
                 }
-                //.background(.sugarBlueLowContrast)
-                .clipShape(Capsule())
                 .padding(.leading, 20)
                 
                 VStack(alignment: .leading) {
-                    HStack {
-                        othersReaction
-                        
-                        Spacer()
-                    }
+                    othersReaction
                     
-                    if userStatus.connUserStatus.commentMade != nil && userStatus.connUserStatus.commentMade != "" {
-                        HStack {
-                            Text(userStatus.connUserStatus.commentMade!)
-                                .font(.system(size: 15))
-                                .padding(5)
-                                .padding(.horizontal, 10)
-                                .background(.bar)
-                                .foregroundStyle(.sugarOrange)
-                                .clipShape(Capsule())
-                                .offset(x: -30, y: 10)
-                                .lineLimit(2)
-                            
-                            Spacer()
-                        }
-                    }
+                    Text(userStatus.connUserStatus.commentMade ?? "")
+                        .font(.system(size: 15))
+                        .padding(5)
+                        .padding(.horizontal, 10)
+                        .background(.bar)
+                        .foregroundStyle(.sugarOrange)
+                        .clipShape(Capsule())
+                        .offset(x: -22, y: 10)
+                        .lineLimit(2)
+                        .offset(x: userStatus.connUserStatus.commentMade != nil && userStatus.connUserStatus.commentMade != "" ? 0 : 300)
+                        .opacity(userStatus.connUserStatus.commentMade != nil && userStatus.connUserStatus.commentMade != "" ? 1 : 0)
+                        .animation(.bouncy(duration: 0.2, extraBounce: -0.1), value: userStatus.connUserStatus.commentMade)
                 }
                 
                 Spacer()
@@ -160,6 +167,9 @@ struct OthersDisplayView: View {
                 withAnimation(.bouncy(duration: 0.25, extraBounce: -0.05)) {
                     showCommentEnter = false
                 }
+                Task {
+                    userStatus.currUserStatus = await display.uploadComment(userComment, status: userStatus.currUserStatus)
+                }
             } label: {
                 Label("Show Reaction", systemImage: "suit.heart")
                     .foregroundStyle(.foreground)
@@ -207,11 +217,11 @@ struct OthersDisplayView: View {
         .clipped()
         .clipShape(RoundedRectangle(cornerRadius: 70))
         .padding(.vertical)
-        .onChange(of: userComment) {
-            Task {
-                userStatus.currUserStatus = await display.uploadComment(userComment, status: userStatus.currUserStatus)
-            }
-        }
+//        .onChange(of: userComment) {
+//            Task {
+//                userStatus.currUserStatus = await display.uploadComment(userComment, status: userStatus.currUserStatus)
+//            }
+//        }
     }
     
     ///
@@ -248,7 +258,7 @@ struct OthersDisplayView: View {
                     .foregroundStyle(.sugarPink)
                     .opacity(userStatus.currUserStatus.reaction == defau ? 1 : 0)
                 Label(defau, systemImage: defau)
-                    .foregroundStyle(userStatus.currUserStatus.reaction == defau ? .white : .sugarGreen)
+                    .foregroundStyle(userStatus.currUserStatus.reaction == defau ? .white : .sugarBlue)
                     .offset(y: 0.5)
                     .animation(nil, value: userStatus.currUserStatus.reaction)
             }
@@ -282,8 +292,9 @@ struct OthersDisplayView: View {
                 .background(.sugarPink)
                 .foregroundStyle(.white)
                 .clipShape(Circle())
-                .offset(x: userStatus.connUserStatus.commentMade != nil && userStatus.connUserStatus.commentMade != "" ? -20 : -30,
-                        y: userStatus.connUserStatus.commentMade != nil && userStatus.connUserStatus.commentMade != "" ? 19 : 30)
+                .offset(x: userStatus.connUserStatus.commentMade != nil && userStatus.connUserStatus.commentMade != "" ? -12 : -30,
+                        y: userStatus.connUserStatus.commentMade != nil && userStatus.connUserStatus.commentMade != "" ? 19 : 46)
+                .animation(.bouncy, value: userStatus.connUserStatus.commentMade)
         }
     }
     
