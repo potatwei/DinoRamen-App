@@ -19,8 +19,7 @@ import Foundation
         return currentUserId
     }
     
-    var userComment = ""
-    var showCommentEnter = false
+    
     var showReactions = false
     var emojis = ["😁","😅","🥰","😣","😭","😋","🙃","🤪","😪","😵‍💫","🤢","🤒"]
     
@@ -37,6 +36,21 @@ import Foundation
             return newStatus
         } catch {
             print("Error setting reaction document in database: \(error)")
+            return status
+        }
+    }
+    
+    ///
+    func uploadComment(_ comment: String, status: Status) async -> Status {
+        var newStatus = status
+        newStatus.commentMade = comment
+        
+        do {
+            try await db.document("users/\(currentUserId)/status/user_status").setData(newStatus.asDictionary())
+            print("Successfully set commentMade in database")
+            return newStatus
+        } catch {
+            print("Error setting commentMade document in database: \(error)")
             return status
         }
     }

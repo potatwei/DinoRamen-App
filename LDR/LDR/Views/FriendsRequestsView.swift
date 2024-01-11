@@ -50,11 +50,9 @@ struct FriendsRequestsView: View {
                 }
             }
         }
-        .onAppear {
-            Task {
-                await friendsRequests.fetchReceivedId()
-                await friendsRequests.fetchUsers()
-            }
+        .task {
+            await friendsRequests.fetchReceivedId()
+            await friendsRequests.fetchUsers()
         }
     }
 }

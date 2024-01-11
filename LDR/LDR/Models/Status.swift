@@ -14,5 +14,6 @@ struct Status: Codable {
     var comment: String
     var image: String?
     var imageId: String?
+    var commentMade: String?
     var reaction: String = ""
 }

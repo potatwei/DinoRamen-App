@@ -62,10 +62,8 @@ struct ProfileView: View {
             })
             .photosPicker(isPresented: $profile.showPhotoPicker, selection: $profile.selectedPhoto, matching: .images, preferredItemEncoding: .automatic)
         }
-        .onAppear() {
-            Task {
-                await currentUserInfo.fetchCurrentUser()
-            }
+        .task {
+            await currentUserInfo.fetchCurrentUser()
         }
     }
     

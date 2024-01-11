@@ -36,6 +36,7 @@ class UserStatusEnvironment: ObservableObject {
             let document = try await db.collection("users").document(currentUserId).collection("status").document("user_status").getDocument()
             if document.exists {
                 currUserStatus = try document.data(as: Status.self)
+                print("get current user status Successfully")
             }
         } catch {
             print("Unable to update Status or fail to get document \(error)")

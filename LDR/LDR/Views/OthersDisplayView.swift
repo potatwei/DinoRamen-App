@@ -10,6 +10,8 @@ import SwiftUI
 struct OthersDisplayView: View {
     @Bindable var display = OthersDisplayViewViewModel()
     @Binding var tabSelection: Int
+    @State var showCommentEnter = false
+    @State var userComment = ""
     
     @EnvironmentObject var userStatus: UserStatusEnvironment
     
@@ -68,13 +70,10 @@ struct OthersDisplayView: View {
             }
             .frame(width: 322)
         }
-        .onAppear {
-            Task {
-                await userStatus.fetchCurrentUserStatus()
-                await userStatus.fetchOtherUserStatus()
-            }
+        .task {
+            await userStatus.fetchCurrentUserStatus()
+            await userStatus.fetchOtherUserStatus()
         }
-        
     }
     
     ///
@@ -87,27 +86,27 @@ struct OthersDisplayView: View {
                 
                 // Exclamationmark
                 reactionButton(defau: "exclamationmark.2")
-                    .offset(x: display.showCommentEnter ? -55 : 0)
+                    .offset(x: showCommentEnter ? -55 : 0)
                 
                 // Heart
                 reactionButton(defau: "heart.fill")
-                    .offset(x: display.showCommentEnter ? -115 : 0)
+                    .offset(x: showCommentEnter ? -115 : 0)
         
                 // Thumbs Down
                 reactionButton(defau: "hand.thumbsdown.fill")
-                    .offset(x: display.showCommentEnter ? -175 : 0)
+                    .offset(x: showCommentEnter ? -175 : 0)
             }
-            .opacity(display.showCommentEnter ? 0.2 : 1)
+            .opacity(showCommentEnter ? 0.2 : 1)
             // Show Reaction Button
             Button {
                 withAnimation(.bouncy(duration: 0.25, extraBounce: -0.05)) {
-                    display.showCommentEnter = false
+                    showCommentEnter = false
                 }
             } label: {
                 Label("Show Reaction", systemImage: "suit.heart")
                     .foregroundStyle(.foreground)
             }
-            .offset(x: display.showCommentEnter ? 0 : -220 , y: 1)
+            .offset(x: showCommentEnter ? 0 : -220 , y: 1)
         }
         .labelStyle(.iconOnly)
         .font(.system(size: 28))
@@ -121,17 +120,17 @@ struct OthersDisplayView: View {
                 .frame(width: 255, height: 60)
                 .foregroundStyle(.regularMaterial)
             
-            TextField("Comment...", text: $display.userComment)
-                .offset(x: display.showCommentEnter ? 0 : 200)
+            TextField("Comment...", text: $userComment)
+                .offset(x: showCommentEnter ? 0 : 200)
                 .padding()
-                .frame(width: display.showCommentEnter ? 255 : 0)
+                .frame(width: showCommentEnter ? 255 : 0)
                 //.background(.sugarBlue)
                 .autocorrectionDisabled()
                 .textInputAutocapitalization(.never)
             
             Button {
                 withAnimation(.bouncy(duration: 0.25, extraBounce: -0.2)) {
-                    display.showCommentEnter = true
+                    showCommentEnter = true
                 }
             } label: {
                 Label("Text Comment", systemImage: "text.bubble")
@@ -139,15 +138,20 @@ struct OthersDisplayView: View {
                     .font(.system(size: 25))
                     .foregroundStyle(.foreground)
             }
-            .offset(x: display.showCommentEnter ? 200 : 0)
-            .sensoryFeedback(.impact(weight: .light, intensity: 0.7), trigger: display.showCommentEnter)
+            .offset(x: showCommentEnter ? 200 : 0)
+            .sensoryFeedback(.impact(weight: .light, intensity: 0.7), trigger: showCommentEnter)
             
             
         }
-        .frame(width: display.showCommentEnter ? 255 : 60)
+        .frame(width: showCommentEnter ? 255 : 60)
         .clipped()
         .clipShape(RoundedRectangle(cornerRadius: 70))
         .padding(.vertical)
+        .onChange(of: userComment) {
+            Task {
+                userStatus.currUserStatus = await display.uploadComment(userComment, status: userStatus.currUserStatus)
+            }
+        }
     }
     
     ///
@@ -160,7 +164,7 @@ struct OthersDisplayView: View {
             
             reactionButtons
         }
-        .frame(width: display.showCommentEnter ? 60 : 255)
+        .frame(width: showCommentEnter ? 60 : 255)
         .clipped()
         .clipShape(RoundedRectangle(cornerRadius: 70))
         .padding(.vertical)

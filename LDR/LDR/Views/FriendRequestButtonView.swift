@@ -40,10 +40,8 @@ struct FriendRequestButtonView: View {
                   friendRequestButton.receivedFriendRequests.contains(friendRequestButton.userToDisplay.id) ||
                   friendRequestButton.userToDisplay.id == friendRequestButton.currentUserId)
         .opacity(friendRequestButton.userToDisplay.id == friendRequestButton.currentUserId ? 0 : 1)
-        .onAppear {
-            Task {
-                await friendRequestButton.updateFriendStatus()
-            }
+        .task {
+            await friendRequestButton.updateFriendStatus()
         }
     }
 }
