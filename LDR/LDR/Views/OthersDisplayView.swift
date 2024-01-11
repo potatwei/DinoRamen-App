@@ -18,76 +18,22 @@ struct OthersDisplayView: View {
     var body: some View {
         VStack {
             HStack {
-                HStack {
-                    ZStack {
-                        if userStatus.currUserStatus.image != nil {
-                            // Show own uploaded image
-                            AsyncImage(url: URL(string: userStatus.currUserStatus.image!)) { image in
-                                image
-                                    .resizable()
-                                    .scaledToFill()
-                            } placeholder: {
-                                Circle()
-                                    .foregroundStyle(.gray)
-                            }
-                            .frame(width: 90, height: 90)
-                            .clipShape(Circle())
-                            .opacity(0.7)
-                            
-                            // Show own emoji
-                            Text(display.emojis[userStatus.currUserStatus.emoji])
-                                .font(.title)
-                                .offset(x: -30, y: -30)
-                                .opacity(0.7)
-                        } else {
-                            // Only show own emoji
-                            ZStack {
-                                Circle().foregroundStyle(.regularMaterial)
-                                
-                                Text(display.emojis[userStatus.currUserStatus.emoji])
-                                    .font(.system(size: 80))
-                                    .opacity(0.7)
-                            }
-                            .frame(width: 90, height: 90)
-                        }
-                        // Show own comment
-                        if userStatus.currUserStatus.comment != "" {
-                            Image(systemName: "ellipsis")
-                                .font(.system(size: 17))
-                                .fontWeight(.semibold)
-                                .padding(.horizontal, 10)
-                                .padding(.vertical, 5)
-                                .background(.thickMaterial)
-                                .clipShape(.capsule)
-                                .offset(y: 24)
-                        }
-                        
-                        // Go to UserEditView
-                        Button {
-                            tabSelection = 1
-                        } label: {
-                            Circle().foregroundStyle(.clear)
-                        }
-                        .frame(width: 90, height: 90)
+                ZStack {
+                    if userStatus.currUserStatus.image != nil {
+                        ownImageAndOwnEmoji // Display Image and Own's Emoji
+                    } else {
+                        ownEmojiOnly // Display Own's Emoji Only
                     }
+                    ifOwnHasComment // Show own comment in three dots
+                    
+                    userEditViewButton // Go to UserEditView
                 }
                 .padding(.leading, 20)
                 
                 VStack(alignment: .leading) {
-                    othersReaction
+                    othersReaction // Show other's reaction on own status
                     
-                    Text(userStatus.connUserStatus.commentMade ?? "")
-                        .font(.system(size: 15))
-                        .padding(5)
-                        .padding(.horizontal, 10)
-                        .background(.bar)
-                        .foregroundStyle(.sugarOrange)
-                        .clipShape(Capsule())
-                        .offset(x: -22, y: 10)
-                        .lineLimit(2)
-                        .offset(x: userStatus.connUserStatus.commentMade != nil && userStatus.connUserStatus.commentMade != "" ? 0 : 300)
-                        .opacity(userStatus.connUserStatus.commentMade != nil && userStatus.connUserStatus.commentMade != "" ? 1 : 0)
-                        .animation(.bouncy(duration: 0.2, extraBounce: -0.1), value: userStatus.connUserStatus.commentMade)
+                    othersCommentEdit // Show other's comment on own status
                 }
                 
                 Spacer()
@@ -118,8 +64,10 @@ struct OthersDisplayView: View {
                     .frame(maxWidth: 260, maxHeight: 260)
                     .offset(y: 50)
                 
-                othersComment
-                    .font(.system(size: 27))
+                if userStatus.connUserStatus.comment != "" {
+                    othersComment
+                        .font(.system(size: 27))
+                }
             }
 
             Spacer()
@@ -139,6 +87,73 @@ struct OthersDisplayView: View {
             await userStatus.fetchCurrentUserStatus()
             await userStatus.fetchOtherUserStatus()
         }
+    }
+    
+    ///
+    @ViewBuilder
+    var othersCommentEdit: some View {
+        Text(userStatus.connUserStatus.commentMade ?? "")
+            .font(.system(size: 15))
+            .padding(5)
+            .padding(.horizontal, 10)
+            .background(.bar)
+            .foregroundStyle(.sugarOrange)
+            .clipShape(Capsule())
+            .offset(x: -22, y: 10)
+            .lineLimit(2)
+            // Below are for fly-in animation
+            .offset(x: userStatus.connUserStatus.commentMade != nil && userStatus.connUserStatus.commentMade != "" ? 0 : 300)
+            .opacity(userStatus.connUserStatus.commentMade != nil && userStatus.connUserStatus.commentMade != "" ? 1 : 0)
+            .animation(.bouncy(duration: 0.2, extraBounce: -0.1), value: userStatus.connUserStatus.commentMade)
+    }
+    
+    ///
+    @ViewBuilder
+    var ifOwnHasComment: some View {
+        if userStatus.currUserStatus.comment != "" {
+            Image(systemName: "ellipsis")
+                .font(.system(size: 17))
+                .fontWeight(.semibold)
+                .padding(.horizontal, 10)
+                .padding(.vertical, 5)
+                .background(.thickMaterial)
+                .clipShape(.capsule)
+                .offset(y: 24)
+        }
+    }
+    
+    ///
+    @ViewBuilder
+    var userEditViewButton: some View {
+        Button {
+            tabSelection = 1
+        } label: {
+            Circle().foregroundStyle(.clear)
+        }
+        .frame(width: 90, height: 90)
+    }
+    
+    ///
+    @ViewBuilder
+    var ownImageAndOwnEmoji: some View {
+        // Show own uploaded image
+        AsyncImage(url: URL(string: userStatus.currUserStatus.image!)) { image in
+            image
+                .resizable()
+                .scaledToFill()
+        } placeholder: {
+            Circle()
+                .foregroundStyle(.gray)
+        }
+        .frame(width: 90, height: 90)
+        .clipShape(Circle())
+        .opacity(0.7)
+        
+        // Show own emoji
+        Text(display.emojis[userStatus.currUserStatus.emoji])
+            .font(.title)
+            .offset(x: -30, y: -30)
+            .opacity(0.7)
     }
     
     ///
@@ -222,6 +237,20 @@ struct OthersDisplayView: View {
 //                userStatus.currUserStatus = await display.uploadComment(userComment, status: userStatus.currUserStatus)
 //            }
 //        }
+    }
+    
+    ///
+    @ViewBuilder
+    var ownEmojiOnly: some View {
+        // Only show own emoji
+        ZStack {
+            Circle().foregroundStyle(.regularMaterial)
+            
+            Text(display.emojis[userStatus.currUserStatus.emoji])
+                .font(.system(size: 80))
+                .opacity(0.7)
+        }
+        .frame(width: 90, height: 90)
     }
     
     ///
