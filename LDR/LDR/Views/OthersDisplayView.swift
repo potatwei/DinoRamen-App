@@ -38,16 +38,17 @@ struct OthersDisplayView: View {
                                 .font(.title)
                                 .offset(x: 25, y: -25)
                         }
-                        Text(userStatus.currUserStatus.comment)
-                            .font(.system(size: 20))
-                            .fontWeight(.semibold)
-                            .padding(.horizontal, 15)
-                            .padding(.vertical, 6)
-                            .background(.thickMaterial)
-                            .clipShape(.capsule)
-                            .padding(.trailing, 25)
+                        
                         
                     }
+                    Text(userStatus.currUserStatus.comment)
+                        .font(.system(size: 20))
+                        .fontWeight(.semibold)
+                        .padding(.horizontal, 15)
+                        .padding(.vertical, 6)
+                        .background(.thickMaterial)
+                        .clipShape(.capsule)
+                        .padding(.trailing, 25)
 
                      // Display other's reaction
                 }

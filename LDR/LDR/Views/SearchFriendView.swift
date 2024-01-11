@@ -42,6 +42,7 @@ struct SearchFriendView: View {
             }
             if friendToSearch == "" {
                 VStack {
+                    Spacer()
                     Image(systemName: colorScheme == .light ? "person.crop.circle.fill.badge.plus" : "person.crop.circle.badge.plus")
                         .foregroundStyle(Color.sugarOrange)
                         .font(.system(size: 100))
@@ -57,7 +58,8 @@ struct SearchFriendView: View {
                         .foregroundStyle(.gray)
                         .font(.system(size: 17))
                 }
-                .offset(y:-360)
+                .offset(y:-340)
+                .ignoresSafeArea(.keyboard, edges: .bottom)
             }
         }
     }
