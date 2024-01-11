@@ -18,12 +18,45 @@ struct OthersDisplayView: View {
     var body: some View {
         VStack {
             HStack {
-                Circle() // Profile Image
-                    .frame(height: 80)
-                    .padding(10)
-                    .padding(.leading, 20)
+                HStack {
+                    if userStatus.currUserStatus.image != nil {
+                        ZStack {
+                            // Show own uploaded image
+                            AsyncImage(url: URL(string: userStatus.currUserStatus.image!)) { image in
+                                image
+                                    .resizable()
+                                    .scaledToFill()
+                            } placeholder: {
+                                Circle()
+                                    .foregroundStyle(.gray)
+                            }
+                            .frame(width: 80, height: 80)
+                            .clipShape(Circle())
+                            .padding(10)
+                            
+                            Text(display.emojis[userStatus.currUserStatus.emoji])
+                                .font(.title)
+                                .offset(x: 25, y: -25)
+                        }
+                        Text(userStatus.currUserStatus.comment)
+                            .font(.system(size: 20))
+                            .fontWeight(.semibold)
+                            .padding(.horizontal, 15)
+                            .padding(.vertical, 6)
+                            .background(.thickMaterial)
+                            .clipShape(.capsule)
+                            .padding(.trailing, 25)
+                        
+                    }
+
+                     // Display other's reaction
+                }
+                .background(.sugarBlueLowContrast)
+                .clipShape(Capsule())
+                .border(/*@START_MENU_TOKEN@*/Color.black/*@END_MENU_TOKEN@*/)
+                .padding(.leading, 20)
                 
-                othersReaction // Display other's reaction
+                othersReaction
                 
                 Spacer()
                 
@@ -206,7 +239,7 @@ struct OthersDisplayView: View {
                 .labelStyle(.iconOnly)
                 .foregroundStyle(.sugarYellow)
         }
-        .padding(.trailing, 25)
+        .padding(.trailing, 20)
         .font(.system(size: 37))
         .offset(y: -22)
         .sensoryFeedback(.impact(weight: .heavy, intensity: 0.7), trigger: tabSelection) // Provide feedback when change tab
@@ -222,7 +255,7 @@ struct OthersDisplayView: View {
                 .background(.bar)
                 .foregroundStyle(.tint)
                 .clipShape(Circle())
-                .offset(x: -39, y: 30)
+                .offset(x: -32, y: 36)
         }
     }
     
