@@ -36,9 +36,10 @@ struct OthersDisplayView: View {
                     
                     VStack {
                         othersEmoji // Others Emoji Displayed
-                            .frame(width: 100,height: 100)
+                            .frame(maxWidth: 100,maxHeight: 100)
                         
-                        Spacer()
+                        Rectangle()
+                            .foregroundStyle(.clear)
                         
                         othersComment // Display other's comment
                             .font(.system(size: 18))
@@ -47,7 +48,7 @@ struct OthersDisplayView: View {
                 }
             } else {
                 othersEmoji // Others Emoji Displayed
-                    .frame(width: 260,height: 260)
+                    .frame(maxWidth: 260, maxHeight: 260)
                     .offset(y: 50)
                 
                 othersComment
@@ -63,23 +64,7 @@ struct OthersDisplayView: View {
                 
                 Spacer()
                 
-                ZStack {
-                    Circle()
-                        .frame(width: 60)
-                        .foregroundStyle(.regularMaterial)
-                    
-                    Button {
-                        withAnimation {
-                            display.showCommentEnter.toggle()
-                        }
-                    } label: {
-                        Label("Text Comment", systemImage: "text.bubble")
-                            .labelStyle(.iconOnly)
-                            .font(.system(size: 25))
-                            .foregroundStyle(.foreground)
-                    }
-                    //.sensoryFeedback(.impact(weight: .light, intensity: 0.7), trigger: )
-                }
+                editComment
             }
             .frame(width: 322)
         }
@@ -112,22 +97,58 @@ struct OthersDisplayView: View {
                 reactionButton(defau: "hand.thumbsdown.fill")
                     .offset(x: display.showCommentEnter ? -175 : 0)
             }
-            .opacity(display.showCommentEnter ? 0 : 1)
+            .opacity(display.showCommentEnter ? 0.2 : 1)
             // Show Reaction Button
             Button {
-                
+                withAnimation(.bouncy(duration: 0.25, extraBounce: -0.05)) {
+                    display.showCommentEnter = false
+                }
             } label: {
                 Label("Show Reaction", systemImage: "suit.heart")
-                    .foregroundStyle(.black)
+                    .foregroundStyle(.foreground)
             }
-            .offset(x: display.showCommentEnter ? 0 : -200 , y: 1)
+            .offset(x: display.showCommentEnter ? 0 : -220 , y: 1)
         }
         .labelStyle(.iconOnly)
         .font(.system(size: 28))
     }
     
     ///
-    //@ViewBuilder
+    @ViewBuilder
+    var editComment: some View {
+        ZStack {
+            RoundedRectangle(cornerRadius: 70)
+                .frame(width: 255, height: 60)
+                .foregroundStyle(.regularMaterial)
+            
+            TextField("Comment...", text: $display.userComment)
+                .offset(x: display.showCommentEnter ? 0 : 200)
+                .padding()
+                .frame(width: display.showCommentEnter ? 255 : 0)
+                //.background(.sugarBlue)
+                .autocorrectionDisabled()
+                .textInputAutocapitalization(.never)
+            
+            Button {
+                withAnimation(.bouncy(duration: 0.25, extraBounce: -0.2)) {
+                    display.showCommentEnter = true
+                }
+            } label: {
+                Label("Text Comment", systemImage: "text.bubble")
+                    .labelStyle(.iconOnly)
+                    .font(.system(size: 25))
+                    .foregroundStyle(.foreground)
+            }
+            .offset(x: display.showCommentEnter ? 200 : 0)
+            .sensoryFeedback(.impact(weight: .light, intensity: 0.7), trigger: display.showCommentEnter)
+            
+            
+        }
+        .frame(width: display.showCommentEnter ? 255 : 60)
+        .clipped()
+        .clipShape(RoundedRectangle(cornerRadius: 70))
+        .padding(.vertical)
+    }
     
     ///
     @ViewBuilder
@@ -225,8 +246,8 @@ struct OthersDisplayView: View {
         } placeholder: {
             RoundedRectangle(cornerRadius: 25.0)
         }
-        .scaledToFill()
         .frame(maxWidth: 280, maxHeight: 400)
+        .scaledToFit()
         .clipShape(RoundedRectangle(cornerRadius: 25.0))
     }
     
