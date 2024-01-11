@@ -19,8 +19,8 @@ struct OthersDisplayView: View {
         VStack {
             HStack {
                 HStack {
-                    if userStatus.currUserStatus.image != nil {
-                        ZStack {
+                    ZStack {
+                        if userStatus.currUserStatus.image != nil {
                             // Show own uploaded image
                             AsyncImage(url: URL(string: userStatus.currUserStatus.image!)) { image in
                                 image
@@ -34,30 +34,54 @@ struct OthersDisplayView: View {
                             .clipShape(Circle())
                             .padding(10)
                             
+                            // Show own emoji
                             Text(display.emojis[userStatus.currUserStatus.emoji])
                                 .font(.title)
-                                .offset(x: 25, y: -25)
+                                .offset(x: -25, y: -25)
+                        } else {
+                            // Only show own emoji
                         }
-                        
-                        
+                        // Show own comment
+                        if userStatus.currUserStatus.comment != "" {
+                            Image(systemName: "ellipsis")
+                                .font(.system(size: 17))
+                                .fontWeight(.semibold)
+                                .padding(.horizontal, 10)
+                                .padding(.vertical, 5)
+                                .background(.thickMaterial)
+                                .clipShape(.capsule)
+                                .offset(y: 22)
+                        }
                     }
-                    Text(userStatus.currUserStatus.comment)
-                        .font(.system(size: 20))
-                        .fontWeight(.semibold)
-                        .padding(.horizontal, 15)
-                        .padding(.vertical, 6)
-                        .background(.thickMaterial)
-                        .clipShape(.capsule)
-                        .padding(.trailing, 25)
-
-                     // Display other's reaction
+                    // Display other's reaction
                 }
-                .background(.sugarBlueLowContrast)
+                //.background(.sugarBlueLowContrast)
                 .clipShape(Capsule())
-                .border(/*@START_MENU_TOKEN@*/Color.black/*@END_MENU_TOKEN@*/)
                 .padding(.leading, 20)
                 
-                othersReaction
+                VStack(alignment: .leading) {
+                    HStack {
+                        othersReaction
+                        
+                        Spacer()
+                    }
+                    
+                    if userStatus.connUserStatus.commentMade != nil && userStatus.connUserStatus.commentMade != "" {
+                        HStack {
+                            Text(userStatus.connUserStatus.commentMade!)
+                                .font(.system(size: 15))
+                                .padding(5)
+                                .padding(.horizontal, 10)
+                                .background(.bar)
+                                .foregroundStyle(.sugarOrange)
+                                .clipShape(Capsule())
+                                .offset(x: -30, y: 10)
+                                .lineLimit(2)
+                            
+                            Spacer()
+                        }
+                    }
+                }
                 
                 Spacer()
                 
@@ -154,13 +178,17 @@ struct OthersDisplayView: View {
                 .frame(width: 255, height: 60)
                 .foregroundStyle(.regularMaterial)
             
-            TextField("Comment...", text: $userComment)
+            TextField(userStatus.currUserStatus.commentMade != nil && userStatus.currUserStatus.commentMade != "" ?  userStatus.currUserStatus.commentMade! :"Comment...", text: $userComment)
                 .offset(x: showCommentEnter ? 0 : 200)
                 .padding()
                 .frame(width: showCommentEnter ? 255 : 0)
-                //.background(.sugarBlue)
                 .autocorrectionDisabled()
                 .textInputAutocapitalization(.never)
+                .onSubmit {
+                    Task {
+                        userStatus.currUserStatus = await display.uploadComment(userComment, status: userStatus.currUserStatus)
+                    }
+                }
             
             Button {
                 withAnimation(.bouncy(duration: 0.25, extraBounce: -0.2)) {
@@ -174,8 +202,6 @@ struct OthersDisplayView: View {
             }
             .offset(x: showCommentEnter ? 200 : 0)
             .sensoryFeedback(.impact(weight: .light, intensity: 0.7), trigger: showCommentEnter)
-            
-            
         }
         .frame(width: showCommentEnter ? 255 : 60)
         .clipped()
@@ -252,11 +278,12 @@ struct OthersDisplayView: View {
         if userStatus.connUserStatus.reaction != "" {
             Image(systemName: userStatus.connUserStatus.reaction)
                 .font(.system(size: 20))
-                .padding(8)
-                .background(.bar)
-                .foregroundStyle(.tint)
+                .padding(7)
+                .background(.sugarPink)
+                .foregroundStyle(.white)
                 .clipShape(Circle())
-                .offset(x: -32, y: 36)
+                .offset(x: userStatus.connUserStatus.commentMade != nil && userStatus.connUserStatus.commentMade != "" ? -20 : -30,
+                        y: userStatus.connUserStatus.commentMade != nil && userStatus.connUserStatus.commentMade != "" ? 19 : 30)
         }
     }
     
