@@ -20,14 +20,20 @@ struct OthersDisplayView: View {
         VStack {
             HStack {
                 ZStack {
-                    if userStatus.currUserStatus.image != nil {
-                        ownImageAndOwnEmoji // Display Image and Own's Emoji
+                    if userStatus.connUserStatus.id != "" && userStatus.currUserStatus.id != "" {
+                        if userStatus.currUserStatus.image != nil {
+                            ownImageAndOwnEmoji // Display Image and Own's Emoji
+                        } else {
+                            ownEmojiOnly // Display Own's Emoji Only
+                        }
+                        ifOwnHasComment // Show own comment in three dots
+                        
+                        userEditViewButton // Go to UserEditView
                     } else {
-                        ownEmojiOnly // Display Own's Emoji Only
+                        ShimmerEffectBox() // Display loading screen when still getting info from server
+                            .frame(width: 90, height: 90)
+                            .clipShape(Circle())
                     }
-                    ifOwnHasComment // Show own comment in three dots
-                    
-                    userEditViewButton // Go to UserEditView
                 }
                 .padding(.leading, 20)
                 
@@ -44,31 +50,38 @@ struct OthersDisplayView: View {
             
             Divider().frame(maxWidth: 330).padding()
             
-            if userStatus.connUserStatus.image != nil {
-                ZStack {
-                    othersPhoto // Photo to display
+            if userStatus.connUserStatus.id != "" && userStatus.currUserStatus.id != "" {
+                if userStatus.connUserStatus.image != nil {
+                    ZStack {
+                        othersPhoto // Photo to display
+                        
+                        VStack {
+                            othersEmoji // Others Emoji Displayed
+                                .frame(maxWidth: 100,maxHeight: 100)
+                            
+                            Rectangle()
+                                .foregroundStyle(.clear)
+                            
+                            othersComment // Display other's comment
+                                .font(.system(size: 18))
+                                .offset(y: -25)
+                        }
+                    }
+                } else {
+                    othersEmoji // Others Emoji Displayed
+                        .frame(maxWidth: 260, maxHeight: 260)
+                        .offset(y: 50)
                     
-                    VStack {
-                        othersEmoji // Others Emoji Displayed
-                            .frame(maxWidth: 100,maxHeight: 100)
-                        
-                        Rectangle()
-                            .foregroundStyle(.clear)
-                        
-                        othersComment // Display other's comment
-                            .font(.system(size: 18))
-                            .offset(y: -25)
+                    if userStatus.connUserStatus.comment != "" {
+                        othersComment
+                            .font(.system(size: 27))
                     }
                 }
             } else {
-                othersEmoji // Others Emoji Displayed
-                    .frame(maxWidth: 260, maxHeight: 260)
-                    .offset(y: 50)
-                
-                if userStatus.connUserStatus.comment != "" {
-                    othersComment
-                        .font(.system(size: 27))
-                }
+                ShimmerEffectBox()
+                    .frame(maxWidth: 280, maxHeight: 400)
+                    .clipShape(RoundedRectangle(cornerRadius: 25.0))
+                    .padding(.top, 60)
             }
 
             Spacer()
@@ -146,8 +159,7 @@ struct OthersDisplayView: View {
                 .resizable()
                 .scaledToFill()
         } placeholder: {
-            Circle()
-                .foregroundStyle(.gray)
+            ShimmerEffectBox()
         }
         .accentColor(refreshImage ? .black : .black)
         .frame(width: 90, height: 90)
@@ -356,7 +368,8 @@ struct OthersDisplayView: View {
             Image
                 .resizable()
         } placeholder: {
-            RoundedRectangle(cornerRadius: 25.0)
+            ShimmerEffectBox()
+                .clipShape(RoundedRectangle(cornerRadius: 25.0))
         }
         .accentColor(refreshImage ? .black : .black)
         .frame(maxWidth: 280, maxHeight: 400)

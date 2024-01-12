@@ -30,10 +30,7 @@ struct UserBarView: View {
                 .resizable()
                 .scaledToFill()
         } placeholder: {
-            Image(systemName: "person.circle")
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-                .foregroundStyle(.blue)
+            ShimmerEffectBox()
         }
         .frame(width: 50, height: 50)
         .clipShape(Circle())

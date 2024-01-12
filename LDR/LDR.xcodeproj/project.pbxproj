@@ -18,6 +18,7 @@
 		7F0B6A142B49DFD3003325C5 /* CameraService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F0B6A132B49DFD3003325C5 /* CameraService.swift */; };
 		7F0B6A162B49E7E6003325C5 /* CameraView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F0B6A152B49E7E6003325C5 /* CameraView.swift */; };
 		7F0B6A182B49EB4C003325C5 /* CustomCameraView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F0B6A172B49EB4C003325C5 /* CustomCameraView.swift */; };
+		7F6B6A822B51E29D001B46E2 /* ShimmerEffectBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F6B6A812B51E29D001B46E2 /* ShimmerEffectBox.swift */; };
 		7F73EBDB2B42170B009202CC /* FriendsRequestsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F73EBDA2B42170B009202CC /* FriendsRequestsView.swift */; };
 		7F73EBDD2B42171E009202CC /* FriendsRequestsViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F73EBDC2B42171E009202CC /* FriendsRequestsViewViewModel.swift */; };
 		7F73EBE12B421934009202CC /* FriendRequestButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F73EBE02B421934009202CC /* FriendRequestButtonView.swift */; };
@@ -84,6 +85,7 @@
 		7F0B6A132B49DFD3003325C5 /* CameraService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraService.swift; sourceTree = "<group>"; };
 		7F0B6A152B49E7E6003325C5 /* CameraView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraView.swift; sourceTree = "<group>"; };
 		7F0B6A172B49EB4C003325C5 /* CustomCameraView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCameraView.swift; sourceTree = "<group>"; };
+		7F6B6A812B51E29D001B46E2 /* ShimmerEffectBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShimmerEffectBox.swift; sourceTree = "<group>"; };
 		7F73EBDA2B42170B009202CC /* FriendsRequestsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsRequestsView.swift; sourceTree = "<group>"; };
 		7F73EBDC2B42171E009202CC /* FriendsRequestsViewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsRequestsViewViewModel.swift; sourceTree = "<group>"; };
 		7F73EBE02B421934009202CC /* FriendRequestButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendRequestButtonView.swift; sourceTree = "<group>"; };
@@ -236,6 +238,7 @@
 				7F73EBE42B423557009202CC /* AddFriendButtonView.swift */,
 				7FEDF9E92B3B92E600127A8D /* HeaderView.swift */,
 				7FEDF9EA2B3B92E600127A8D /* LDRButton.swift */,
+				7F6B6A812B51E29D001B46E2 /* ShimmerEffectBox.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -383,6 +386,7 @@
 				7FEDF9FD2B3B92E600127A8D /* LoginViewViewModel.swift in Sources */,
 				7FEDFA042B3B92E600127A8D /* UserEditView.swift in Sources */,
 				7FEDFA0A2B3B92E600127A8D /* Status.swift in Sources */,
+				7F6B6A822B51E29D001B46E2 /* ShimmerEffectBox.swift in Sources */,
 				7FD361552B4CC01000923139 /* UserEnvironment.swift in Sources */,
 				7FEDFA072B3B92E600127A8D /* ApplicationApp.swift in Sources */,
 				7FEDFA022B3B92E600127A8D /* LDRButton.swift in Sources */,

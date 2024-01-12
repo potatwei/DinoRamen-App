@@ -76,10 +76,7 @@ struct ProfileView: View {
                 .resizable()
                 .scaledToFill()
         } placeholder: {
-            Image(systemName: "person.circle")
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-                .foregroundStyle(.blue)
+            ShimmerEffectBox()
         }
         .frame(width: 100, height: 100)
         .clipShape(Circle())
