@@ -16,10 +16,12 @@ struct emojiSwitchButton: View {
             edit()
         } label: {
             Label("Emoji \(offset == -1 ? "Left" : "Right") Switch",
-                  systemImage: "arrowtriangle.\(offset == -1 ? "backward" : "forward").fill")
+                  systemImage: "chevron.compact.\(offset == -1 ? "left" : "right")")
         }
         .font(.system(size: 50))
+        .bold()
         .labelStyle(.iconOnly)
+        .foregroundStyle(offset == -1 ? .sugarYellow : .sugarOrange )
     }
 }
 

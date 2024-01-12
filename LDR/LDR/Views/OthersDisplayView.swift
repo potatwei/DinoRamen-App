@@ -12,6 +12,7 @@ struct OthersDisplayView: View {
     @Binding var tabSelection: Int
     @State var showCommentEnter = false
     @State var userComment = ""
+    @State var refreshImage = false
     
     @EnvironmentObject var userStatus: UserStatusEnvironment
     
@@ -83,6 +84,9 @@ struct OthersDisplayView: View {
             }
             .frame(width: 322)
         }
+        .onDisappear {
+            refreshImage.toggle()
+        }
         .task {
             await userStatus.fetchCurrentUserStatus()
             await userStatus.fetchOtherUserStatus()
@@ -118,7 +122,7 @@ struct OthersDisplayView: View {
                 .padding(.vertical, 5)
                 .background(.thickMaterial)
                 .clipShape(.capsule)
-                .offset(y: 24)
+                .offset(y: 27)
         }
     }
     
@@ -145,6 +149,7 @@ struct OthersDisplayView: View {
             Circle()
                 .foregroundStyle(.gray)
         }
+        .accentColor(refreshImage ? .black : .black)
         .frame(width: 90, height: 90)
         .clipShape(Circle())
         .opacity(0.7)
@@ -179,6 +184,7 @@ struct OthersDisplayView: View {
             .opacity(showCommentEnter ? 0.2 : 1)
             // Show Reaction Button
             Button {
+                hideKeyboard()
                 withAnimation(.bouncy(duration: 0.25, extraBounce: -0.05)) {
                     showCommentEnter = false
                 }
@@ -210,13 +216,14 @@ struct OthersDisplayView: View {
                 .autocorrectionDisabled()
                 .textInputAutocapitalization(.never)
                 .onSubmit {
+                    hideKeyboard()
                     Task {
                         userStatus.currUserStatus = await display.uploadComment(userComment, status: userStatus.currUserStatus)
                     }
                 }
             
             Button {
-                withAnimation(.bouncy(duration: 0.25, extraBounce: -0.2)) {
+                withAnimation(.bouncy(duration: 0.25, extraBounce: -0.05)) {
                     showCommentEnter = true
                 }
             } label: {
@@ -351,6 +358,7 @@ struct OthersDisplayView: View {
         } placeholder: {
             RoundedRectangle(cornerRadius: 25.0)
         }
+        .accentColor(refreshImage ? .black : .black)
         .frame(maxWidth: 280, maxHeight: 400)
         .scaledToFit()
         .clipShape(RoundedRectangle(cornerRadius: 25.0))
