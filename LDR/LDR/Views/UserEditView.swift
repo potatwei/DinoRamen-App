@@ -55,8 +55,9 @@ struct UserEditView: View {
                         Circle()
                             .foregroundStyle(.ultraThinMaterial)
                             .frame(maxHeight: 160)
-                        Text(userEdit.emojis[userStatus.currUserStatus.emoji])
-                            .font(.system(size: 155))
+                        Image(userEdit.emojis[userStatus.currUserStatus.emoji])
+                            .resizable()
+                            .scaledToFit()
                     }
                     .frame(maxWidth: 120, maxHeight: 120)
                     .minimumScaleFactor(0.7)

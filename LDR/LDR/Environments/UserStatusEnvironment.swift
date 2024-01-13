@@ -81,10 +81,10 @@ class UserStatusEnvironment: ObservableObject {
     func changeEmoji(by value: Int) {
         currUserStatus.emoji += value
         if currUserStatus.emoji < 0 {
-            currUserStatus.emoji += 12
+            currUserStatus.emoji += 6
         }
-        if currUserStatus.emoji > 11 {
-            currUserStatus.emoji -= 12
+        if currUserStatus.emoji > 5 {
+            currUserStatus.emoji -= 6
         }
     }
 }

@@ -11,9 +11,8 @@ import Foundation
 import FirebaseStorage
 
 @Observable class UserEditViewViewModel {
-    var emojis = ["😁","😅","🥰","😣","😭","😋","🙃","🤪","😪","😵‍💫","🤢","🤒"]
+    var emojis = ["laugh","sweat","loveEye","loveHeart","largeCry","smallCry"]
     
-    //var emojiToDisplay: Int { return userStatus.emoji } // TODO: Change to String after assets setted up and delete the emojis array
     var takenImage: UIImage?
     var currentUserId: String {
         guard let currentUserId = Auth.auth().currentUser?.uid else {

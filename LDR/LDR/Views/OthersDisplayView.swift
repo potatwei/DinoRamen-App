@@ -57,7 +57,7 @@ struct OthersDisplayView: View {
                         
                         VStack {
                             othersEmoji // Others Emoji Displayed
-                                .frame(maxWidth: 100,maxHeight: 100)
+                                .frame(maxWidth: 120,maxHeight: 120)
                             
                             Rectangle()
                                 .foregroundStyle(.clear)
@@ -69,7 +69,7 @@ struct OthersDisplayView: View {
                     }
                 } else {
                     othersEmoji // Others Emoji Displayed
-                        .frame(maxWidth: 260, maxHeight: 260)
+                        .frame(maxWidth: 270, maxHeight: 270)
                         .offset(y: 50)
                     
                     if userStatus.connUserStatus.comment != "" {
@@ -167,8 +167,10 @@ struct OthersDisplayView: View {
         .opacity(0.7)
         
         // Show own emoji
-        Text(display.emojis[userStatus.currUserStatus.emoji])
-            .font(.title)
+        Image(display.emojis[userStatus.currUserStatus.emoji])
+            .resizable()
+            .scaledToFit()
+            .frame(maxWidth: 40, maxHeight: 40)
             .offset(x: -30, y: -30)
             .opacity(0.7)
     }
@@ -265,8 +267,9 @@ struct OthersDisplayView: View {
         ZStack {
             Circle().foregroundStyle(.regularMaterial)
             
-            Text(display.emojis[userStatus.currUserStatus.emoji])
-                .font(.system(size: 80))
+            Image(display.emojis[userStatus.currUserStatus.emoji])
+                .resizable()
+                .scaledToFit()
                 .opacity(0.7)
         }
         .frame(width: 90, height: 90)
@@ -353,11 +356,11 @@ struct OthersDisplayView: View {
             Circle()
                 .frame(width: 230)
                 .foregroundStyle(.ultraThinMaterial)
-            Text(display.emojis[userStatus.connUserStatus.emoji])
-                .font(.system(size: 300))
+            Image(display.emojis[userStatus.connUserStatus.emoji])
+                .resizable()
+                .scaledToFit()
         }
         .padding(1)
-        .minimumScaleFactor(0.1)
     }
     
     ///

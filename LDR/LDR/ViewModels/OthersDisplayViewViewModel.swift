@@ -21,7 +21,7 @@ import Foundation
     
     
     var showReactions = false
-    var emojis = ["😁","😅","🥰","😣","😭","😋","🙃","🤪","😪","😵‍💫","🤢","🤒"]
+    var emojis = ["laugh","sweat","loveEye","loveHeart","largeCry","smallCry"]
     
     ///
     func selectReaction(_ reaction: String, status: Status) async -> Status {
