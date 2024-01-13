@@ -30,8 +30,8 @@ struct CustomCameraView: View {
                 }
             }
             .frame(maxWidth: 350, maxHeight: 502)
+            .border(.white)
             .clipShape(RoundedRectangle(cornerRadius: 15))
-            .ignoresSafeArea()
             
             
             VStack {

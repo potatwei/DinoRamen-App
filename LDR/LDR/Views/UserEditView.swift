@@ -129,8 +129,8 @@ struct UserEditView: View {
                     .resizable()
             } placeholder: {
                 ShimmerEffectBox()
-                    .clipShape(RoundedRectangle(cornerRadius: 25))
                     .aspectRatio(0.6984127, contentMode: .fit)
+                    .clipShape(RoundedRectangle(cornerRadius: 25))
             }
             .accentColor(refreshImage ? .black : .black)
             .frame(maxWidth: 280, maxHeight: 401)

@@ -19,6 +19,9 @@ struct SearchFriendView: View {
                 friendToSearch
             }, set: {
                 friendToSearch = $0
+                if friendToSearch.isEmpty {
+                    searchFriend.queriedUsers = []
+                }
                 searchFriend.fetchUsers(from: friendToSearch.uppercased())
             }
         )
@@ -38,6 +41,11 @@ struct SearchFriendView: View {
                     Button("Dismiss") {
                         dismiss()
                     }
+                }
+            }
+            .overlay {
+                if searchFriend.queriedUsers.isEmpty, !friendToSearch.isEmpty {
+                    ContentUnavailableView.search
                 }
             }
             if friendToSearch == "" {

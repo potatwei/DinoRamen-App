@@ -54,7 +54,7 @@ class CameraService {
                     session.addOutput(output)
                 }
                 
-                previewLayer.videoGravity = .resizeAspectFill
+                previewLayer.videoGravity = .resize
                 previewLayer.session = session
                 
                 DispatchQueue.global(qos: .background).async {
