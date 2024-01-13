@@ -29,7 +29,8 @@ struct CustomCameraView: View {
                     print(error.localizedDescription)
                 }
             }
-            .clipShape(RoundedRectangle(cornerRadius: 8))
+            .frame(maxWidth: 350, maxHeight: 502)
+            .clipShape(RoundedRectangle(cornerRadius: 15))
             .ignoresSafeArea()
             
             

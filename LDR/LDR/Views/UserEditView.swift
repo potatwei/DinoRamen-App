@@ -51,16 +51,10 @@ struct UserEditView: View {
                     // Left switch
                     emojiSwitchButton(offset: -1) { userStatus.changeEmoji(by: -1) }
                     // Emoji
-                    ZStack{
-                        Circle()
-                            .foregroundStyle(.ultraThinMaterial)
-                            .frame(maxHeight: 160)
-                        Image(userEdit.emojis[userStatus.currUserStatus.emoji])
-                            .resizable()
-                            .scaledToFit()
-                    }
-                    .frame(maxWidth: 120, maxHeight: 120)
-                    .minimumScaleFactor(0.7)
+                    Image(userEdit.emojis[userStatus.currUserStatus.emoji])
+                        .resizable()
+                        .scaledToFit()
+                        .frame(maxWidth: 120, maxHeight: 120)
                     // Right Switch
                     emojiSwitchButton(offset: 1) { userStatus.changeEmoji(by: 1) }
                 }

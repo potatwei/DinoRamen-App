@@ -170,8 +170,8 @@ struct OthersDisplayView: View {
         Image(display.emojis[userStatus.currUserStatus.emoji])
             .resizable()
             .scaledToFit()
-            .frame(maxWidth: 40, maxHeight: 40)
-            .offset(x: -30, y: -30)
+            .frame(maxWidth: 38, maxHeight: 38)
+            .offset(x: -37, y: -20)
             .opacity(0.7)
     }
     
@@ -271,6 +271,7 @@ struct OthersDisplayView: View {
                 .resizable()
                 .scaledToFit()
                 .opacity(0.7)
+                .ignoresSafeArea(.container, edges: .top)
         }
         .frame(width: 90, height: 90)
     }
@@ -352,15 +353,10 @@ struct OthersDisplayView: View {
     ///
     @ViewBuilder
     var othersEmoji: some View {
-        ZStack {
-            Circle()
-                .frame(width: 230)
-                .foregroundStyle(.ultraThinMaterial)
-            Image(display.emojis[userStatus.connUserStatus.emoji])
-                .resizable()
-                .scaledToFit()
-        }
-        .padding(1)
+        Image(display.emojis[userStatus.connUserStatus.emoji])
+            .resizable()
+            .scaledToFit()
+            .padding(1)
     }
     
     ///
