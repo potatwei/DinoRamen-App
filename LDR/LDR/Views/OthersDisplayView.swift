@@ -58,6 +58,7 @@ struct OthersDisplayView: View {
                         VStack {
                             othersEmoji // Others Emoji Displayed
                                 .frame(maxWidth: 120,maxHeight: 120)
+                                .offset(y: -10)
                             
                             Rectangle()
                                 .foregroundStyle(.clear)
@@ -79,9 +80,9 @@ struct OthersDisplayView: View {
                 }
             } else {
                 ShimmerEffectBox()
-                    .frame(maxWidth: 280, maxHeight: 400)
+                    .frame(maxWidth: 280, maxHeight: 440)
                     .clipShape(RoundedRectangle(cornerRadius: 25.0))
-                    .padding(.top, 60)
+                    .padding(.top, 40)
             }
 
             Spacer()
@@ -365,14 +366,13 @@ struct OthersDisplayView: View {
         let imageURL = URL(string: userStatus.connUserStatus.image!)
         AsyncImage(url: imageURL) { Image in
             Image
-                .resizable()
+                .centerCropped()
         } placeholder: {
             ShimmerEffectBox()
-                .clipShape(RoundedRectangle(cornerRadius: 25.0))
+                .aspectRatio(0.63636, contentMode: .fill)
         }
         .accentColor(refreshImage ? .black : .black)
-        .frame(maxWidth: 280, maxHeight: 400)
-        .scaledToFit()
+        .frame(maxWidth: 280, maxHeight: 440)
         .clipShape(RoundedRectangle(cornerRadius: 25.0))
     }
     

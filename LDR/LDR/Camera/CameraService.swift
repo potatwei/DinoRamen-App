@@ -42,19 +42,32 @@ class CameraService {
     }
     
     private func setupCamera(completion: @escaping (Error?) -> ()) {
+        var device = AVCaptureDevice.default(for: .video)
+        
+        if AVCaptureDevice.default(.builtInDualCamera, for: .video, position: .back) != nil {
+            device = AVCaptureDevice.default(.builtInDualCamera, for: .video, position: .back)
+        } else if AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .back) != nil {
+            device = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .back)
+        } else {
+            fatalError("Missing expected back camera device.")
+        }
+        
         let session = AVCaptureSession()
-        if let device = AVCaptureDevice.default(for: .video) {
+        if let device = device {
             do {
                 let input = try AVCaptureDeviceInput(device: device)
                 if session.canAddInput(input) {
+                    print("Can Input")
                     session.addInput(input)
                 }
                 
                 if session.canAddOutput(output) {
+                    print("Can Output")
                     session.addOutput(output)
                 }
                 
-                previewLayer.videoGravity = .resize
+                previewLayer.frame = CGRect(x: 0, y: 0, width: 350, height: 550)
+                previewLayer.videoGravity = .resizeAspectFill
                 previewLayer.session = session
                 
                 DispatchQueue.global(qos: .background).async {

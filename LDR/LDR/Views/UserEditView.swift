@@ -59,7 +59,7 @@ struct UserEditView: View {
                     emojiSwitchButton(offset: 1) { userStatus.changeEmoji(by: 1) }
                 }
                 .sensoryFeedback(.impact(weight: .light, intensity: 0.7), trigger: userStatus.currUserStatus.emoji)
-                .offset(x: 0, y: -90)
+                .offset(x: 0, y: -85)
                 
                 HStack {
                     Image(systemName: "book.pages.fill")
@@ -78,6 +78,9 @@ struct UserEditView: View {
             enteredText = ""
             refreshImage.toggle()
         })
+        .onAppear {
+            refreshImage.toggle()
+        }
         .task {
             // fetch data from database and sync comment
             await userStatus.fetchCurrentUserStatus()
@@ -102,7 +105,7 @@ struct UserEditView: View {
         // Photo to display
         Group {
             RoundedRectangle(cornerRadius: 25.0)
-                .frame(maxWidth: 280, maxHeight: 401)
+                .frame(maxWidth: 280, maxHeight: 440)
                 .foregroundStyle(Gradient(colors: [.sugarMint,.sugarBlue]))
             
             Button {
@@ -126,21 +129,20 @@ struct UserEditView: View {
             let imageURL = URL(string: userStatus.currUserStatus.image!)
             AsyncImage(url: imageURL) { Image in
                 Image
-                    .resizable()
+                    .centerCropped()
+                    .accentColor(refreshImage ? .black : .black)
             } placeholder: {
                 ShimmerEffectBox()
-                    .aspectRatio(0.6984127, contentMode: .fit)
                     .clipShape(RoundedRectangle(cornerRadius: 25))
+                    .aspectRatio(0.63636, contentMode: .fit)
             }
-            .accentColor(refreshImage ? .black : .black)
-            .frame(maxWidth: 280, maxHeight: 401)
-            .scaledToFit()
+            .frame(maxWidth: 280, maxHeight: 440)
             .clipShape(RoundedRectangle(cornerRadius: 25.0))
-            
+    
             RoundedRectangle(cornerRadius: 25.0)
-                .frame(maxWidth: 280, maxHeight: 401)
+                .frame(maxWidth: 280, maxHeight: 440)
                 .foregroundStyle(.ultraThinMaterial)
-                .aspectRatio(0.6984127, contentMode: .fit)
+                .aspectRatio(0.63636, contentMode: .fill)
             
             Button {
                 // turn on camera
@@ -160,9 +162,8 @@ struct UserEditView: View {
     var displayTakenImage: some View {
         Group {
             Image(uiImage: userEdit.takenImage!)
-                .resizable()
-                .frame(maxWidth: 280, maxHeight: 401)
-                .scaledToFit()
+                .centerCropped()
+                .frame(maxWidth: 280, maxHeight: 440)
                 .clipShape(RoundedRectangle(cornerRadius: 25.0))
             
             Button {
@@ -170,7 +171,7 @@ struct UserEditView: View {
                 showCamera = true
             } label: {
                 RoundedRectangle(cornerRadius: 25)
-                    .frame(maxWidth: 220, maxHeight: 315)
+                    .frame(maxWidth: 280, maxHeight: 440)
                     .foregroundStyle(.clear)
             }
         }

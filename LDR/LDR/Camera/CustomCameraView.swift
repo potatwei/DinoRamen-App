@@ -20,6 +20,7 @@ struct CustomCameraView: View {
                 switch result {
                 case .success(let photo):
                     if let data = photo.fileDataRepresentation() {
+                        //capturedImage = cropImage(UIImage(data: data) ?? UIImage())
                         capturedImage = UIImage(data: data)
                         dismiss()
                     } else {
@@ -29,9 +30,11 @@ struct CustomCameraView: View {
                     print(error.localizedDescription)
                 }
             }
-            .frame(maxWidth: 350, maxHeight: 502)
-            .border(.white)
+            .frame(maxWidth: 350, maxHeight: 550)
             .clipShape(RoundedRectangle(cornerRadius: 15))
+            .onDisappear {
+                cameraService.session?.stopRunning()
+            }
             
             
             VStack {
