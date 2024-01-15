@@ -369,7 +369,7 @@ struct OthersDisplayView: View {
                 .centerCropped()
         } placeholder: {
             ShimmerEffectBox()
-                .aspectRatio(0.63636, contentMode: .fill)
+                .aspectRatio(contentMode: .fill)
         }
         .accentColor(refreshImage ? .black : .black)
         .frame(maxWidth: 280, maxHeight: 440)

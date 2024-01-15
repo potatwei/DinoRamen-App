@@ -27,37 +27,32 @@ struct CameraView: UIViewControllerRepresentable {
         viewController.view.backgroundColor = .black
         viewController.view.layer.addSublayer(cameraService.previewLayer)
         
-        
         return viewController
     }
     
     func makeCoordinator() -> Coordinator {
-        Coordinator(self, didFinishProcessingPhoto: didFinishProcessingPhoto)
+        Coordinator(didFinishProcessingPhoto: didFinishProcessingPhoto)
     }
     
     func updateUIViewController(_ uiViewController: UIViewController, context: Context) {
         
     }
-    
-    class Coordinator: NSObject, AVCapturePhotoCaptureDelegate {
-        let parent: CameraView
-        private var didFinishProcessingPhoto: (Result<AVCapturePhoto, Error>) -> ()
-        
-        init(_ parent: CameraView, didFinishProcessingPhoto: @escaping (Result<AVCapturePhoto, Error>) -> ()) {
-            self.parent = parent
-            self.didFinishProcessingPhoto = didFinishProcessingPhoto
-        }
-        
-        func photoOutput(_ output: AVCapturePhotoOutput, didFinishProcessingPhoto photo: AVCapturePhoto, error: Error?) {
-            if let error = error {
-                didFinishProcessingPhoto(.failure(error))
-                return
-            }
-            didFinishProcessingPhoto(.success(photo))
-        }
-    }
 }
 
-//#Preview {
-//    CameraView()
-//}
+class Coordinator: NSObject, AVCapturePhotoCaptureDelegate {
+    //let parent: CameraView
+    private var didFinishProcessingPhoto: (Result<AVCapturePhoto, Error>) -> ()
+    
+    init(didFinishProcessingPhoto: @escaping (Result<AVCapturePhoto, Error>) -> ()) {
+        //self.parent = parent
+        self.didFinishProcessingPhoto = didFinishProcessingPhoto
+    }
+    
+    func photoOutput(_ output: AVCapturePhotoOutput, didFinishProcessingPhoto photo: AVCapturePhoto, error: Error?) {
+        if let error = error {
+            didFinishProcessingPhoto(.failure(error))
+            return
+        }
+        didFinishProcessingPhoto(.success(photo))
+    }
+}

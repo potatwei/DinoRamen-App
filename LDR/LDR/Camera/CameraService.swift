@@ -7,14 +7,18 @@
 
 import Foundation
 import AVFoundation
+import UIKit
 
 class CameraService {
     
     var session: AVCaptureSession?
     var delegate: AVCapturePhotoCaptureDelegate?
+    var usingFrontCamera = false
     
     let output = AVCapturePhotoOutput()
+    var input: AVCaptureDeviceInput?
     let previewLayer = AVCaptureVideoPreviewLayer()
+    
     
     func start(delegate: AVCapturePhotoCaptureDelegate, completion: @escaping (Error?) -> ()) {
         self.delegate = delegate
@@ -43,21 +47,26 @@ class CameraService {
     
     private func setupCamera(completion: @escaping (Error?) -> ()) {
         var device = AVCaptureDevice.default(for: .video)
-        
-        if AVCaptureDevice.default(.builtInDualCamera, for: .video, position: .back) != nil {
-            device = AVCaptureDevice.default(.builtInDualCamera, for: .video, position: .back)
-        } else if AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .back) != nil {
-            device = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .back)
+
+        if !usingFrontCamera {
+            if AVCaptureDevice.default(.builtInDualCamera, for: .video, position: .back) != nil {
+                device = AVCaptureDevice.default(.builtInDualCamera, for: .video, position: .back)
+            } else if AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .back) != nil {
+                device = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .back)
+            } else {
+                fatalError("Missing expected back camera device.")
+            }
         } else {
-            fatalError("Missing expected back camera device.")
+            device = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .front)
         }
-        
+
         let session = AVCaptureSession()
         if let device = device {
             do {
                 let input = try AVCaptureDeviceInput(device: device)
                 if session.canAddInput(input) {
                     print("Can Input")
+                    self.input = input
                     session.addInput(input)
                 }
                 
@@ -80,8 +89,48 @@ class CameraService {
         }
     }
     
+    
+    
     func capturePhoto(with settings: AVCapturePhotoSettings = AVCapturePhotoSettings()) {
         output.capturePhoto(with: settings, delegate: delegate!)
     }
     
+    func switchCamera() {
+        var _ = self.delegate!
+        
+        usingFrontCamera.toggle()
+        
+        if session != nil{
+            guard let _ = self.input else { return }
+            
+            session?.removeInput(self.input!)
+            
+            var device = AVCaptureDevice.default(for: .video)
+
+            if !usingFrontCamera {
+                if AVCaptureDevice.default(.builtInDualCamera, for: .video, position: .back) != nil {
+                    device = AVCaptureDevice.default(.builtInDualCamera, for: .video, position: .back)
+                } else if AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .back) != nil {
+                    device = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .back)
+                } else {
+                    fatalError("Missing expected back camera device.")
+                }
+            } else {
+                device = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .front)
+            }
+            
+            do {
+                let input = try AVCaptureDeviceInput(device: device!)
+                
+                if session!.canAddInput(input) {
+                    print("Can Input")
+                    self.input = input
+                    session!.addInput(input)
+                }
+            } catch {
+                print(error)
+            }
+        }
+
+    }
 }

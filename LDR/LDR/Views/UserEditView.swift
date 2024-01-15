@@ -130,11 +130,10 @@ struct UserEditView: View {
             AsyncImage(url: imageURL) { Image in
                 Image
                     .centerCropped()
-                    .accentColor(refreshImage ? .black : .black)
             } placeholder: {
                 ShimmerEffectBox()
                     .clipShape(RoundedRectangle(cornerRadius: 25))
-                    .aspectRatio(0.63636, contentMode: .fit)
+                    .aspectRatio(contentMode: .fill)
             }
             .frame(maxWidth: 280, maxHeight: 440)
             .clipShape(RoundedRectangle(cornerRadius: 25.0))
@@ -142,7 +141,7 @@ struct UserEditView: View {
             RoundedRectangle(cornerRadius: 25.0)
                 .frame(maxWidth: 280, maxHeight: 440)
                 .foregroundStyle(.ultraThinMaterial)
-                .aspectRatio(0.63636, contentMode: .fill)
+                .aspectRatio(contentMode: .fill)
             
             Button {
                 // turn on camera

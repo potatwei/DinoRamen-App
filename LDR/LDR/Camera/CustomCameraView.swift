@@ -15,7 +15,7 @@ struct CustomCameraView: View {
     @Environment(\.dismiss) private var dismiss
     
     var body: some View {
-        ZStack {
+        VStack {
             CameraView(cameraService: cameraService) { result in
                 switch result {
                 case .success(let photo):
@@ -35,19 +35,35 @@ struct CustomCameraView: View {
             .onDisappear {
                 cameraService.session?.stopRunning()
             }
+            .padding(.top, 50)
             
+            Spacer()
             
-            VStack {
-                Spacer()
+            HStack {
+                
+                
                 Button {
                     cameraService.capturePhoto()
                 } label: {
                     Image(systemName: "circle")
                         .font(.system(size: 72))
-                        .foregroundStyle(.white)
+                        .foregroundStyle(Gradient(colors: [.sugarPink, .sugarYellow]))
                 }
-                .padding(.bottom)
+                
+                Button {
+                    cameraService.switchCamera()
+                } label: {
+                    Label("Switch Camera", systemImage: "camera.rotate.fill")
+                        .labelStyle(.iconOnly)
+                        .font(.system(size: 30))
+                }
             }
+            .padding(.bottom, 25)
+            
         }
     }
+}
+
+#Preview {
+    CustomCameraView(capturedImage: .constant(UIImage()))
 }
