@@ -11,6 +11,7 @@ struct CustomCameraView: View {
     
     let cameraService = CameraService()
     @Binding var capturedImage: UIImage?
+    @State var flashLightOn = false
     
     @Environment(\.dismiss) private var dismiss
     
@@ -40,7 +41,15 @@ struct CustomCameraView: View {
             Spacer()
             
             HStack {
-                
+                Button {
+                    flashLightOn.toggle()
+                    cameraService.flashLightOn = flashLightOn
+                } label: {
+                    Label("FlahLight", systemImage: flashLightOn ? "bolt.fill" : "bolt.slash.fill")
+                        .labelStyle(.iconOnly)
+                        .font(.system(size: 30))
+                        .foregroundStyle(flashLightOn ? .yellow : .white)
+                }
                 
                 Button {
                     cameraService.capturePhoto()
@@ -56,11 +65,12 @@ struct CustomCameraView: View {
                     Label("Switch Camera", systemImage: "camera.rotate.fill")
                         .labelStyle(.iconOnly)
                         .font(.system(size: 30))
+                        .foregroundStyle(.white)
                 }
             }
             .padding(.bottom, 25)
-            
         }
+        .background(.black)
     }
 }
 

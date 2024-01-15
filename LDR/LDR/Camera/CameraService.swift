@@ -14,6 +14,7 @@ class CameraService {
     var session: AVCaptureSession?
     var delegate: AVCapturePhotoCaptureDelegate?
     var usingFrontCamera = false
+    var flashLightOn = false
     
     let output = AVCapturePhotoOutput()
     var input: AVCaptureDeviceInput?
@@ -91,7 +92,9 @@ class CameraService {
     
     
     
-    func capturePhoto(with settings: AVCapturePhotoSettings = AVCapturePhotoSettings()) {
+    func capturePhoto() {
+        var settings = AVCapturePhotoSettings()
+        settings.flashMode = flashLightOn ? .on : .off
         output.capturePhoto(with: settings, delegate: delegate!)
     }
     
