@@ -43,3 +43,5 @@ Thumbs.db
 xcuserdata
 xcuserdata/*
 *.xcuserstate
+
+Secret.swift
