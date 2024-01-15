@@ -44,4 +44,4 @@ xcuserdata
 xcuserdata/*
 *.xcuserstate
 
-Secret.swift
+**/Secret.swift
