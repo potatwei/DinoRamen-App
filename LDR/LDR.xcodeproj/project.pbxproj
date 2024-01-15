@@ -59,8 +59,8 @@
 		7FBA550D2B55A5B100009551 /* FirebaseRemoteConfigSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 7FBA550C2B55A5B100009551 /* FirebaseRemoteConfigSwift */; };
 		7FBA550F2B55A5B100009551 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 7FBA550E2B55A5B100009551 /* FirebaseStorage */; };
 		7FBA55112B55A5B100009551 /* FirebaseStorageCombine-Community in Frameworks */ = {isa = PBXBuildFile; productRef = 7FBA55102B55A5B100009551 /* FirebaseStorageCombine-Community */; };
-		7FBA55142B55ADA900009551 /* Secret.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FBA55132B55ADA900009551 /* Secret.swift */; };
-		7FBA55152B55ADA900009551 /* Secret.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FBA55132B55ADA900009551 /* Secret.swift */; };
+		7FBA55172B55B03200009551 /* Secret.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FBA55162B55B03200009551 /* Secret.swift */; };
+		7FBA55182B55B03200009551 /* Secret.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FBA55162B55B03200009551 /* Secret.swift */; };
 		7FD361552B4CC01000923139 /* UserEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FD361542B4CC01000923139 /* UserEnvironment.swift */; };
 		7FD361572B4CEBBD00923139 /* UserStatusEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FD361562B4CEBBD00923139 /* UserStatusEnvironment.swift */; };
 		7FEDF9AA2B3B92A000127A8D /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 7FEDF9A92B3B92A000127A8D /* FirebaseAnalytics */; };
@@ -161,7 +161,7 @@
 		7FBA54CF2B559A3200009551 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7FBA54DB2B55A56800009551 /* LDRWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = LDRWidgetExtension.entitlements; sourceTree = "<group>"; };
 		7FBA55122B55AB1200009551 /* LDR.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = LDR.entitlements; sourceTree = "<group>"; };
-		7FBA55132B55ADA900009551 /* Secret.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Secret.swift; sourceTree = "<group>"; };
+		7FBA55162B55B03200009551 /* Secret.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Secret.swift; sourceTree = "<group>"; };
 		7FD361542B4CC01000923139 /* UserEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserEnvironment.swift; sourceTree = "<group>"; };
 		7FD361562B4CEBBD00923139 /* UserStatusEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserStatusEnvironment.swift; sourceTree = "<group>"; };
 		7FEDF9972B3B925700127A8D /* LDR.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LDR.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -302,7 +302,7 @@
 		7FEDF98E2B3B925700127A8D = {
 			isa = PBXGroup;
 			children = (
-				7FBA55132B55ADA900009551 /* Secret.swift */,
+				7FBA55162B55B03200009551 /* Secret.swift */,
 				7FBA54DB2B55A56800009551 /* LDRWidgetExtension.entitlements */,
 				7FEDF9992B3B925700127A8D /* LDR */,
 				7FBA54C82B559A3000009551 /* LDRWidget */,
@@ -568,7 +568,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7FBA54CC2B559A3100009551 /* LDRWidget.swift in Sources */,
-				7FBA55152B55ADA900009551 /* Secret.swift in Sources */,
+				7FBA55182B55B03200009551 /* Secret.swift in Sources */,
 				7FBA54CA2B559A3000009551 /* LDRWidgetBundle.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -602,7 +602,7 @@
 				7FEDF9FA2B3B92E600127A8D /* OthersDisplayViewViewModel.swift in Sources */,
 				7F73EBE72B423570009202CC /* AddFriendButtonViewViewModel.swift in Sources */,
 				7F0B6A142B49DFD3003325C5 /* CameraService.swift in Sources */,
-				7FBA55142B55ADA900009551 /* Secret.swift in Sources */,
+				7FBA55172B55B03200009551 /* Secret.swift in Sources */,
 				7F0776BA2B3DDC61005AEB58 /* SearchFriendView.swift in Sources */,
 				7F0776BE2B3E2CB6005AEB58 /* UserBarViewViewModel.swift in Sources */,
 				7FEDF9FC2B3B92E600127A8D /* RegisterViewViewModel.swift in Sources */,
