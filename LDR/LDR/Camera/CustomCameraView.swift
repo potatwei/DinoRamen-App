@@ -12,6 +12,7 @@ struct CustomCameraView: View {
     let cameraService = CameraService()
     @Binding var capturedImage: UIImage?
     @State var flashLightOn = false
+    @State var currentZoomFactor: CGFloat = 1.0
     
     @Environment(\.dismiss) private var dismiss
     
@@ -33,14 +34,29 @@ struct CustomCameraView: View {
             }
             .frame(maxWidth: 350, maxHeight: 550)
             .clipShape(RoundedRectangle(cornerRadius: 15))
+            .padding(.top, 50)
             .onDisappear {
                 cameraService.session?.stopRunning()
             }
-            .padding(.top, 50)
+            .gesture(
+                MagnifyGesture().onChanged({ value in
+                    if value.velocity < 0 {
+                        currentZoomFactor = currentZoomFactor - value.magnification / 17
+                    } else {
+                        currentZoomFactor = currentZoomFactor + value.magnification / 30
+
+                    }
+                    currentZoomFactor = min(max(currentZoomFactor, 1), 5)
+                    cameraService.setZoom(factor: currentZoomFactor)
+                })
+            )
+            
             
             Spacer()
             
             HStack {
+                Spacer()
+                
                 Button {
                     flashLightOn.toggle()
                     cameraService.flashLightOn = flashLightOn
@@ -49,7 +65,12 @@ struct CustomCameraView: View {
                         .labelStyle(.iconOnly)
                         .font(.system(size: 30))
                         .foregroundStyle(flashLightOn ? .yellow : .white)
+                        .animation(.snappy, value: flashLightOn)
+                        .frame(width: 60, height: 50)
+                        //.border(.white)
                 }
+                .padding(.trailing, 30)
+                //.border(.white)
                 
                 Button {
                     cameraService.capturePhoto()
@@ -61,12 +82,19 @@ struct CustomCameraView: View {
                 
                 Button {
                     cameraService.switchCamera()
+                    currentZoomFactor = 1
                 } label: {
                     Label("Switch Camera", systemImage: "camera.rotate.fill")
                         .labelStyle(.iconOnly)
                         .font(.system(size: 30))
                         .foregroundStyle(.white)
+                        .frame(width: 60, height: 50)
+                        //.border(.white)
                 }
+                .padding(.leading, 30)
+                //.border(.white)
+                
+                Spacer()
             }
             .padding(.bottom, 25)
         }

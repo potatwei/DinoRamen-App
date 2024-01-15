@@ -19,6 +19,7 @@ class CameraService {
     let output = AVCapturePhotoOutput()
     var input: AVCaptureDeviceInput?
     let previewLayer = AVCaptureVideoPreviewLayer()
+    var device = AVCaptureDevice.default(for: .video)
     
     
     func start(delegate: AVCapturePhotoCaptureDelegate, completion: @escaping (Error?) -> ()) {
@@ -47,8 +48,6 @@ class CameraService {
     }
     
     private func setupCamera(completion: @escaping (Error?) -> ()) {
-        var device = AVCaptureDevice.default(for: .video)
-
         if !usingFrontCamera {
             if AVCaptureDevice.default(.builtInDualCamera, for: .video, position: .back) != nil {
                 device = AVCaptureDevice.default(.builtInDualCamera, for: .video, position: .back)
@@ -90,10 +89,21 @@ class CameraService {
         }
     }
     
-    
+    func setZoom(factor: CGFloat) {
+        let device = self.device
+        
+        do {
+            try device!.lockForConfiguration()
+            device!.videoZoomFactor = factor
+            device!.unlockForConfiguration()
+        }
+        catch {
+            print(error.localizedDescription)
+        }
+    }
     
     func capturePhoto() {
-        var settings = AVCapturePhotoSettings()
+        let settings = AVCapturePhotoSettings()
         settings.flashMode = flashLightOn ? .on : .off
         output.capturePhoto(with: settings, delegate: delegate!)
     }
