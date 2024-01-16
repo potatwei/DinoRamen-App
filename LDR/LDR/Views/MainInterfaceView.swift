@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import WidgetKit
 
 struct MainInterfaceView: View {
     //var interface: MainInterfaceViewModel

@@ -10,7 +10,7 @@ import Foundation
 
 struct Status: Codable {
     var id: String
-    var emoji: Int // TODO: change to string after asset setted up
+    var emoji: Int
     var comment: String
     var image: String?
     var imageId: String?
