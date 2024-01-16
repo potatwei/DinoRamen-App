@@ -29,7 +29,6 @@ struct ApplicationApp: App {
                 .onChange(of: scenePhase) { oldValue, newValue in
                     if newValue == .inactive {
                         WidgetCenter.shared.reloadAllTimelines()
-                        
                     }
                 }
         }
