@@ -7,18 +7,19 @@
 
 import SwiftUI
 import FirebaseCore
-import FirebaseAuth
+
+class AppDelegate: NSObject, UIApplicationDelegate {
+  func application(_ application: UIApplication,
+                   didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
+    print("Colors application is starting up. ApplicationDelegate didFinishLaunchingWithOptions.")
+    FirebaseApp.configure()
+    return true
+  }
+}
 
 @main
 struct ApplicationApp: App {
-    init () {
-        FirebaseApp.configure()
-        do {
-          try Auth.auth().useUserAccessGroup("\(TeamID).name.shihangwei.LDR")
-        } catch let error as NSError {
-          print("Error changing user access group: %@", error)
-        }
-    }
+    @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     
     var body: some Scene {
         WindowGroup {
