@@ -14,6 +14,7 @@ struct UserEditView: View {
     @Bindable var userEdit = UserEditViewViewModel()
     @Binding var tabSelection: Int
     @State var enteredText = ""
+    @State var takenImage: UIImage?
     @State var showCamera = false
     @State var refreshImage = false
     
@@ -26,7 +27,7 @@ struct UserEditView: View {
             
             // Picuture to be displayed
             ZStack {
-                if userEdit.takenImage != nil {
+                if takenImage != nil {
                     // Straightly display the taken image with a clear camera button covering it
                     displayTakenImage
                 } else if userStatus.currUserStatus.image != nil {
@@ -74,7 +75,7 @@ struct UserEditView: View {
             uploadButton
         }
         .onDisappear(perform: {
-            userEdit.takenImage = nil
+            takenImage = nil
             enteredText = ""
             refreshImage.toggle()
         })
@@ -87,7 +88,7 @@ struct UserEditView: View {
         }
         .fullScreenCover(isPresented: $showCamera, content: {
             // Show Camera View
-            CustomCameraView(capturedImage: $userEdit.takenImage)
+            CustomCameraView(capturedImage: $takenImage)
                 .gesture(
                     DragGesture(minimumDistance: 50, coordinateSpace: .local)
                         .onEnded {value in
@@ -160,7 +161,7 @@ struct UserEditView: View {
     @ViewBuilder
     var displayTakenImage: some View {
         Group {
-            Image(uiImage: userEdit.takenImage!)
+            Image(uiImage: takenImage!)
                 .centerCropped()
                 .frame(maxWidth: 280, maxHeight: 440)
                 .clipShape(RoundedRectangle(cornerRadius: 25.0))
@@ -182,7 +183,7 @@ struct UserEditView: View {
         ZStack {
             Button {
                 Task {
-                    userStatus.currUserStatus = await userEdit.upload(userStatus.currUserStatus, comment: enteredText)
+                    userStatus.currUserStatus = await userEdit.upload(userStatus.currUserStatus, comment: enteredText, takenImage: takenImage)
                 }
                 tabSelection = 0
             } label: {

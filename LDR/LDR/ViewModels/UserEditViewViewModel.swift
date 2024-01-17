@@ -13,7 +13,7 @@ import FirebaseStorage
 @Observable class UserEditViewViewModel {
     var emojis = ["laugh","sweat","loveEye","loveHeart","largeCry","smallCry"]
     
-    var takenImage: UIImage?
+    
     var currentUserId: String {
         guard let currentUserId = Auth.auth().currentUser?.uid else {
             print("Fail to get current user id")
@@ -23,7 +23,7 @@ import FirebaseStorage
     }
     
     @MainActor
-    func upload(_ status: Status, comment: String) async -> Status {
+    func upload(_ status: Status, comment: String, takenImage: UIImage?) async -> Status {
         var status = status
         // Updata Model
         status.id = currentUserId
