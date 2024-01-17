@@ -26,6 +26,7 @@
 		7F73EBE52B423557009202CC /* AddFriendButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F73EBE42B423557009202CC /* AddFriendButtonView.swift */; };
 		7F73EBE72B423570009202CC /* AddFriendButtonViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F73EBE62B423570009202CC /* AddFriendButtonViewViewModel.swift */; };
 		7F765AF42B5609D900EDACE3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7FEDF9EE2B3B92E600127A8D /* Assets.xcassets */; };
+		7F85893C2B573A230002D6C6 /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F85893B2B573A230002D6C6 /* NotificationManager.swift */; };
 		7FBA54C52B559A3000009551 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FBA54C42B559A3000009551 /* WidgetKit.framework */; };
 		7FBA54C72B559A3000009551 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FBA54C62B559A3000009551 /* SwiftUI.framework */; };
 		7FBA54CA2B559A3000009551 /* LDRWidgetBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FBA54C92B559A3000009551 /* LDRWidgetBundle.swift */; };
@@ -133,6 +134,8 @@
 		7F73EBE22B42194A009202CC /* FriendRequestViewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendRequestViewViewModel.swift; sourceTree = "<group>"; };
 		7F73EBE42B423557009202CC /* AddFriendButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFriendButtonView.swift; sourceTree = "<group>"; };
 		7F73EBE62B423570009202CC /* AddFriendButtonViewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFriendButtonViewViewModel.swift; sourceTree = "<group>"; };
+		7F85893A2B5735E60002D6C6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		7F85893B2B573A230002D6C6 /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
 		7FBA54C22B559A3000009551 /* LDRWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = LDRWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		7FBA54C42B559A3000009551 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		7FBA54C62B559A3000009551 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
@@ -280,6 +283,7 @@
 		7FEDF9992B3B925700127A8D /* LDR */ = {
 			isa = PBXGroup;
 			children = (
+				7F85893A2B5735E60002D6C6 /* Info.plist */,
 				7FD361532B4CBFF900923139 /* Environments */,
 				7F0B6A122B49DFAF003325C5 /* Camera */,
 				7FEDF9F22B3B92E600127A8D /* Models */,
@@ -338,6 +342,7 @@
 				7FEDF9EF2B3B92E600127A8D /* Extensions.swift */,
 				7FEDFA0E2B3B938F00127A8D /* GoogleService-Info.plist */,
 				7FEDF9EE2B3B92E600127A8D /* Assets.xcassets */,
+				7F85893B2B573A230002D6C6 /* NotificationManager.swift */,
 			);
 			path = Others;
 			sourceTree = "<group>";
@@ -522,6 +527,7 @@
 				7F73EBDD2B42171E009202CC /* FriendsRequestsViewViewModel.swift in Sources */,
 				7F0776B82B3DDC52005AEB58 /* SearchFriendViewViewModel.swift in Sources */,
 				7F0B6A162B49E7E6003325C5 /* CameraView.swift in Sources */,
+				7F85893C2B573A230002D6C6 /* NotificationManager.swift in Sources */,
 				7FEDF9FE2B3B92E600127A8D /* LoginView.swift in Sources */,
 				7FEDF9FD2B3B92E600127A8D /* LoginViewViewModel.swift in Sources */,
 				7FEDFA042B3B92E600127A8D /* UserEditView.swift in Sources */,
@@ -761,6 +767,7 @@
 				DEVELOPMENT_TEAM = 2TK48Y293M;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = LDR/Info.plist;
 				INFOPLIST_KEY_NSCameraUsageDescription = "Camera is used to capture photos";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -801,6 +808,7 @@
 				DEVELOPMENT_TEAM = 2TK48Y293M;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = LDR/Info.plist;
 				INFOPLIST_KEY_NSCameraUsageDescription = "Camera is used to capture photos";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;

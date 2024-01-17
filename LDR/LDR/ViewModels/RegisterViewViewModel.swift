@@ -9,7 +9,7 @@ import FirebaseAuth
 import Foundation
 import FirebaseFirestore
 import SwiftUI
-
+import FirebaseMessaging
 
 
 @Observable
@@ -44,10 +44,15 @@ class RegisterViewViewModel {
     }
     
     private func insertUserRecord(id: String) {
-        let newUser = User(id: id,
+        var newUser = User(id: id,
                            name: name,
                            email: email,
                            joined: Date().timeIntervalSince1970)
+        
+        if let fcm = Messaging.messaging().fcmToken {
+            print("fcm", fcm)
+            newUser.fcmToken = fcm
+        }
         
         let db = Firestore.firestore()
         

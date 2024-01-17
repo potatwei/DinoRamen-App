@@ -18,7 +18,6 @@ class ProfileViewViewModel {
     var showingSearchFriendView = false
     var showPhotoPicker = false
     var isSheetPresented = false
-    var user: User?
     
     func logOut() {
         do {

@@ -8,6 +8,7 @@
 import FirebaseAuth
 import FirebaseFirestore
 import Foundation
+import FirebaseMessaging
 
 class UserEnvironment: ObservableObject {
     @Published var currentUser = User(id: "", name: "", email: "", joined: 0.0)
@@ -15,6 +16,7 @@ class UserEnvironment: ObservableObject {
     init() {
         Task {
             await fetchCurrentUser()
+            await updateFCMToken()
         }
     }
     
@@ -34,6 +36,24 @@ class UserEnvironment: ObservableObject {
             }
         } catch {
             print("Unable to update User or fail to get document \(error)")
+        }
+    }
+    
+    func updateFCMToken() async {
+        if let fcm = Messaging.messaging().fcmToken {
+            print("fcmToken exist")
+            guard let userId = Auth.auth().currentUser?.uid else {
+                return
+            }
+            let db = Firestore.firestore()
+            do {
+                try await db.collection("users").document(userId).updateData(["fcmToken" : fcm])
+                print("Successfully updated fcmToken")
+            } catch {
+                print("Error updating fcmToken: \(error.localizedDescription)")
+            }
+        } else {
+            print("No fcmToken exist")
         }
     }
 }

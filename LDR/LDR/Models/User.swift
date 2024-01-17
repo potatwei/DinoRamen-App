@@ -12,6 +12,7 @@ struct User: Codable{
     let name: String
     let email: String
     let joined: TimeInterval
+    var fcmToken: String?
     var profileImageId: String = ""
     var profileImage: String = ""
     var keywordsForLookup: [String] {
