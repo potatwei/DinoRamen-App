@@ -6,7 +6,7 @@ admin.initializeApp();
 
 exports.sendNotification = functions.firestore
     .document("users/{userId}/status/{userStatus}")
-    .onWrite( (snapshot, context) => { // When document changes
+    .onWrite( async (snapshot, context) => { // When document changes
       const db = getFirestore();
 
       // Get current user id
@@ -20,20 +20,14 @@ exports.sendNotification = functions.firestore
             .doc(senderId)
             .collection("friend")
             .doc("connected");
-        const doc = connectedFriendIdRef.get()
-            .then((doc) => {
-              if (!doc.exists) {
-                console.log("No connected document");
-              } else {
-                console.log("Connected document get", doc.data());
-              }
-            })
+        const doc = await connectedFriendIdRef.get()
             .catch((err) => {
               console.log("Error getting document", err);
             });
 
         // Get connect user id
         if (doc.exists) {
+          console.log("Connected document get", doc.data());
           let receiverId;
           for (const [key, value] of Object.entries(doc.data())) {
             receiverId = key;
@@ -43,33 +37,33 @@ exports.sendNotification = functions.firestore
 
           // Get connect user fcmToken document
           const connectedUserRef = db.collection("users").doc(receiverId);
-          const connectedUserDoc = connectedUserRef.get()
-              .then((connectedUserDoc) => {
-                if (!connectedUserDoc.exists) {
-                  console.log("No connected document");
-                } else {
-                  console.log("Connected doc get", connectedUserDoc.data());
-                }
-              })
+          const connectedUserDoc = await connectedUserRef.get()
               .catch((err) => {
                 console.log("Error getting document", err);
               });
 
           if (connectedUserDoc.exists) {
+            console.log("Connected doc get", connectedUserDoc.data());
             // Get token string from document
             const receiverFCMToken = connectedUserDoc.data().fcmToken;
             // Send notification
             const message = {
-              data: {
+              notification: {
                 title: "LDR",
                 body: "Your friend just updated their status",
               },
               token: receiverFCMToken,
             };
-            admin.messaging().send(message);
+            await admin.messaging().send(message)
+                .then((response) => {
+                  console.log("Successfully sent message:", response);
+                })
+                .catch((error) => {
+                  console.log("Error sending message:", error);
+                });
           }
         } else {
-            console.log("Connected document doesn't exist");
+          console.log("Connected document doesn't exist");
         }
       } else {
         console.log("Sender Id is undefined");
