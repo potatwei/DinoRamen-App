@@ -56,11 +56,9 @@ struct ApplicationApp: App {
                     }
                 }
                 .task {
-                    print("+++++++++==========")
                     await notificationManager.getAuthStatus()
                     if !notificationManager.hasPermission {
                         await notificationManager.request()
-                        print("==========+++++++++")
                     }
                 }
         }

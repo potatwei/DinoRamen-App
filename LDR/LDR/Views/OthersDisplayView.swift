@@ -14,6 +14,8 @@ struct OthersDisplayView: View {
     @State var userComment = ""
     @State var refreshImage = false
     
+    @Environment(\.scenePhase) var scenePhase
+    
     @EnvironmentObject var userStatus: UserStatusEnvironment
     
     var body: some View {
@@ -104,6 +106,14 @@ struct OthersDisplayView: View {
         .task {
             await userStatus.fetchCurrentUserStatus()
             await userStatus.fetchOtherUserStatus()
+        }
+        .onChange(of: scenePhase) { oldValue, newValue in
+            if newValue == .active {
+                Task {
+                    await userStatus.fetchCurrentUserStatus()
+                    await userStatus.fetchOtherUserStatus()
+                }
+            }
         }
     }
     

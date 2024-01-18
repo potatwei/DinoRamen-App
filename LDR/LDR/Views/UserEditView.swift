@@ -18,6 +18,8 @@ struct UserEditView: View {
     @State var showCamera = false
     @State var refreshImage = false
     
+    @Environment(\.scenePhase) var scenePhase
+    
     @EnvironmentObject var userStatus: UserStatusEnvironment
     
     var body: some View {
@@ -73,6 +75,13 @@ struct UserEditView: View {
             
             // Upload Button
             uploadButton
+        }
+        .onChange(of: scenePhase) { oldValue, newValue in
+            if newValue == .active {
+                Task {
+                    await userStatus.fetchCurrentUserStatus()
+                }
+            }
         }
         .onDisappear(perform: {
             takenImage = nil
