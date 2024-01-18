@@ -68,7 +68,11 @@ exports.sendNotification = functions.firestore
             };
             admin.messaging().send(message);
           }
+        } else {
+            console.log("Connected document doesn't exist");
         }
+      } else {
+        console.log("Sender Id is undefined");
       }
       return Promise.resolve;
     });
