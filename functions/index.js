@@ -44,13 +44,37 @@ exports.sendNotification = functions.firestore
 
           if (connectedUserDoc.exists) {
             console.log("Connected doc get", connectedUserDoc.data());
+            // Construct message based on changes made in status
+            const oldStatus = snapshot.before.data();
+            let notificationBodyText;
+            let notificationBodyName;
+            if (oldStatus.commentMade != newStatus.commentMade) {
+              notificationBodyText = " commented your status";
+            } else if (oldStatus.reaction != newStatus.reaction) {
+              notificationBodyText = " reacted to your status";
+            } else {
+              notificationBodyText = " updated their status";
+            }
+            // Get current user name
+            const currentUserProfileRef = db.collection("users").doc(senderId);
+            const currentUserProfile = await currentUserProfileRef.get()
+                .catch((err) => {
+                  console.log("Error getting document", err);
+                });
+            if (currentUserProfile.exists) {
+              console.log("Current user doc get", currentUserProfile.data());
+              notificationBodyName = currentUserProfile.data().name;
+            } else {
+              console.log("Current user doc doesnt exist");
+            }
+            const notifiBody = notificationBodyName + notificationBodyText;
             // Get token string from document
             const receiverFCMToken = connectedUserDoc.data().fcmToken;
             // Send notification
             const message = {
               notification: {
                 title: "LDR",
-                body: "Your friend just updated their status",
+                body: notifiBody,
               },
               token: receiverFCMToken,
             };
