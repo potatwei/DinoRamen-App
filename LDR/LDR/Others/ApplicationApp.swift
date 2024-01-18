@@ -30,6 +30,11 @@ class AppDelegate: NSObject, UIApplicationDelegate, MessagingDelegate, UNUserNot
         Messaging.messaging().apnsToken = deviceToken
     }
     
+    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+        print("Get remote notification🌽")
+        WidgetCenter.shared.reloadAllTimelines()
+        completionHandler(UIBackgroundFetchResult.failed)
+    }
     
     func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String?) {
         if let fcm = Messaging.messaging().fcmToken {
