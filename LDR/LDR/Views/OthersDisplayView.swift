@@ -13,6 +13,7 @@ struct OthersDisplayView: View {
     @State var showCommentEnter = false
     @State var userComment = ""
     @State var refreshImage = false
+    @State var showUploadButton = ""
     
     @Environment(\.scenePhase) var scenePhase
     
@@ -102,6 +103,7 @@ struct OthersDisplayView: View {
         }
         .onDisappear {
             refreshImage.toggle()
+            showUploadButton = ""
         }
         .task {
             await userStatus.fetchCurrentUserStatus()
@@ -220,7 +222,7 @@ struct OthersDisplayView: View {
                 Label("Show Reaction", systemImage: "suit.heart")
                     .foregroundStyle(.foreground)
             }
-            .offset(x: showCommentEnter ? 0 : -220 , y: 1)
+            .offset(x: showCommentEnter ? 0 : -300 , y: 1)
         }
         .labelStyle(.iconOnly)
         .font(.system(size: 28))
@@ -231,7 +233,7 @@ struct OthersDisplayView: View {
     var editComment: some View {
         ZStack {
             RoundedRectangle(cornerRadius: 70)
-                .frame(width: 255, height: 60)
+                .frame(width: showCommentEnter ? 255 : 60, height: 60)
                 .foregroundStyle(.regularMaterial)
             
             TextField(userStatus.currUserStatus.commentMade != nil && userStatus.currUserStatus.commentMade != "" ?  userStatus.currUserStatus.commentMade! :"Comment...", text: $userComment)
@@ -307,23 +309,32 @@ struct OthersDisplayView: View {
     @ViewBuilder
     func reactionButton(defau: String) -> some View {
         Button {
-            withAnimation(.spring(response: 0.2, dampingFraction: 0.5)) {
-                userStatus.currUserStatus.reaction = defau
-            }
-            Task {
-                userStatus.currUserStatus = await display.selectReaction(defau, status: userStatus.currUserStatus)
+            if showUploadButton == defau {
+                print(defau)
+                withAnimation(.spring(response: 0.2, dampingFraction: 0.5)) {
+                    showUploadButton = ""
+                    userStatus.currUserStatus.reaction = defau
+                }
+                Task {
+                    userStatus.currUserStatus = await display.selectReaction(defau, status: userStatus.currUserStatus)
+                }
+            } else {
+                withAnimation(.spring(response: 0.2, dampingFraction: 0.5)){
+                    showUploadButton = defau
+                }
             }
         } label: {
             ZStack {
                 Circle()
                     .frame(width: 50)
-                    .scaleEffect(userStatus.currUserStatus.reaction == defau ? 1 : 0)
-                    .foregroundStyle(.sugarPink)
-                    .opacity(userStatus.currUserStatus.reaction == defau ? 1 : 0)
-                Label(defau, systemImage: defau)
-                    .foregroundStyle(userStatus.currUserStatus.reaction == defau ? .white : .sugarBlue)
+                    .scaleEffect(userStatus.currUserStatus.reaction == defau || showUploadButton == defau ? 1 : 0)
+                    .foregroundStyle(showUploadButton == defau ? .sugarGreen : .sugarPink)
+                    .opacity(userStatus.currUserStatus.reaction == defau || showUploadButton == defau ? 1 : 0)
+                Label(showUploadButton == defau ? "Upload" : defau, systemImage: showUploadButton == defau ? "arrow.down.circle.dotted" : defau)
+                    .foregroundStyle(userStatus.currUserStatus.reaction == defau || showUploadButton == defau ? .white : .sugarBlue)
                     .offset(y: 0.5)
                     .animation(nil, value: userStatus.currUserStatus.reaction)
+                    .rotationEffect(.degrees(showUploadButton == defau ? 180 : 0))
             }
         }
         .sensoryFeedback(.impact(weight: .light, intensity: 0.5), trigger: userStatus.currUserStatus.reaction)
