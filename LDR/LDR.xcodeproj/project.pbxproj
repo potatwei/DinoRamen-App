@@ -40,8 +40,6 @@
 		7FBA54F72B55A5B100009551 /* FirebaseFirestoreCombine-Community in Frameworks */ = {isa = PBXBuildFile; productRef = 7FBA54F62B55A5B100009551 /* FirebaseFirestoreCombine-Community */; };
 		7FBA54F92B55A5B100009551 /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 7FBA54F82B55A5B100009551 /* FirebaseFirestoreSwift */; };
 		7FBA55032B55A5B100009551 /* FirebaseInstallations in Frameworks */ = {isa = PBXBuildFile; productRef = 7FBA55022B55A5B100009551 /* FirebaseInstallations */; };
-		7FBA551A2B55B28100009551 /* Secret.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FBA55192B55B28100009551 /* Secret.swift */; };
-		7FBA551B2B55B28100009551 /* Secret.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FBA55192B55B28100009551 /* Secret.swift */; };
 		7FBA551C2B55B3EE00009551 /* Status.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FEDF9F42B3B92E600127A8D /* Status.swift */; };
 		7FD361552B4CC01000923139 /* UserEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FD361542B4CC01000923139 /* UserEnvironment.swift */; };
 		7FD361572B4CEBBD00923139 /* UserStatusEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FD361562B4CEBBD00923139 /* UserStatusEnvironment.swift */; };
@@ -136,6 +134,7 @@
 		7F73EBE62B423570009202CC /* AddFriendButtonViewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFriendButtonViewViewModel.swift; sourceTree = "<group>"; };
 		7F85893A2B5735E60002D6C6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		7F85893B2B573A230002D6C6 /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
+		7F9F903E2B58A7A900353011 /* Secret.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Secret.swift; sourceTree = "<group>"; };
 		7FBA54C22B559A3000009551 /* LDRWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = LDRWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		7FBA54C42B559A3000009551 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		7FBA54C62B559A3000009551 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
@@ -143,7 +142,6 @@
 		7FBA54CB2B559A3100009551 /* LDRWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LDRWidget.swift; sourceTree = "<group>"; };
 		7FBA54CD2B559A3200009551 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		7FBA54CF2B559A3200009551 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		7FBA55192B55B28100009551 /* Secret.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Secret.swift; path = "../../../../Library/Mobile Documents/.Trash/LRD-Kawaiiiii-App/LDR/Secret.swift"; sourceTree = "<group>"; };
 		7FD361542B4CC01000923139 /* UserEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserEnvironment.swift; sourceTree = "<group>"; };
 		7FD361562B4CEBBD00923139 /* UserStatusEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserStatusEnvironment.swift; sourceTree = "<group>"; };
 		7FEDF9972B3B925700127A8D /* LDR.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LDR.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -263,7 +261,6 @@
 		7FEDF98E2B3B925700127A8D = {
 			isa = PBXGroup;
 			children = (
-				7FBA55192B55B28100009551 /* Secret.swift */,
 				7FEDF9992B3B925700127A8D /* LDR */,
 				7FBA54C82B559A3000009551 /* LDRWidget */,
 				7FBA54C32B559A3000009551 /* Frameworks */,
@@ -338,6 +335,7 @@
 		7FEDF9ED2B3B92E600127A8D /* Others */ = {
 			isa = PBXGroup;
 			children = (
+				7F9F903E2B58A7A900353011 /* Secret.swift */,
 				7FEDF9F02B3B92E600127A8D /* ApplicationApp.swift */,
 				7FEDF9EF2B3B92E600127A8D /* Extensions.swift */,
 				7FEDFA0E2B3B938F00127A8D /* GoogleService-Info.plist */,
@@ -509,7 +507,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				7FBA54CC2B559A3100009551 /* LDRWidget.swift in Sources */,
-				7FBA551B2B55B28100009551 /* Secret.swift in Sources */,
 				7FBA54CA2B559A3000009551 /* LDRWidgetBundle.swift in Sources */,
 				7FBA551C2B55B3EE00009551 /* Status.swift in Sources */,
 			);
@@ -545,7 +542,6 @@
 				7FEDF9FA2B3B92E600127A8D /* OthersDisplayViewViewModel.swift in Sources */,
 				7F73EBE72B423570009202CC /* AddFriendButtonViewViewModel.swift in Sources */,
 				7F0B6A142B49DFD3003325C5 /* CameraService.swift in Sources */,
-				7FBA551A2B55B28100009551 /* Secret.swift in Sources */,
 				7F0776BA2B3DDC61005AEB58 /* SearchFriendView.swift in Sources */,
 				7F0776BE2B3E2CB6005AEB58 /* UserBarViewViewModel.swift in Sources */,
 				7FEDF9FC2B3B92E600127A8D /* RegisterViewViewModel.swift in Sources */,
