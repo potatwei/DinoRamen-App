@@ -108,12 +108,14 @@ struct OthersDisplayView: View {
         .task {
             await userStatus.fetchCurrentUserStatus()
             await userStatus.fetchOtherUserStatus()
+            await userStatus.loadImages()
         }
         .onChange(of: scenePhase) { oldValue, newValue in
             if newValue == .active {
                 Task {
                     await userStatus.fetchCurrentUserStatus()
                     await userStatus.fetchOtherUserStatus()
+                    await userStatus.loadImages()
                 }
             }
         }
@@ -167,18 +169,18 @@ struct OthersDisplayView: View {
     @ViewBuilder
     var ownImageAndOwnEmoji: some View {
         // Show own uploaded image
-        AsyncImage(url: URL(string: userStatus.currUserStatus.image!)) { image in
-            image
+        if userStatus.currUserImage != nil{
+            Image(uiImage: userStatus.currUserImage!)
                 .resizable()
-                .scaledToFill()
-        } placeholder: {
+                .frame(width: 90, height: 90)
+                .clipShape(Circle())
+                .opacity(0.7)
+        } else {
             ShimmerEffectBox()
+                .frame(width: 90, height: 90)
+                .clipShape(Circle())
         }
-        .accentColor(refreshImage ? .black : .black)
-        .frame(width: 90, height: 90)
-        .clipShape(Circle())
-        .opacity(0.7)
-        
+
         // Show own emoji
         Image(display.emojis[userStatus.currUserStatus.emoji])
             .resizable()
@@ -384,17 +386,18 @@ struct OthersDisplayView: View {
     ///
     @ViewBuilder
     var othersPhoto: some View {
-        let imageURL = URL(string: userStatus.connUserStatus.image!)
-        AsyncImage(url: imageURL) { Image in
-            Image
+        if userStatus.connUserImage != nil {
+            Image(uiImage: userStatus.connUserImage!)
                 .centerCropped()
-        } placeholder: {
+                .frame(maxWidth: 280, maxHeight: 440)
+                .clipShape(RoundedRectangle(cornerRadius: 25.0))
+        }
+        else {
             ShimmerEffectBox()
                 .aspectRatio(contentMode: .fill)
+                .frame(maxWidth: 280, maxHeight: 440)
+                .clipShape(RoundedRectangle(cornerRadius: 25.0))
         }
-        .accentColor(refreshImage ? .black : .black)
-        .frame(maxWidth: 280, maxHeight: 440)
-        .clipShape(RoundedRectangle(cornerRadius: 25.0))
     }
     
     ///

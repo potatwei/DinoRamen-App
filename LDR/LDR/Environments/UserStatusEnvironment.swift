@@ -13,7 +13,8 @@ class UserStatusEnvironment: ObservableObject {
     @Published var currUserStatus = Status(id: "", emoji: 0, comment: "")
     @Published var connUserStatus = Status(id: "", emoji: 0, comment: "")
     private let db = Firestore.firestore()
-    
+    @Published var currUserImage: UIImage?
+    @Published var connUserImage: UIImage?
     var currentUserId: String {
         guard let currentUserId = Auth.auth().currentUser?.uid else {
             print("Fail to get current user id")
@@ -26,6 +27,8 @@ class UserStatusEnvironment: ObservableObject {
     init() {
         Task {
             await fetchCurrentUserStatus()
+            await fetchOtherUserStatus()
+            await loadImages()
         }
     }
     
@@ -86,5 +89,35 @@ class UserStatusEnvironment: ObservableObject {
         if currUserStatus.emoji > 5 {
             currUserStatus.emoji -= 6
         }
+    }
+    
+    func downloadImage(from url: String?) async -> UIImage? {
+        if let url = url {
+            guard let url = URL(string: url) else {
+                print("Invalid URL")
+                return nil
+            }
+            do {
+                let (imageData, _) = try await URLSession.shared.data(from: url)
+                return UIImage(data: imageData)
+            } catch {
+                print("Invalid data")
+                return nil
+            }
+        } else {
+            print("URL is nil")
+            return nil
+        }
+    }
+    
+    @MainActor
+    func loadImages() async {
+        async let currImage = downloadImage(from: currUserStatus.image)
+        async let connImage = downloadImage(from: connUserStatus.image)
+        
+        let loadedImages = await [currImage, connImage]
+        print(loadedImages)
+        currUserImage = loadedImages[0]
+        connUserImage = loadedImages[1]
     }
 }

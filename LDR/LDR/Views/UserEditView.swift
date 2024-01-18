@@ -80,6 +80,7 @@ struct UserEditView: View {
             if newValue == .active {
                 Task {
                     await userStatus.fetchCurrentUserStatus()
+                    await userStatus.loadImages()
                 }
             }
         }
@@ -94,6 +95,7 @@ struct UserEditView: View {
         .task {
             // fetch data from database and sync comment
             await userStatus.fetchCurrentUserStatus()
+            await userStatus.loadImages()
         }
         .fullScreenCover(isPresented: $showCamera, content: {
             // Show Camera View
@@ -136,17 +138,17 @@ struct UserEditView: View {
     @ViewBuilder
     var currentUserUploadedImage: some View {
         Group {
-            let imageURL = URL(string: userStatus.currUserStatus.image!)
-            AsyncImage(url: imageURL) { Image in
-                Image
+            if userStatus.currUserImage != nil {
+                Image(uiImage: userStatus.currUserImage!)
                     .centerCropped()
-            } placeholder: {
+                    .frame(maxWidth: 280, maxHeight: 440)
+                    .clipShape(RoundedRectangle(cornerRadius: 25.0))
+            } else {
                 ShimmerEffectBox()
-                    .clipShape(RoundedRectangle(cornerRadius: 25))
                     .aspectRatio(contentMode: .fill)
+                    .frame(maxWidth: 280, maxHeight: 440)
+                    .clipShape(RoundedRectangle(cornerRadius: 25.0))
             }
-            .frame(maxWidth: 280, maxHeight: 440)
-            .clipShape(RoundedRectangle(cornerRadius: 25.0))
     
             RoundedRectangle(cornerRadius: 25.0)
                 .frame(maxWidth: 280, maxHeight: 440)
