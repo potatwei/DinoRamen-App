@@ -182,12 +182,11 @@ struct ProfileView: View {
                 Text(currentUserInfo.currentUser.email)
                 
                 HStack {
-                    Text("Since")
                     Text("\(Date(timeIntervalSince1970: currentUserInfo.currentUser.joined).formatted(date: .abbreviated, time: .omitted))")
                 }
             }
             .foregroundStyle(.gray)
-            .font(.system(size: 17))
+            .font(.system(size: 16))
             .minimumScaleFactor(0.9)
         }
         .frame(maxHeight: 85)

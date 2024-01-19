@@ -77,6 +77,7 @@ import CryptoKit
         if let currentUserEmail = Auth.auth().currentUser?.email, !currentUserEmail.isEmpty {
             // current user's email is not empty, dont over write it
         } else {
+           
             Task {
                 do {
                     try await Auth.auth().currentUser?.updateEmail(to: email ?? "")

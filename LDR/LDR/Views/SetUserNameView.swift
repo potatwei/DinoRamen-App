@@ -12,6 +12,7 @@ struct SetUserNameView: View {
     @State var enteredUserName = ""
     @EnvironmentObject var signInStatus: SignInEnvironment
     @State var buttonHaptic = true
+    @Binding var tabSelection: Int
     
     var body: some View {
         VStack {
@@ -44,9 +45,11 @@ struct SetUserNameView: View {
                 .foregroundStyle(.black)
                 
             Button {
+                tabSelection = 0
                 setUserName.register(userName: enteredUserName)
                 signInStatus.isUserExist()
                 buttonHaptic.toggle()
+                hideKeyboard()
             } label: {
                 Label("Submit user name", systemImage: "arrow.right.circle")
                     .labelStyle(.iconOnly)
@@ -59,10 +62,11 @@ struct SetUserNameView: View {
             
             Spacer()
         }
+        .background(Rectangle().foregroundStyle(.background))
     }
 }
 
 #Preview {
-    SetUserNameView()
+    SetUserNameView(tabSelection: .constant(1))
         .environmentObject(SignInEnvironment())
 }

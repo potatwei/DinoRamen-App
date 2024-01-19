@@ -84,7 +84,6 @@ struct LoginView: View {
             login.appleLoginRequest(request)
         } onCompletion: { result in
             login.appleLoginCompletion(result)
-            signInStatus.isUserExist()
         }
         .signInWithAppleButtonStyle(.black)
         .clipShape(RoundedRectangle(cornerRadius: 25.0))
@@ -119,8 +118,6 @@ struct LoginView: View {
                 Auth.auth().signIn(with: credential) {_,error in
                     
                 }
-                
-                signInStatus.isUserExist()
                 
                 let emailAddress = user.profile?.email
                 
