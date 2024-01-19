@@ -22,29 +22,32 @@ struct OthersDisplayView: View {
     var body: some View {
         VStack {
             HStack {
-                ZStack {
-                    if userStatus.connUserStatus.id != "" && userStatus.currUserStatus.id != "" {
-                        if userStatus.currUserStatus.image != nil {
-                            ownImageAndOwnEmoji // Display Image and Own's Emoji
+                Group {
+                    ZStack {
+                        if userStatus.connUserStatus.id != "" && userStatus.currUserStatus.id != "" {
+                            if userStatus.currUserStatus.image != nil {
+                                ownImageAndOwnEmoji // Display Image and Own's Emoji
+                            } else {
+                                ownEmojiOnly // Display Own's Emoji Only
+                            }
+                            ifOwnHasComment // Show own comment in three dots
+                            
+                            userEditViewButton // Go to UserEditView
                         } else {
-                            ownEmojiOnly // Display Own's Emoji Only
+                            ShimmerEffectBox() // Display loading screen when still getting info from server
+                                .frame(width: 90, height: 90)
+                                .clipShape(Circle())
                         }
-                        ifOwnHasComment // Show own comment in three dots
+                    }
+                    .padding(.leading, 20)
+                    
+                    VStack(alignment: .leading) {
+                        othersReaction // Show other's reaction on own status
                         
-                        userEditViewButton // Go to UserEditView
-                    } else {
-                        ShimmerEffectBox() // Display loading screen when still getting info from server
-                            .frame(width: 90, height: 90)
-                            .clipShape(Circle())
+                        othersCommentEdit // Show other's comment on own status
                     }
                 }
-                .padding(.leading, 20)
-                
-                VStack(alignment: .leading) {
-                    othersReaction // Show other's reaction on own status
-                    
-                    othersCommentEdit // Show other's comment on own status
-                }
+                .opacity(userStatus.connUserStatus.id == "DNE" ? 0 : 1)
                 
                 Spacer()
                 
@@ -81,6 +84,12 @@ struct OthersDisplayView: View {
                             .font(.system(size: 27))
                     }
                 }
+            } else if userStatus.connUserStatus.id == "DNE" {
+                Text("Connect with friend!")
+                    .font(.system(size: 25))
+                    .fontWeight(.bold)
+                    .foregroundStyle(Gradient(colors: [.sugarOrange, .sugarYellow]))
+                    .padding(.top, 170)
             } else {
                 ShimmerEffectBox()
                     .frame(maxWidth: 280, maxHeight: 440)
@@ -100,6 +109,7 @@ struct OthersDisplayView: View {
                 editComment
             }
             .frame(width: 322)
+            .opacity(userStatus.connUserStatus.id == "DNE" ? 0 : 1)
         }
         .onDisappear {
             refreshImage.toggle()

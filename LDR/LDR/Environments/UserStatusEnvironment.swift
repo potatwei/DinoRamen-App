@@ -61,6 +61,7 @@ class UserStatusEnvironment: ObservableObject {
                     print("get connected user id Successfully")
                 }
             } else {
+                connUserStatus = Status(id: "DNE", emoji: 0, comment: "")
                 print("Connected document doesn't exist")
             }
         } catch {

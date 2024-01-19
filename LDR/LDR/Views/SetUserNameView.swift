@@ -11,6 +11,7 @@ struct SetUserNameView: View {
     var setUserName = SetUserNameViewViewModel()
     @State var enteredUserName = ""
     @EnvironmentObject var signInStatus: SignInEnvironment
+    @State var buttonHaptic = true
     
     var body: some View {
         VStack {
@@ -45,6 +46,7 @@ struct SetUserNameView: View {
             Button {
                 setUserName.register(userName: enteredUserName)
                 signInStatus.isUserExist()
+                buttonHaptic.toggle()
             } label: {
                 Label("Submit user name", systemImage: "arrow.right.circle")
                     .labelStyle(.iconOnly)
@@ -53,6 +55,7 @@ struct SetUserNameView: View {
                     .foregroundStyle(Gradient(colors: [.sugarOrange, .sugarYellow]))
             }
             .padding(30)
+            .sensoryFeedback(.impact(weight: .light, intensity: 0.7), trigger: buttonHaptic)
             
             Spacer()
         }
