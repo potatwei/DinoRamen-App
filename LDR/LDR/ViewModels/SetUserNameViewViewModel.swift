@@ -1,39 +1,33 @@
 //
-//  RegisterViewViewModel.swift
-//  Application
+//  SetUserNameViewViewModel.swift
+//  LDR
 //
-//  Created by Shihang Wei on 12/26/23.
+//  Created by Shihang Wei on 1/18/24.
 //
 
-import FirebaseAuth
 import Foundation
-import FirebaseFirestore
-import SwiftUI
+import FirebaseAuth
 import FirebaseMessaging
-
+import FirebaseFirestore
 
 @Observable
-class RegisterViewViewModel {
-    
-    // Binding Variables
-    var name = ""
-    var email = ""
-    
+class SetUserNameViewViewModel {
     var errorMessage = ""
-
-    func register() {
-        guard validate() else {
+    
+    func register(userName: String) {
+        guard validate(enteredUserName: userName) else {
             return
         }
         let userId = Auth.auth().currentUser?.uid
-        insertUserRecord(id: userId ?? "")
-
+        insertUserRecord(id: userId ?? "", userName)
     }
     
-    private func insertUserRecord(id: String) {
+    private func insertUserRecord(id: String, _ enteredUserName: String) {
+        let email = Auth.auth().currentUser?.email
+        
         var newUser = User(id: id,
-                           name: name,
-                           email: email,
+                           name: enteredUserName,
+                           email: email ?? "",
                            joined: Date().timeIntervalSince1970)
         
         if let fcm = Messaging.messaging().fcmToken {
@@ -52,13 +46,17 @@ class RegisterViewViewModel {
         }
     }
     
-    private func validate() -> Bool {
-        guard !name.trimmingCharacters(in: .whitespaces).isEmpty,
-              !email.trimmingCharacters(in: .whitespaces).isEmpty else {
+    private func validate(enteredUserName: String) -> Bool {
+        guard !enteredUserName.trimmingCharacters(in: .whitespaces).isEmpty else {
             errorMessage = "Please fill in all fields"
+            return false
+        }
+        guard enteredUserName.trimmingCharacters(in: .whitespaces).count <= 36 else {
+            errorMessage = "User name is too long"
             return false
         }
         
         return true
     }
+
 }

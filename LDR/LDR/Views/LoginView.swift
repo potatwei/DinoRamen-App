@@ -6,6 +6,11 @@
 //
 
 import SwiftUI
+import GoogleSignIn
+import GoogleSignInSwift
+import FirebaseCore
+import FirebaseAuth
+import _AuthenticationServices_SwiftUI
 
 struct LoginView: View {
     @Bindable private var login = LoginViewViewModel()
@@ -78,10 +83,59 @@ struct LoginView: View {
     }
     
     /// computed variable that contains styled button that will call ViewModel 'login' method login()
+    @ViewBuilder
     var loginButton: some View {
+        SignInWithAppleButton { request in
+            login.appleLoginRequest(request)
+        } onCompletion: { result in
+            login.appleLoginCompletion(result)
+        }
+        .signInWithAppleButtonStyle(.black)
+        .clipShape(RoundedRectangle(cornerRadius: 25.0))
+        .frame(maxHeight: 50)
+        .padding(.horizontal, 25)
+        .padding(.vertical, 8)
+        
+        
+        GoogleSignInButton {
+            guard let clientID = FirebaseApp.app()?.options.clientID else { return }
+            
+            // Create Google Sign In configuration object.
+            let config = GIDConfiguration(clientID: clientID)
+            GIDSignIn.sharedInstance.configuration = config
+            
+            // Start the sign in flow!
+            GIDSignIn.sharedInstance.signIn(withPresenting: getRootViewController()) { result, error in
+                guard error == nil else {
+                    print(error ?? "Error when sign in")
+                    return
+                }
+                
+                guard let user = result?.user,
+                      let idToken = user.idToken?.tokenString
+                else {
+                    return
+                }
+                
+                let credential = GoogleAuthProvider.credential(withIDToken: idToken,
+                                                               accessToken: user.accessToken.tokenString)
+                
+                Auth.auth().signIn(with: credential) {_,error in
+                    
+                }
+                
+                let emailAddress = user.profile?.email
+                
+                Task {
+                    await login.updateUserEmail(to: emailAddress)
+                }
+            }
+        }
+        
         LDRButton(title: "Log In", background: .accentColor) {
             // Attempt to Login
             login.login()
+            
         }
         .frame(width: 190, height: 90)
         .offset(y: -20)

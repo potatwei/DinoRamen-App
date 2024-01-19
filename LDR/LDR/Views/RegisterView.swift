@@ -43,7 +43,7 @@ struct RegisterView: View {
     /// computed variable that contains three TextField for inputing  registeration information
     var registerField: some View {
         Group {
-            TextField("Full Name", text: $register.name)
+            TextField("User Name", text: $register.name)
                 .submitLabel(.next)
                 .focused($focusField, equals: .name) // this field is bound to the .name case
                 .onSubmit {
@@ -54,13 +54,7 @@ struct RegisterView: View {
                 .keyboardType(.emailAddress)
                 .focused($focusField, equals: .email)
                 .onSubmit {
-                    focusField = .password
-                }
-            SecureField("Password", text: $register.password)
-                .submitLabel(.done)
-                .focused($focusField, equals: Field.password)
-                .onSubmit {
-                    focusField = nil // will dismiss the keyboard
+                    focusField = nil
                 }
         }
         .autocorrectionDisabled()
