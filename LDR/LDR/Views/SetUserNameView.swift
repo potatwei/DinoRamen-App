@@ -10,7 +10,7 @@ import SwiftUI
 struct SetUserNameView: View {
     var setUserName = SetUserNameViewViewModel()
     @State var enteredUserName = ""
-    @Binding var ifUserExist: Bool
+    @EnvironmentObject var signInStatus: SignInEnvironment
     
     var body: some View {
         VStack {
@@ -40,10 +40,11 @@ struct SetUserNameView: View {
                 .padding(.horizontal, 30)
                 .padding()
                 .shadow(radius: 10)
+                .foregroundStyle(.black)
                 
             Button {
                 setUserName.register(userName: enteredUserName)
-                ifUserExist = true
+                signInStatus.isUserExist()
             } label: {
                 Label("Submit user name", systemImage: "arrow.right.circle")
                     .labelStyle(.iconOnly)
@@ -59,5 +60,6 @@ struct SetUserNameView: View {
 }
 
 #Preview {
-    SetUserNameView(ifUserExist: .constant(true))
+    SetUserNameView()
+        .environmentObject(SignInEnvironment())
 }
