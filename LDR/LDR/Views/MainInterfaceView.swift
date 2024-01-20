@@ -19,43 +19,42 @@ struct MainInterfaceView: View {
     @State var show = false
     
     var body: some View {
-        ZStack {
-            if !interface.isSignIn {
-                NavigationStack {
-                    LoginView()
+        if interface.isSignIn {
+            ZStack {
+                if signInStatus.ifUserDocumentExist == false {
+                    SetUserNameView(tabSelection: $selection)
+                        .transition(.slide)
                         .environmentObject(signInStatus)
-                    
+                        .zIndex(1)
                 }
-                .transition(.slide)
-                .zIndex(2)
+                
+                TabView(selection: $selection) {
+                    UserEditView(tabSelection: $selection)
+                        .tabItem { Label("Edit", systemImage: "figure") }
+                        .tag(1)
+                        .environmentObject(status)
+                    
+                    OthersDisplayView(tabSelection: $selection)
+                        .tabItem { Label("Home", systemImage: "house") }
+                        .tag(0)
+                        .environmentObject(status)
+                    
+                    ProfileView(tabSelection: $selection)
+                        .tabItem { Label("Profile", systemImage: "person.circle") }
+                        .tag(2)
+                }
+                .tabViewStyle(.page(indexDisplayMode: .never))
+                .animation(.easeOut(duration: 0.1), value: selection)
+                .environmentObject(currentUserInfo)
+                .zIndex(0)
             }
-            
-            if signInStatus.ifUserDocumentExist == false {
-                SetUserNameView(tabSelection: $selection)
-                    .transition(.slide)
+        } else {
+            NavigationStack {
+                LoginView()
                     .environmentObject(signInStatus)
-                    .zIndex(1)
-            }
-            
-            TabView(selection: $selection) {
-                UserEditView(tabSelection: $selection)
-                    .tabItem { Label("Edit", systemImage: "figure") }
-                    .tag(1)
-                    .environmentObject(status)
                 
-                OthersDisplayView(tabSelection: $selection)
-                    .tabItem { Label("Home", systemImage: "house") }
-                    .tag(0)
-                    .environmentObject(status)
-                
-                ProfileView(tabSelection: $selection)
-                    .tabItem { Label("Profile", systemImage: "person.circle") }
-                    .tag(2)
             }
-            .tabViewStyle(.page(indexDisplayMode: .never))
-            .animation(.easeOut(duration: 0.1), value: selection)
-            .environmentObject(currentUserInfo)
-            .zIndex(0)
+            .transition(.slide)
         }
     }
 }

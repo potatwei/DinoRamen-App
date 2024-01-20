@@ -19,9 +19,27 @@ struct LoginView: View {
     
     var body: some View {
         VStack {
+            Text("DinoRamen")
+                .fontWeight(.bold)
+                .font(.system(size: 55))
+                .foregroundStyle(Gradient(colors: [.sugarOrange, .sugarYellow]))
+            
+            Text("Window to your other half")
+                .fontWeight(.semibold)
+                .font(.system(size: 17))
+                .foregroundStyle(.gray)
+                .padding(.bottom, 0)
+            
+            Image("Icon")
+                .resizable()
+                .frame(width: 120, height: 120)
+                .clipShape(RoundedRectangle(cornerRadius: 25.0))
+                .padding()
+            
             // Log In Button
             loginButton
         }
+        .offset(y: -90)
     }
     
     /// computed variable that contains styled button that will call ViewModel 'login' method login()

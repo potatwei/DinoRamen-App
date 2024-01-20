@@ -182,9 +182,11 @@ struct OthersDisplayView: View {
         if userStatus.currUserImage != nil{
             Image(uiImage: userStatus.currUserImage!)
                 .resizable()
+                .scaledToFill()
                 .frame(width: 90, height: 90)
                 .clipShape(Circle())
                 .opacity(0.7)
+            
         } else {
             ShimmerEffectBox()
                 .frame(width: 90, height: 90)

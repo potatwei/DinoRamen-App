@@ -15,7 +15,7 @@ import FirebaseFirestore
     var currentUserId: String {
         guard let currentUserId = Auth.auth().currentUser?.uid else {
             print("Fail to get current user id")
-            return ""
+            return "a"
         }
         return currentUserId
     }
