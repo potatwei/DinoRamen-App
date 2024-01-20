@@ -44,40 +44,7 @@ struct LoginView: View {
         }
         .frame(width: 320)
         
-        Button {
-            guard let clientID = FirebaseApp.app()?.options.clientID else { return }
-            
-            // Create Google Sign In configuration object.
-            let config = GIDConfiguration(clientID: clientID)
-            GIDSignIn.sharedInstance.configuration = config
-            
-            // Start the sign in flow!
-            GIDSignIn.sharedInstance.signIn(withPresenting: getRootViewController()) { result, error in
-                guard error == nil else {
-                    print(error ?? "Error when sign in")
-                    return
-                }
-                
-                guard let user = result?.user,
-                      let idToken = user.idToken?.tokenString
-                else {
-                    return
-                }
-                
-                let credential = GoogleAuthProvider.credential(withIDToken: idToken,
-                                                               accessToken: user.accessToken.tokenString)
-                
-                Auth.auth().signIn(with: credential) {_,error in
-                    
-                }
-                
-                let emailAddress = user.profile?.email
-                
-                Task {
-                    await login.updateUserEmail(to: emailAddress)
-                }
-            }
-        } label: {
+        ZStack {
             Image("googleSignin")
                 .frame(maxHeight: 40)
                 .border(.white)
@@ -85,12 +52,51 @@ struct LoginView: View {
                 .padding(.horizontal, 45)
                 .background(.white)
                 .overlay(content: {
-                    RoundedRectangle(cornerRadius: 5)
-                        .stroke(lineWidth: 0.8)
+                    RoundedRectangle(cornerRadius: 6)
+                        .stroke(lineWidth: 1.2)
                 })
-                .clipShape(RoundedRectangle(cornerRadius: 7))
+                .clipShape(RoundedRectangle(cornerRadius: 6))
                 .padding(.vertical, 10)
                 .foregroundStyle(.black)
+            
+            Button {
+                guard let clientID = FirebaseApp.app()?.options.clientID else { return }
+                
+                // Create Google Sign In configuration object.
+                let config = GIDConfiguration(clientID: clientID)
+                GIDSignIn.sharedInstance.configuration = config
+                
+                // Start the sign in flow!
+                GIDSignIn.sharedInstance.signIn(withPresenting: getRootViewController()) { result, error in
+                    guard error == nil else {
+                        print(error ?? "Error when sign in")
+                        return
+                    }
+                    
+                    guard let user = result?.user,
+                          let idToken = user.idToken?.tokenString
+                    else {
+                        return
+                    }
+                    
+                    let credential = GoogleAuthProvider.credential(withIDToken: idToken,
+                                                                   accessToken: user.accessToken.tokenString)
+                    
+                    Auth.auth().signIn(with: credential) {_,error in
+                        
+                    }
+                    
+                    let emailAddress = user.profile?.email
+                    
+                    Task {
+                        await login.updateUserEmail(to: emailAddress)
+                    }
+                }
+            } label: {
+                RoundedRectangle(cornerRadius: 6)
+                    .frame(width: 276, height: 40)
+                    .foregroundStyle(.clear)
+            }
         }
     }
 }

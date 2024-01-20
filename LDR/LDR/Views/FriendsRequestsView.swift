@@ -14,7 +14,6 @@ struct FriendsRequestsView: View {
     
     var body: some View {
         NavigationStack {
-            Group {
                 if friendsRequests.queriedUsers.count != 0 {
                     List(friendsRequests.queriedUsers, id: \.self.id) { user in
                         HStack {
@@ -41,12 +40,12 @@ struct FriendsRequestsView: View {
                     }
                     .offset(y:-120)
                 }
-            }
-            .toolbar {
-                ToolbarItem {
-                    Button("Dismiss") {
-                        dismiss()
-                    }
+            
+        }
+        .toolbar {
+            ToolbarItem {
+                Button("Dismiss") {
+                    dismiss()
                 }
             }
         }
@@ -58,5 +57,5 @@ struct FriendsRequestsView: View {
 }
 
 #Preview {
-    FriendsRequestsView(isPresenting: .constant(true))
+    FriendsRequestsView(isPresenting: .constant(false))
 }
