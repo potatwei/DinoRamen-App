@@ -10,6 +10,7 @@ import FirebaseCore
 import FirebaseAuth
 import FirebaseMessaging
 import WidgetKit
+import GoogleSignIn
 
 class AppDelegate: NSObject, UIApplicationDelegate, MessagingDelegate, UNUserNotificationCenterDelegate {
     func application(_ application: UIApplication,
@@ -40,6 +41,12 @@ class AppDelegate: NSObject, UIApplicationDelegate, MessagingDelegate, UNUserNot
         if let fcm = Messaging.messaging().fcmToken {
             print("fcm", fcm)
         }
+    }
+    
+    func application(_ app: UIApplication,
+                     open url: URL,
+                     options: [UIApplication.OpenURLOptionsKey: Any] = [:]) -> Bool {
+      return GIDSignIn.sharedInstance.handle(url)
     }
 }
 

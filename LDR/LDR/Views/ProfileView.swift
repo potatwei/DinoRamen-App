@@ -69,20 +69,30 @@ struct ProfileView: View {
     
     /// - Returns: `AsyncImage` object that download the current user profile image from firebase
     /// the `AsyncImage` has a default lable of "person.circle"
+    @ViewBuilder
     var profileImage: some View {
-        let imageURL = URL(string: currentUserInfo.currentUser.profileImage)
-        return AsyncImage(url: imageURL) { image in
-            image
+        if currentUserInfo.currentUser.profileImage != "" {
+            let imageURL = URL(string: currentUserInfo.currentUser.profileImage)
+            AsyncImage(url: imageURL) { image in
+                image
+                    .resizable()
+                    .scaledToFill()
+            } placeholder: {
+                ShimmerEffectBox()
+            }
+            .frame(width: 100, height: 100)
+            .clipShape(Circle())
+            .padding(15)
+            .padding(.leading, 15)
+        } else {
+            Image("DefaultProfileImage")
                 .resizable()
                 .scaledToFill()
-        } placeholder: {
-            ShimmerEffectBox()
+                .frame(width: 100, height: 100)
+                .clipShape(Circle())
+                .padding(15)
+                .padding(.leading, 15)
         }
-        .frame(width: 100, height: 100)
-        .clipShape(Circle())
-        .padding(15)
-        .padding(.leading, 15)
-        
     }
     
     /// When an image is selected, the current profile image will be deleted from database, then a new image
@@ -172,12 +182,11 @@ struct ProfileView: View {
                 Text(currentUserInfo.currentUser.email)
                 
                 HStack {
-                    Text("Since")
                     Text("\(Date(timeIntervalSince1970: currentUserInfo.currentUser.joined).formatted(date: .abbreviated, time: .omitted))")
                 }
             }
             .foregroundStyle(.gray)
-            .font(.system(size: 17))
+            .font(.system(size: 16))
             .minimumScaleFactor(0.9)
         }
         .frame(maxHeight: 85)

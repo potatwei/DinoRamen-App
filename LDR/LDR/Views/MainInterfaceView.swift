@@ -9,39 +9,52 @@ import SwiftUI
 import WidgetKit
 
 struct MainInterfaceView: View {
-    //var interface: MainInterfaceViewModel
-    @StateObject var interface = MainInterfaceViewModel()
+    @ObservedObject var interface = MainInterfaceViewModel()
     @State var selection = 0
     
     @StateObject var currentUserInfo = UserEnvironment()
     @StateObject var status = UserStatusEnvironment()
+    @StateObject var signInStatus = SignInEnvironment()
+    
+    @State var show = false
     
     var body: some View {
-        //Text("\(interface.currentUserId)")
         if interface.isSignIn {
-            TabView(selection: $selection) {
-                UserEditView(tabSelection: $selection)
-                    .tabItem { Label("Edit", systemImage: "figure") }
-                    .tag(1)
-                    .environmentObject(status)
+            ZStack {
+                if signInStatus.ifUserDocumentExist == false {
+                    SetUserNameView(tabSelection: $selection)
+                        .transition(.slide)
+                        .environmentObject(signInStatus)
+                        .zIndex(1)
+                }
                 
-                OthersDisplayView(tabSelection: $selection)
-                    .tabItem { Label("Home", systemImage: "house") }
-                    .tag(0)
-                    .environmentObject(status)
-                
-                ProfileView(tabSelection: $selection)
-                    .tabItem { Label("Profile", systemImage: "person.circle") }
-                    .tag(2)
+                TabView(selection: $selection) {
+                    UserEditView(tabSelection: $selection)
+                        .tabItem { Label("Edit", systemImage: "figure") }
+                        .tag(1)
+                        .environmentObject(status)
+                    
+                    OthersDisplayView(tabSelection: $selection)
+                        .tabItem { Label("Home", systemImage: "house") }
+                        .tag(0)
+                        .environmentObject(status)
+                    
+                    ProfileView(tabSelection: $selection)
+                        .tabItem { Label("Profile", systemImage: "person.circle") }
+                        .tag(2)
+                }
+                .tabViewStyle(.page(indexDisplayMode: .never))
+                .animation(.easeOut(duration: 0.1), value: selection)
+                .environmentObject(currentUserInfo)
+                .zIndex(0)
             }
-            .tabViewStyle(.page(indexDisplayMode: .never))
-            .animation(.easeOut(duration: 0.1), value: selection)
-            .transition(.slide)
-            .environmentObject(currentUserInfo)
         } else {
             NavigationStack {
                 LoginView()
+                    .environmentObject(signInStatus)
+                
             }
+            .transition(.slide)
         }
     }
 }
