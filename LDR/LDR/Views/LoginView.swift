@@ -51,7 +51,7 @@ struct LoginView: View {
             login.appleLoginCompletion(result)
         }
         .signInWithAppleButtonStyle(.whiteOutline)
-        .frame(maxHeight: 40)
+        .frame(maxWidth: 250, maxHeight: 40)
         .padding(.horizontal, 60)
         .padding(.vertical, 10)
         
@@ -64,15 +64,18 @@ struct LoginView: View {
         
         ZStack {
             Image("googleSignin")
+                .resizable()
                 .frame(maxHeight: 40)
+                .clipShape(RoundedRectangle(cornerRadius: 6))
                 .border(.white)
                 .clipped()
-                .padding(.horizontal, 45)
+                .padding(.horizontal, 32)
                 .background(.white)
                 .overlay(content: {
                     RoundedRectangle(cornerRadius: 6)
-                        .stroke(lineWidth: 1.2)
+                        .stroke(lineWidth: 1.3)
                 })
+                .frame(maxWidth: 250, maxHeight: 40)
                 .clipShape(RoundedRectangle(cornerRadius: 6))
                 .padding(.vertical, 10)
                 .foregroundStyle(.black)

@@ -27,10 +27,10 @@
 		7F73EBE72B423570009202CC /* AddFriendButtonViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F73EBE62B423570009202CC /* AddFriendButtonViewViewModel.swift */; };
 		7F765AF42B5609D900EDACE3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7FEDF9EE2B3B92E600127A8D /* Assets.xcassets */; };
 		7F85893C2B573A230002D6C6 /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F85893B2B573A230002D6C6 /* NotificationManager.swift */; };
+		7F8CC9602B5B8D5200630271 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7F8CC95F2B5B8D5200630271 /* GoogleService-Info.plist */; };
+		7F8CC9612B5B8D5200630271 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7F8CC95F2B5B8D5200630271 /* GoogleService-Info.plist */; };
 		7F9F903F2B58AC7500353011 /* Secret.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F9F903E2B58A7A900353011 /* Secret.swift */; };
 		7F9F90402B58AC7600353011 /* Secret.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F9F903E2B58A7A900353011 /* Secret.swift */; };
-		7F9F904D2B59BB4700353011 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7F9F904C2B59BB4700353011 /* GoogleService-Info.plist */; };
-		7F9F904E2B59BB4700353011 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7F9F904C2B59BB4700353011 /* GoogleService-Info.plist */; };
 		7F9F90512B59BE3A00353011 /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = 7F9F90502B59BE3A00353011 /* GoogleSignIn */; };
 		7F9F90532B59BE3A00353011 /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 7F9F90522B59BE3A00353011 /* GoogleSignInSwift */; };
 		7F9F90552B59F30300353011 /* SetUserNameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F9F90542B59F30300353011 /* SetUserNameView.swift */; };
@@ -140,8 +140,8 @@
 		7F73EBE62B423570009202CC /* AddFriendButtonViewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFriendButtonViewViewModel.swift; sourceTree = "<group>"; };
 		7F85893A2B5735E60002D6C6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		7F85893B2B573A230002D6C6 /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
+		7F8CC95F2B5B8D5200630271 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		7F9F903E2B58A7A900353011 /* Secret.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Secret.swift; sourceTree = "<group>"; };
-		7F9F904C2B59BB4700353011 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		7F9F90542B59F30300353011 /* SetUserNameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetUserNameView.swift; sourceTree = "<group>"; };
 		7F9F90562B59F31400353011 /* SetUserNameViewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetUserNameViewViewModel.swift; sourceTree = "<group>"; };
 		7FBA54C22B559A3000009551 /* LDRWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = LDRWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -347,7 +347,7 @@
 				7F9F903E2B58A7A900353011 /* Secret.swift */,
 				7FEDF9F02B3B92E600127A8D /* ApplicationApp.swift */,
 				7FEDF9EF2B3B92E600127A8D /* Extensions.swift */,
-				7F9F904C2B59BB4700353011 /* GoogleService-Info.plist */,
+				7F8CC95F2B5B8D5200630271 /* GoogleService-Info.plist */,
 				7FEDF9EE2B3B92E600127A8D /* Assets.xcassets */,
 				7F85893B2B573A230002D6C6 /* NotificationManager.swift */,
 			);
@@ -497,7 +497,7 @@
 			files = (
 				7FBA54CE2B559A3200009551 /* Assets.xcassets in Resources */,
 				7F765AF42B5609D900EDACE3 /* Assets.xcassets in Resources */,
-				7F9F904E2B59BB4700353011 /* GoogleService-Info.plist in Resources */,
+				7F8CC9612B5B8D5200630271 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -507,7 +507,7 @@
 			files = (
 				7FEDFA052B3B92E600127A8D /* Assets.xcassets in Resources */,
 				7FEDFA142B3B95A200127A8D /* Preview Assets.xcassets in Resources */,
-				7F9F904D2B59BB4700353011 /* GoogleService-Info.plist in Resources */,
+				7F8CC9602B5B8D5200630271 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -770,6 +770,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CODE_SIGN_ENTITLEMENTS = LDR/LDR.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
@@ -779,6 +780,8 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = LDR/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = DinoRamen;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.social-networking";
 				INFOPLIST_KEY_NSCameraUsageDescription = "Camera is used to capture photos";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -811,6 +814,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CODE_SIGN_ENTITLEMENTS = LDR/LDR.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
@@ -820,6 +824,8 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = LDR/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = DinoRamen;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.social-networking";
 				INFOPLIST_KEY_NSCameraUsageDescription = "Camera is used to capture photos";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -891,8 +897,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
 			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 10.19.1;
+				kind = exactVersion;
+				version = 10.19.1;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
