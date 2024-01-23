@@ -56,7 +56,13 @@ struct OthersDisplayView: View {
             
             Divider().frame(maxWidth: 330).padding()
             
-            if userStatus.connUserStatus.id != "" && userStatus.currUserStatus.id != "" {
+            if userStatus.connUserStatus.id == "DNE" {
+                Text("Connect with friend!")
+                    .font(.system(size: 25))
+                    .fontWeight(.bold)
+                    .foregroundStyle(Gradient(colors: [.sugarOrange, .sugarYellow]))
+                    .padding(.top, 170)
+            } else if userStatus.connUserStatus.id != "" && userStatus.currUserStatus.id != "" {
                 if userStatus.connUserStatus.image != nil {
                     ZStack {
                         othersPhoto // Photo to display
@@ -84,12 +90,6 @@ struct OthersDisplayView: View {
                             .font(.system(size: 27))
                     }
                 }
-            } else if userStatus.connUserStatus.id == "DNE" {
-                Text("Connect with friend!")
-                    .font(.system(size: 25))
-                    .fontWeight(.bold)
-                    .foregroundStyle(Gradient(colors: [.sugarOrange, .sugarYellow]))
-                    .padding(.top, 170)
             } else {
                 ShimmerEffectBox()
                     .frame(maxWidth: 280, maxHeight: 440)

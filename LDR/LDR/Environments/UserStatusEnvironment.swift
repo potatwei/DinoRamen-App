@@ -40,6 +40,8 @@ class UserStatusEnvironment: ObservableObject {
             if document.exists {
                 currUserStatus = try document.data(as: Status.self)
                 print("get current user status Successfully")
+            } else {
+                currUserStatus = Status(id: "", emoji: 0, comment: "")
             }
         } catch {
             print("Unable to update Status or fail to get document \(error)")
