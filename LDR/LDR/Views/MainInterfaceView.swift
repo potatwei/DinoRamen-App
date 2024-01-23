@@ -2,7 +2,7 @@
 //  ContentView.swift
 //  Application
 //
-//  Created by Shihang Wei on 12/25/23.
+//  Created by Shihang Wei on 12/25/23
 //
 
 import SwiftUI
