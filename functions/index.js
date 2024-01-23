@@ -73,7 +73,7 @@ exports.sendNotification = functions.firestore
             // Send notification
             const message = {
               notification: {
-                title: "LDR",
+                title: "DinoRamen",
                 body: notifiBody,
               },
               token: receiverFCMToken,
