@@ -23,7 +23,7 @@ import FirebaseFirestore
         self.requestingUser = requestingUser
     }
     
-    func acceptRequest() async -> [Bool]{
+    func disconnectFriend() async -> [Bool]{
         
         // Remove received user's id from user/currentUserId/friend/received
         async let ifRemovedFromCurrentUserFriendConnected = removeItemFromDataBase(requestingUser.id, path: "users/\(currentUserId)/friend/connected")

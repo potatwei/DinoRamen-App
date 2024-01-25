@@ -91,9 +91,11 @@
 		7FEDFA142B3B95A200127A8D /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7FEDFA132B3B95A200127A8D /* Preview Assets.xcassets */; };
 		C9997CA92B6305DB00099553 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C9997CA82B6305DB00099553 /* GoogleService-Info.plist */; };
 		C9997CAA2B6305DB00099553 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C9997CA82B6305DB00099553 /* GoogleService-Info.plist */; };
+		C9997CAC2B63097D00099553 /* DisconnectButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9997CAB2B63097D00099553 /* DisconnectButtonView.swift */; };
+		C9997CAE2B6309C600099553 /* ShowConnectedFriendView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9997CAD2B6309C600099553 /* ShowConnectedFriendView.swift */; };
 		C9C921512B5F516B0021C370 /* Secret.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9C921502B5F516B0021C370 /* Secret.swift */; };
 		C9C921522B5F516B0021C370 /* Secret.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9C921502B5F516B0021C370 /* Secret.swift */; };
-		C9C921542B5F5F1E0021C370 /* DisconnectViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9C921532B5F5F1E0021C370 /* DisconnectViewModel.swift */; };
+		C9C921542B5F5F1E0021C370 /* DisconnectButtonViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9C921532B5F5F1E0021C370 /* DisconnectButtonViewViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -170,8 +172,10 @@
 		7FEDF9F42B3B92E600127A8D /* Status.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Status.swift; sourceTree = "<group>"; };
 		7FEDFA132B3B95A200127A8D /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		C9997CA82B6305DB00099553 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		C9997CAB2B63097D00099553 /* DisconnectButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisconnectButtonView.swift; sourceTree = "<group>"; };
+		C9997CAD2B6309C600099553 /* ShowConnectedFriendView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowConnectedFriendView.swift; sourceTree = "<group>"; };
 		C9C921502B5F516B0021C370 /* Secret.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Secret.swift; sourceTree = "<group>"; };
-		C9C921532B5F5F1E0021C370 /* DisconnectViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisconnectViewModel.swift; sourceTree = "<group>"; };
+		C9C921532B5F5F1E0021C370 /* DisconnectButtonViewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisconnectButtonViewViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -317,7 +321,7 @@
 				7F73EBE22B42194A009202CC /* FriendRequestViewViewModel.swift */,
 				7F73EBE62B423570009202CC /* AddFriendButtonViewViewModel.swift */,
 				7F73EBDC2B42171E009202CC /* FriendsRequestsViewViewModel.swift */,
-				C9C921532B5F5F1E0021C370 /* DisconnectViewModel.swift */,
+				C9C921532B5F5F1E0021C370 /* DisconnectButtonViewViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -336,10 +340,12 @@
 				7F0776BB2B3E2CA4005AEB58 /* UserBarView.swift */,
 				7F73EBE02B421934009202CC /* FriendRequestButtonView.swift */,
 				7F73EBDA2B42170B009202CC /* FriendsRequestsView.swift */,
+				C9997CAD2B6309C600099553 /* ShowConnectedFriendView.swift */,
 				7F73EBE42B423557009202CC /* AddFriendButtonView.swift */,
 				7FEDF9E92B3B92E600127A8D /* HeaderView.swift */,
 				7FEDF9EA2B3B92E600127A8D /* LDRButton.swift */,
 				7F6B6A812B51E29D001B46E2 /* ShimmerEffectBox.swift */,
+				C9997CAB2B63097D00099553 /* DisconnectButtonView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -546,6 +552,7 @@
 				7FEDF9FD2B3B92E600127A8D /* LoginViewViewModel.swift in Sources */,
 				7FEDFA042B3B92E600127A8D /* UserEditView.swift in Sources */,
 				7FEDFA0A2B3B92E600127A8D /* Status.swift in Sources */,
+				C9997CAC2B63097D00099553 /* DisconnectButtonView.swift in Sources */,
 				7F6B6A822B51E29D001B46E2 /* ShimmerEffectBox.swift in Sources */,
 				7FD361552B4CC01000923139 /* UserEnvironment.swift in Sources */,
 				7FEDFA072B3B92E600127A8D /* ApplicationApp.swift in Sources */,
@@ -556,9 +563,10 @@
 				7F0776BC2B3E2CA4005AEB58 /* UserBarView.swift in Sources */,
 				7F37472D2B5A5AFD00A9E655 /* SignInEnvironment.swift in Sources */,
 				7FEDF9FB2B3B92E600127A8D /* UserEditViewViewModel.swift in Sources */,
-				C9C921542B5F5F1E0021C370 /* DisconnectViewModel.swift in Sources */,
+				C9C921542B5F5F1E0021C370 /* DisconnectButtonViewViewModel.swift in Sources */,
 				7FEDFA062B3B92E600127A8D /* Extensions.swift in Sources */,
 				7FEDF9FA2B3B92E600127A8D /* OthersDisplayViewViewModel.swift in Sources */,
+				C9997CAE2B6309C600099553 /* ShowConnectedFriendView.swift in Sources */,
 				7F9F90552B59F30300353011 /* SetUserNameView.swift in Sources */,
 				7F73EBE72B423570009202CC /* AddFriendButtonViewViewModel.swift in Sources */,
 				7F0B6A142B49DFD3003325C5 /* CameraService.swift in Sources */,
