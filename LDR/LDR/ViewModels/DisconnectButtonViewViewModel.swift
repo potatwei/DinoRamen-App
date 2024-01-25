@@ -8,7 +8,7 @@ import Foundation
 import FirebaseAuth
 import FirebaseFirestore
 
-@Observable class DisconnectViewViewModel {
+@Observable class DisconnectButtonViewViewModel {
     private let db = Firestore.firestore()
     let requestingUser: User
     var currentUserId: String {
