@@ -18,6 +18,8 @@ struct MainInterfaceView: View {
     
     @State var show = false
     
+    @Environment(\.scenePhase) var scenePhase
+    
     var body: some View {
         if interface.isSignIn {
             ZStack {

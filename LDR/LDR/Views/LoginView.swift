@@ -83,11 +83,11 @@ struct LoginView: View {
             Button {
                 guard let clientID = FirebaseApp.app()?.options.clientID else { return }
                 
-                // Create Google Sign In configuration object.
+                // Create Google Sign In configuration object
                 let config = GIDConfiguration(clientID: clientID)
                 GIDSignIn.sharedInstance.configuration = config
                 
-                // Start the sign in flow!
+                // Start the sign in flow
                 GIDSignIn.sharedInstance.signIn(withPresenting: getRootViewController()) { result, error in
                     guard error == nil else {
                         print(error ?? "Error when sign in")
