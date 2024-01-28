@@ -15,6 +15,7 @@ class UserStatusEnvironment: ObservableObject {
     private let db = Firestore.firestore()
     @Published var currUserImage: UIImage?
     @Published var connUserImage: UIImage?
+    var ownStatusDocSnapShotListener: ListenerRegistration?
     var currentUserId: String {
         guard let currentUserId = Auth.auth().currentUser?.uid else {
             print("Fail to get current user id")
@@ -29,7 +30,28 @@ class UserStatusEnvironment: ObservableObject {
             await fetchCurrentUserStatus()
             await fetchOtherUserStatus()
             await loadImages()
+            await ownStatusDocSnapShotListener = createRealTimeListener()
         }
+    }
+    
+    @MainActor
+    func createRealTimeListener() async -> ListenerRegistration {
+        return db.document("users/\(currentUserId)/status/user_status")
+            .addSnapshotListener { docSnapshot, error in
+                guard error == nil else {
+                    print("Error Getting Real Time Document \(error?.localizedDescription ?? "no error"))")
+                    return
+                }
+                do {
+                    self.currUserStatus = try docSnapshot?.data(as: Status.self) ?? Status(id: "", emoji: 0, comment: "")
+                    print("Successfully Getting Real Time Document \(self.currUserStatus)")
+                    Task {
+                        self.currUserImage = await self.downloadImage(from: self.currUserStatus.image)
+                    }
+                } catch {
+                    print("Error getting data in document \(error.localizedDescription)")
+                }
+            }
     }
     
     @MainActor
